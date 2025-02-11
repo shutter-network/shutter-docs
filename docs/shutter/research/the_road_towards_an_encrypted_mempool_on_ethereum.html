@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">The Road Towards an Encrypted Mempool On Ethereum | Shutter Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://docs.shutter.network/img/shutter_hero_banner.png"><meta data-rh="true" name="twitter:image" content="https://docs.shutter.network/img/shutter_hero_banner.png"><meta data-rh="true" property="og:url" content="https://docs.shutter.network/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="The Road Towards an Encrypted Mempool On Ethereum | Shutter Docs"><meta data-rh="true" name="description" content="A white paper that outlines an important advancement in Ethereum&#x27;s transaction infrastructure"><meta data-rh="true" property="og:description" content="A white paper that outlines an important advancement in Ethereum&#x27;s transaction infrastructure"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.shutter.network/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum"><link data-rh="true" rel="alternate" href="https://docs.shutter.network/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.shutter.network/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.295f220c.css">
+<script src="/assets/js/runtime~main.6ec20d48.js" defer="defer"></script>
+<script src="/assets/js/main.9efdc937.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/Shutter_Main_Logotype_White.png" alt="Shutter Docs" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/Shutter_Main_Logotype_White.png" alt="Shutter Docs" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Docs</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/docs/shutter">Network</a><a class="navbar__item navbar__link" href="/docs/dao">DAO</a><a class="navbar__item navbar__link" href="/docs/protocol">Protocol</a></div><div class="navbar__items navbar__items--right"><a href="https://calendly.com/loringharkness/30min" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Schedule a Demo<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item sidebar-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/docs/shutter">Shutter Network</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter">Overview of Shutter Network</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/products">Products of Shutter</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/integrations">Integrations of Shutter</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item sidebar-title"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum">Research</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum">The Road Towards an Encrypted Mempool On Ethereum</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/research/shutterized_beacon_chain">Shutterized Beacon Chain</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/research/viability_integrating_enc_mempool_op_stack">The Viability of Integrating an Encrypted Mempool as Proposed by Shutter Into the OP Stack</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/research/decision_template_for_enc_mempool_ops">Decision template for Encrypted Mempool Integration in OP Stack</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/shutter/research/transaction_ordering_in_amm">Transaction Ordering in Automated Market Makers: A Critical Examination of Impact and Strategies</a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Research</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">The Road Towards an Encrypted Mempool On Ethereum</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>The Road Towards an Encrypted Mempool On Ethereum L1</h1></header>
+<p>by Frederik Lührs, Luis Bezzenberger, Francesco Mosterts, Sebastian Faust, Andreas Erwig</p>
+<p>Many thanks to Julian Ma, Drew Van der Werff, Alex Vinyas, Martin Köppelmann, Marc Harvey-Hill, Phillippe Schommers, and Julie Bettens for their valuable feedback on this document.</p>
+<p>Ethereum&#x27;s promise of decentralization, fairness, and security is challenged by issues like censorship, front-running, and builder centralization, making a case for encrypted mempools stronger than ever.</p>
+<p>Who We Are:<br>
+<!-- -->We are a group of projects and individuals building on Ethereum since 2014, dedicated to advancing the network&#x27;s privacy, decentralization, and fairness. Our contributors include the Shutter Network, Gnosis, MEV Blocker, Nethermind, Chainbound, and more.</p>
+<p>This post first touches on the general goals, challenges, and end vision for transaction encryption and then outlines a practical roadmap for implementing a threshold encrypted mempool using proposer commitments to integrate with Ethereum&#x27;s PBS transaction supply chain. It explores how this approach could improve censorship resistance, mitigate malicious MEV, and ensure a fair transaction process.</p>
+<p>The document represents one possible approach and shall act as a starting point for conversation. We invite feedback and contributions from all perspectives, particularly from those involved in the PBS supply chain, including RPC providers, relays, builders, and proposers.</p>
+<p>Additionally, we&#x27;re planning to design this integration as modularly as possible, leading to a generalized mempool encryption interface, which is as encryption technology-agnostic as possible.</p>
+<p><img decoding="async" loading="lazy" src="/assets/images/enc_mem_roadmap-524a188adadb98962a8ea8e800ab7b58.png" width="886" height="499" class="img_ev3q"></p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="tldrtable-of-contents">TL;DR/Table of Contents:<a href="#tldrtable-of-contents" class="hash-link" aria-label="Direct link to TL;DR/Table of Contents:" title="Direct link to TL;DR/Table of Contents:">​</a></h2>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="problem">Problem:<a href="#problem" class="hash-link" aria-label="Direct link to Problem:" title="Direct link to Problem:">​</a></h4>
+<ul>
+<li>
+<p>Censorship &amp; Front-Running: Exploitation of transaction ordering by validators/builders undermines Ethereum&#x27;s openness and fairness.</p>
+</li>
+<li>
+<p>Centralization: Proposer-Builder Separation (PBS) has led to builder centralization, increasing censorship and MEV risks.</p>
+</li>
+<li>
+<p>MEV Challenges: Exploiting Maximal Extractable Value (MEV) harms users and compromises integrity.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="solution-encrypted-mempools">Solution: Encrypted Mempools<a href="#solution-encrypted-mempools" class="hash-link" aria-label="Direct link to Solution: Encrypted Mempools" title="Direct link to Solution: Encrypted Mempools">​</a></h4>
+<ul>
+<li>
+<p>Encrypt transactions to prevent front-running and censorship.</p>
+</li>
+<li>
+<p>Decrypt only post-commitment, ensuring fairness and privacy.</p>
+</li>
+<li>
+<p>Vitalik emphasizes the necessity for decentralized block building and MEV mitigation.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="endgame-fully-private-ethereum">Endgame: Fully Private Ethereum<a href="#endgame-fully-private-ethereum" class="hash-link" aria-label="Direct link to Endgame: Fully Private Ethereum" title="Direct link to Endgame: Fully Private Ethereum">​</a></h4>
+<ul>
+<li>
+<p>Employ cryptographic tools (e.g., FHE, ZK Proofs), integrated into the Ethereum L1 protocol for complete encryption.</p>
+</li>
+<li>
+<p>Achieve censorship resistance, fairness, and decentralized transaction ordering.</p>
+</li>
+<li>
+<p>Overcome current limitations with incremental steps toward scalability and decentralization.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="roadmap-highlights">Roadmap Highlights:<a href="#roadmap-highlights" class="hash-link" aria-label="Direct link to Roadmap Highlights:" title="Direct link to Roadmap Highlights:">​</a></h4>
+<ol>
+<li>
+<p>Step 1 - RPC Integration: Enable encrypted transactions with eth_sendEncryptedTransaction via existing infrastructure like MEV Blocker.</p>
+</li>
+<li>
+<p>Step 2 - PBS Integration: Introduce relays and proposer commitments to secure transaction inclusion while maintaining privacy.</p>
+</li>
+<li>
+<p>Step 3 - In-Protocol Shutterization: Integrate threshold encryption into Ethereum&#x27;s consensus layer for decentralized and secure transaction processing.</p>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="who-will-make-up-the-threshold-committee">Who will make up the threshold committee<a href="#who-will-make-up-the-threshold-committee" class="hash-link" aria-label="Direct link to Who will make up the threshold committee" title="Direct link to Who will make up the threshold committee">​</a></h4>
+<p>Economics impact</p>
+<p>In-protocol implementation</p>
+<p>Open questions</p>
+<p>Further Improvements</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="problem-1">Problem<a href="#problem-1" class="hash-link" aria-label="Direct link to Problem" title="Direct link to Problem">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="big-picture-censorship-front-running-builder-centralization">Big picture: Censorship, Front-Running, Builder Centralization<a href="#big-picture-censorship-front-running-builder-centralization" class="hash-link" aria-label="Direct link to Big picture: Censorship, Front-Running, Builder Centralization" title="Direct link to Big picture: Censorship, Front-Running, Builder Centralization">​</a></h3>
+<p>Ethereum aims for decentralization and fairness but faces challenges in transaction processing. Malicious actors exploit the brief window before transactions are included in a block to censor, front-run, or reorder transactions, undermining the network&#x27;s integrity.</p>
+<p>Censorship and Front-Running. Validators or block producers might deliberately exclude or delay transactions, violating Ethereum&#x27;s open-access principles and causing financial losses for users. Front-running occurs when someone observes pending transactions and inserts their own ahead to profit, harming users and compromising market integrity.</p>
+<p>Centralization in Block Building. Proposer-Builder Separation (PBS) <a href="https://barnabe.substack.com/p/pbs" target="_blank" rel="noopener noreferrer">was introduced to preserve the decentralization of the validator set</a>. PBS acknowledges that block building is centralizing and aims to keep this centralization at the builder level, not at the proposer level. However with or without PBS, Ethereum is now facing a strong tendency towards builder centralization, with a few powerful builders controlling most of the blocks. This centralization increases risks like censorship and the rents that MEV extracting agents seek.</p>
+<p>The Essential Role of Encrypted Mempools. In his recent blog post series &quot;<a href="https://vitalik.eth.limo/general/2024/10/20/futures3.html" target="_blank" rel="noopener noreferrer">Possible futures of the Ethereum protocol</a>&quot;, Vitalik emphasizes that to address these issues, we need to give transaction selection back to proposers (validators) and limit builders&#x27; roles. However, for this to work without introducing new vulnerabilities, encrypted mempools are crucial.</p>
+<p>Encrypted mempools allow users to broadcast transactions in encrypted form, so block builders cannot see the details and thus cannot front-run or censor them. Transactions are decrypted later, ensuring a higher level of information symmetry during the transaction ordering process.</p>
+<p>Vitalik highlights that encrypted mempools are essential for implementing solutions like BRAID, FOCIL, or multiple concurrent proposers (MCP), which aim to decentralize block construction and reduce MEV. We also think that <a href="https://x.com/ShutterNetwork/status/1796522253624258750" target="_blank" rel="noopener noreferrer">for inclusion lists to be widely adopted, an encrypted mempool is highly beneficial</a> as well. Interestingly, our proposal for an encrypted mempool using proposer commitments integrates naturally with the concept of inclusion lists.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="second-order-problems">Second order problems<a href="#second-order-problems" class="hash-link" aria-label="Direct link to Second order problems" title="Direct link to Second order problems">​</a></h3>
+<p>Under the assumption that an encrypted mempool is the way forward to tackle the aforementioned issues, several additional challenges must be considered:</p>
+<p><strong>Enforcing Reveal</strong></p>
+<p>Ensuring that decryption keys are released on time is critical. Without a timely key release, encrypted transactions could remain locked, leading to delays or stalled transactions.</p>
+<p><strong>Trust Assumptions</strong></p>
+<p>All technologies that are currently being discussed in the community to enable encrypted mempools, such as Verifiable Delay Functions, Threshold Encryption, or Trusted Execution Environments, rely on certain trust assumptions. We discuss those assumptions in more detail below in &quot;Technologies Enabling the Encrypted Mempool.&quot;</p>
+<p><strong>Relationship with PBS</strong></p>
+<p>Implementing an encrypted mempool is relatively straightforward on a basic Layer 1 blockchain, but integrating it under the assumption that out-of-protocol Proposer-Builder Separation (PBS) exists adds complexity. Finding a way to make encrypted transactions compatible under this assumption is a non-trivial challenge.</p>
+<p><strong>Distribution of Back-Running MEV</strong>**</p>
+<p>Some forms of MEV, like back-running, are considered acceptable and even beneficial. The challenge is to allow these while preventing malicious MEV and to ensure that the profits from back-running are fairly distributed.</p>
+<p><strong>Verifiability and Accountability</strong></p>
+<p>It&#x27;s essential to have mechanisms in place to verify that all parties are following the protocol and to hold them accountable if they don&#x27;t. This includes being able to detect misbehavior and apply penalties accordingly.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-endgame-of-encryption-ethereum-with-fully-configurable-decentralized-privacy">The Endgame of Encryption: Ethereum with Fully Configurable, Decentralized Privacy<a href="#the-endgame-of-encryption-ethereum-with-fully-configurable-decentralized-privacy" class="hash-link" aria-label="Direct link to The Endgame of Encryption: Ethereum with Fully Configurable, Decentralized Privacy" title="Direct link to The Endgame of Encryption: Ethereum with Fully Configurable, Decentralized Privacy">​</a></h2>
+<p>We think the ultimate aim for the Ethereum community is a fully encrypted and decentralized Ethereum where all transactions are private yet verifiable. Transaction encryption is powerful because it prevents front-running, censorship, and manipulation by keeping transaction details hidden until they&#x27;re confirmed on the blockchain. This ensures fairness and security for all participants.</p>
+<p>In this envisioned system, advanced cryptographic techniques like Fully Homomorphic Encryption (FHE), Multi-Party Computation (MPC), indistinguishability Obfuscation (iO), and Zero-Knowledge Proofs (ZK) enable verifiable computation on encrypted data without revealing any underlying information. Here&#x27;s how it would function:</p>
+<ul>
+<li>
+<p>Users encrypt their transactions using a fully homomorphic encryption scheme before broadcasting the ciphertext to the network. The transaction data remains confidential and accessible only to authorized parties.</p>
+</li>
+<li>
+<p>Validators and nodes process encrypted transactions without decrypting them. They rely on cryptographic proofs to verify the validity and integrity of each transaction</p>
+</li>
+<li>
+<p>Smart contracts execute on encrypted inputs thanks to FHE, allowing them to perform computation while preserving data privacy. Outputs remain encrypted, ensuring end-to-end confidentiality.</p>
+</li>
+<li>
+<p>Decryption occurs only when necessary, and only authorized parties can decrypt specific data, preserving privacy while enabling necessary transparency.</p>
+</li>
+</ul>
+<p>By integrating these cryptographic methods at the Ethereum protocol level, the blockchain effectively becomes a secure &quot;black box&quot; that autonomously processes transactions. This eliminates the need for intermediaries or trusted third parties. Traditional roles like transaction intermediaries and exchange operators become obsolete (or, put differently, become smart contracts, possibly &quot;actually smart&quot; via advancements in scalability, computation, and AI) as the blockchain itself handles validation and execution securely and privately.</p>
+<p>This approach enhances security by reducing attack surfaces---since transaction details are hidden, malicious actors can&#x27;t front-run or manipulate them. Censorship becomes impractical because validators can&#x27;t discriminate against transactions they can&#x27;t interpret.</p>
+<p>Achieving this vision would revolutionize the way public blockchains process transactions, providing unparalleled information symmetry, security, and privacy. It fulfills the full potential of decentralized finance by giving users complete control over their data and assets in a truly decentralized and trustless system.</p>
+<p>While technologies like FHE and iO aren&#x27;t yet practical for widespread use due to computational challenges, ongoing research is rapidly advancing. In the meantime, implementing a threshold encrypted mempool via proposer commitments can serve as a stepping stone toward this ultimate goal.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="technologies-enabling-the-encrypted-mempool">Technologies Enabling the Encrypted Mempool<a href="#technologies-enabling-the-encrypted-mempool" class="hash-link" aria-label="Direct link to Technologies Enabling the Encrypted Mempool" title="Direct link to Technologies Enabling the Encrypted Mempool">​</a></h2>
+<p>Several approaches have been proposed and are currently being explored to enable encrypted mempools, including Timed Cryptography, Fully Homomorphic Encryption (FHE), Trusted Execution Environments (TEEs), Witness Encryption, and Threshold Encryption.</p>
+<p>Timed Cryptography. Timed Cryptography in the style of Verifiable Delay Functions  (VDFs) allows to hide the content of a transaction until a predefined time, e.g., until the transaction&#x27;s position in the block is fixed. The required time to reveal the content of a transaction is determined by a so-called difficulty parameter. The core idea behind this approach is that parties must compute a function to reveal a transaction and that this computation takes the same, predictable amount of time for all parties, independently of their respective computing power. Unfortunately, the approach of using timed cryptography for MEV protection has several drawbacks: 1) specialized hardware exists that significantly speeds up the computation process, allowing parties in possession of such hardware to learn transactions prematurely. This issue could be addressed by appropriately adjusting the difficulty parameter and commercializing the process of computing the delay function, but it would exclude parties not in possession of the specialized hardware from participating in the transaction decryption process; 2) computing delay functions is a costly and wasteful task; 3) not all parties in the network receive the protected transaction at the same time, giving those who receive it early a time advantage; 4) it is not clear how to set the difficulty parameter such that the transaction gets revealed just in time to be included in the block; 5) if the transaction does not get included in the block, it is revealed and can be front-run. </p>
+<p>Fully Homomorphic Encryption. FHE is a powerful cryptographic primitive that allows for arbitrary computation over encrypted data, thereby preserving their confidentiality. FHE (along with zero-knowledge proofs) is especially interesting in the context of MEV because it might allow the prevention of malicious MEV while allowing the capture of good (or harmless) MEV such as the MEV extracted by backrunning. Unfortunately, FHE is not yet practical for real-world use as it requires a significant computational overhead. The Flashbots team investigated the efficiency of FHE for capturing backrunning MEV in a <a href="https://writings.flashbots.net/blind-arbitrage-fhe" target="_blank" rel="noopener noreferrer">recent blog post</a>, which illustrates nicely the extreme computational constraints that FHE imposes.  </p>
+<p>Trusted Execution Environments. A  TEE is a hardware module that provides a secure execution environment even if the host machine is corrupted. As such, TEEs could be used to prevent malicious MEV while allowing the capture of good MEV by ordering transactions inside a TEE. However, in the past various attacks on TEEs (in particular Intel SGX) have been presented, raising doubts about their security. Besides that, using TEEs always requires trusting the respective hardware manufacturer.</p>
+<p>Witness encryption. Witness encryption is an encryption scheme that is defined w.r.t. a relation such that a message can be encrypted under a statement in the relation. The resulting ciphertext can only be decrypted using a valid witness for the encrypting statement. For instance, for the case of MEV protection, witness encryption could be used as follows: a user could encrypt its transaction under the statement &quot;The transaction is included in a finalized block&quot; such that the ciphertext can only be decrypted with a validity proof of this statement. The Shutter encryption scheme is a form of witness encryption known as <a href="https://eprint.iacr.org/2022/433.pdf" target="_blank" rel="noopener noreferrer">signature-based witness encryption</a>. Unfortunately, for complex relations like the one mentioned above, witness encryption is not yet ready for practical use.</p>
+<p>Threshold encryption. Threshold encryption is a type of public key encryption where the decryption key is split among multiple parties, requiring collaboration from at least a threshold number of them to decrypt a message. If fewer than the threshold number participate, no information about the plaintext or decryption key is revealed.<br>
+<!-- -->Threshold encryption is a promising candidate for the encrypted mempool. First, it decentralizes the decryption process, preventing premature or unauthorized decryption attempts as long as fewer than the threshold number of participants are compromised. Second, it guarantees timely decryption as long as the threshold is set below half the total number of participants, ensuring resilience even in the presence of failures or adversarial behavior.<br>
+<!-- -->However, both of these guarantees crucially rely on the so-called threshold trust assumption, i.e., the assumption that strictly less than the threshold number of parties behave maliciously. Below in &quot;Further Improvements&quot;, we discuss several promising directions to reduce this trust assumption.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="shutter-high-level">Shutter high level<a href="#shutter-high-level" class="hash-link" aria-label="Direct link to Shutter high level" title="Direct link to Shutter high level">​</a></h2>
+<p>Shutter encrypts transactions so that their contents are hidden until block proposers or sequencers commit to order and inclusion. This is achieved through a decentralized threshold encryption scheme, ensuring that no single party can decrypt or manipulate transactions prematurely.</p>
+<ul>
+<li>
+<p>Encryption: Users encrypt their transactions using a public encryption key generated collaboratively by a group of nodes (Keypers) through a Distributed Key Generation (DKG) protocol.</p>
+</li>
+<li>
+<p>Commitment: Block producers include these encrypted transactions in blocks, committing to their inclusion and order without access to their contents.</p>
+</li>
+<li>
+<p>Decryption: Once transactions are included in the chain, the keypers release the decryption key, enabling execution without exposing the data to potential front-running.</p>
+</li>
+</ul>
+<p>Threshold Encryption: Unique Properties</p>
+<p>Threshold encryption relies on Keypers to collaboratively generate and manage cryptographic keys. A transaction is only decryptable if a threshold number of Keypers agree to release the decryption key. This ensures:</p>
+<ul>
+<li>
+<p>Security: No subset of Keypers sized smaller than the threshold number can act maliciously.</p>
+</li>
+<li>
+<p>Liveness: The protocol&#x27;s execution is not interrupted by a minority of Keypers going offline or acting maliciously.</p>
+</li>
+</ul>
+<h1>Recap: The Shutterized Beacon Chain</h1>
+<p>In 2022, <a href="https://ethresear.ch/t/shutterized-beacon-chain/12249" target="_blank" rel="noopener noreferrer">we proposed integrating their threshold encryption scheme directly into Ethereum&#x27;s consensus layer</a> to combat MEV and front-running. At that time, Ethereum lacked mechanisms like Proposer-Builder Separation (PBS).</p>
+<p>The core concept involved a subset of validators called Keypers, who would manage encryption and decryption keys through a Distributed Key Generation (DKG) protocol. Users would encrypt their transactions using a session public key derived from a &quot;master key&quot; which was generated by the Keypers via a DKG, ensuring transaction details remained hidden during the mempool phase. After a block containing encrypted transactions was proposed, Keypers would release decryption key shares. Once enough shares were released to meet a predefined threshold, the transactions would be decrypted and executed in a predetermined order. Ethereum&#x27;s attesters would validate the decryption keys as part of their duties, and if a supermajority confirmed their validity, the encrypted transactions became eligible for execution.</p>
+<p>This approach significantly reduces opportunities for front-running and other forms of MEV by preventing malicious actors from accessing transaction details before block inclusion. It preserves Ethereum&#x27;s composability, as integrating encryption at the protocol level avoids the pitfalls of off-chain solutions that can disrupt interactions between smart contracts. Users could continue sending transactions as usual, without needing to engage with complex MEV protection mechanisms.</p>
+<p><a href="https://www.gnosis.io/blog/welcome-to-the-future-shutterized-gnosis-chain-has-become-a-blueprint-for-base-layer-neutrality" target="_blank" rel="noopener noreferrer">The Shutterized Beacon Chain has been implemented on the Gnosis Chain</a>, operating as an Ethereum-like beacon chain in an out-of-protocol version. Collaborating with Nethermind, the team successfully integrated threshold encryption into the chain&#x27;s operations. A substantial percentage of validators are participating and an alpha Keyper set comprised of 7 Keypers is securely managing encryption keys. The network has processed many shielded transactions, demonstrating the practicality and effectiveness of the approach. The <a href="https://explorer.shutter.network/" target="_blank" rel="noopener noreferrer">Shutter Explorer</a> allows users and developers to monitor the live implementation, offering transparency without compromising security.</p>
+<p><img decoding="async" loading="lazy" src="/assets/images/enc_mem_explorer-e326a0d982d0bb1ab07c52034ac28429.png" width="927" height="382" class="img_ev3q"></p>
+<p>The implementation provided valuable insights into practical challenges, such as Keyper selection and decentralization.</p>
+<p>Additionally, we built an <a href="https://blog.shutter.network/shutterized-op-stack-testnet-shop-now-live-on-sepolia/" target="_blank" rel="noopener noreferrer">encrypted mempool module for OP Stack chains and deployed this as a testnet</a>, further proving the viability of threshold encrypted mempools for various sequencing environments.</p>
+<p>The successful implementation at the Gnosis Chain, as well as the Shutterized OP Stack testnet, demonstrate the feasibility of this approach and provide a blueprint for potential adoption on Ethereum&#x27;s mainnet. Enter our plan and roadmap to do just that:</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="new-practical-plan-threshold-encrypted-mempool-for-l1-using-proposer-commitments">New practical plan: threshold encrypted mempool for L1 using proposer commitments<a href="#new-practical-plan-threshold-encrypted-mempool-for-l1-using-proposer-commitments" class="hash-link" aria-label="Direct link to New practical plan: threshold encrypted mempool for L1 using proposer commitments" title="Direct link to New practical plan: threshold encrypted mempool for L1 using proposer commitments">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="overview-of-proposer-commitments">Overview of Proposer Commitments<a href="#overview-of-proposer-commitments" class="hash-link" aria-label="Direct link to Overview of Proposer Commitments" title="Direct link to Overview of Proposer Commitments">​</a></h3>
+<p>Proposer commitments enhance trust in Ethereum&#x27;s block production by enabling proposers to pre-commit to include specific transactions. <a href="https://github.com/Commit-Boost" target="_blank" rel="noopener noreferrer">Commit-Boost</a> formalizes this with cryptographic proofs and protocol enforcement, ensuring transparency and fairness in block building.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="how-commit-boost-works">How Commit-Boost Works<a href="#how-commit-boost-works" class="hash-link" aria-label="Direct link to How Commit-Boost Works" title="Direct link to How Commit-Boost Works">​</a></h3>
+<ol>
+<li>
+<p>Pre-Commitment: Proposers cryptographically sign and broadcast a promise to include specific transactions in the next block.</p>
+</li>
+<li>
+<p>Proof Enforcement: Watchers verify compliance during block validation. Deviations, like omitting committed transactions, result in penalties (e.g., slashing).</p>
+</li>
+<li>
+<p>Execution Flow:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>A user submits an encrypted transaction.</p>
+</li>
+<li>
+<p>The proposer commits to including it at the top of the block.</p>
+</li>
+<li>
+<p>The Shutter Network or similar reveals the decryption key, enabling transaction inclusion in the block.</p>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="benefits-of-commit-boost">Benefits of Commit-Boost<a href="#benefits-of-commit-boost" class="hash-link" aria-label="Direct link to Benefits of Commit-Boost" title="Direct link to Benefits of Commit-Boost">​</a></h3>
+<ul>
+<li>
+<p>Guaranteed Inclusion: Users gain assurance their transactions will be included.</p>
+</li>
+<li>
+<p>MEV Resistance: Pre-commitments prevent front-running.</p>
+</li>
+<li>
+<p>Trust Layer: Proposers are held accountable, fostering user confidence.</p>
+</li>
+<li>
+<p>Support for Encrypted Transactions: Ensures inclusion after decryption.</p>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="impacts-on-block-building">Impacts on Block Building<a href="#impacts-on-block-building" class="hash-link" aria-label="Direct link to Impacts on Block Building" title="Direct link to Impacts on Block Building">​</a></h3>
+<ol>
+<li>
+<p>Proposer Accountability: Incentivizes honest behavior through penalties for incorrect or dishonest commitments.</p>
+</li>
+<li>
+<p>Integration with MEV Tools: Works with privacy-focused features like encrypted transactions.</p>
+</li>
+<li>
+<p>Complexity: Builders must comply with commitments, adding constraints to block design. One example of such could be Inclusion Lists.</p>
+</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="challenges">Challenges<a href="#challenges" class="hash-link" aria-label="Direct link to Challenges" title="Direct link to Challenges">​</a></h3>
+<ul>
+<li>
+<p>Collusion: Proposers could collaborate with builders to extract MEV.</p>
+</li>
+<li>
+<p>Latency: Commitment and decryption introduce delays.</p>
+</li>
+<li>
+<p>Verification: It is difficult to verify if a proposer failed due to network issues or deliberate misconduct.</p>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion">Conclusion<a href="#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion">​</a></h3>
+<p>Commit-Boost strengthens Ethereum by aligning proposer incentives with fairness and transparency, benefiting both users and the network. Its integration with encrypted transactions and MEV tools promises a robust, decentralized transaction framework while addressing challenges like collusion and latency.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="roadmap">Roadmap<a href="#roadmap" class="hash-link" aria-label="Direct link to Roadmap" title="Direct link to Roadmap">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="step-1-rpc">Step 1 RPC<a href="#step-1-rpc" class="hash-link" aria-label="Direct link to Step 1 RPC" title="Direct link to Step 1 RPC">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="step-1-introducing-eth_sendencryptedtransaction-for-private-transaction-handling">Step 1: Introducing eth_sendEncryptedTransaction for Private Transaction Handling<a href="#step-1-introducing-eth_sendencryptedtransaction-for-private-transaction-handling" class="hash-link" aria-label="Direct link to Step 1: Introducing eth_sendEncryptedTransaction for Private Transaction Handling" title="Direct link to Step 1: Introducing eth_sendEncryptedTransaction for Private Transaction Handling">​</a></h4>
+<p>This architecture outlines the initial implementation of Ethereum&#x27;s encrypted transaction handling, leveraging the MEV Blocker privacy endpoint. The goal is to introduce foundational support for encrypted transactions while maintaining compatibility with existing wallets and applications. Future steps will expand the capabilities along the transaction supply chain.</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="initial-architecture-overview">Initial Architecture Overview<a href="#initial-architecture-overview" class="hash-link" aria-label="Direct link to Initial Architecture Overview" title="Direct link to Initial Architecture Overview">​</a></h5>
+<p>Terminology: The existing MEV Blocker infrastructure is referred to as the MEV Blocker backend. Until wallets support encrypting transactions, there needs to be a user-facing service that acts merely as a proxy server, forwarding most of the requests and modifying others. This user-facing proxy server is referred to as the MEV Blocker front-end.</p>
+<ol>
+<li>New Ethereum JSON-RPC Endpoint:<br>
+<!-- -->A new RPC method, eth_sendEncryptedTransaction, is introduced to handle encrypted transactions. This method allows users to send ciphertext representing an encrypted transaction directly to an RPC supporting the new endpoint.</li>
+</ol>
+<ul>
+<li>At this stage, the encryption and decryption workflow is centralized but provides a framework for future decentralization.</li>
+</ul>
+<ol start="3">
+<li>MEV Blocker&#x27;s Role:</li>
+</ol>
+<ul>
+<li>
+<p>Backend Modifications:<br>
+<!-- -->MEV Blocker&#x27;s existing infrastructure will be extended with the eth_sendEncryptedTransaction endpoint.</p>
+</li>
+<li>
+<p>When a user sends an encrypted transaction using this endpoint, the accept the ciphertext. The MEV Blocker Backend will request the decryption key from Shutter Network&#x27;s Keypers to decrypt the transaction.</p>
+</li>
+<li>
+<p>Once decrypted, the transaction will follow the normal process and be forwarded to block builders.</p>
+</li>
+<li>
+<p>Front-end Modifications:<br>
+<!-- -->A new Encrypting RPC server (ERPC) will be introduced as a front-end service.</p>
+</li>
+<li>
+<p>This ERPC proxies all requests except for sendRawTransaction.</p>
+</li>
+<li>
+<p>When a user submits a sendRawTransaction call, the ERPC encrypts the transaction using Shutter Network&#x27;s encryption and forwards it to the MEV Blocker Backend via the eth_sendEncryptedTransaction endpoint.</p>
+</li>
+<li>
+<p>Endpoint Redirection:<br>
+<!-- -->The mevblocker.io/privacy endpoint, which currently points to MEV Blocker&#x27;s backend infrastructure, will now point to the ERPC.</p>
+</li>
+<li>
+<p>This change is necessary because most wallets today do not support the new eth_sendEncryptedTransaction endpoint. The ERPC acts as a helper service until wallets gain native support for this functionality.</p>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="key-benefits-of-step-1">Key Benefits of Step 1<a href="#key-benefits-of-step-1" class="hash-link" aria-label="Direct link to Key Benefits of Step 1" title="Direct link to Key Benefits of Step 1">​</a></h5>
+<ol>
+<li>
+<p>Seamless User Experience:<br>
+<!-- -->By operating the encryption RPC, MEV Blocker ensures users can begin using encrypted transactions without requiring wallet upgrades. The backend handles encryption and decryption transparently.</p>
+</li>
+<li>
+<p>Refactoring for Future Expansion:<br>
+<!-- -->This approach decouples the encryption and transaction-handling logic, laying the groundwork for:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>User-Facing Enhancements: Wallet integration for local encryption.</p>
+</li>
+<li>
+<p>Transaction Supply Chain Improvements: Expanding encrypted transaction support to builders, relays, and proposers.</p>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="user-facing-transition-path">User-Facing Transition Path<a href="#user-facing-transition-path" class="hash-link" aria-label="Direct link to User-Facing Transition Path" title="Direct link to User-Facing Transition Path">​</a></h5>
+<ol>
+<li>
+<p>Current Workflow:<br>
+<!-- -->Users interact with the ERPC hosted at mevblocker.io/privacy. This service encrypts raw transactions submitted via the sendRawTransaction endpoint and forwards them to the MEV Blocker Backend using the new eth_sendEncryptedTransaction endpoint.</p>
+</li>
+<li>
+<p>Future Workflow:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Wallet providers implement native support for eth_sendEncryptedTransaction.</p>
+</li>
+<li>
+<p>Users can locally encrypt their transactions and send them directly to MEV Blocker, removing the need for backend encryption.</p>
+</li>
+<li>
+<p>Once wallet support is prevalent, the ERPC can be deprecated, and mevblocker.io/privacy can act purely as a forwarding service for encrypted transactions.</p>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="transaction-supply-chain-transition-path">Transaction Supply Chain Transition Path<a href="#transaction-supply-chain-transition-path" class="hash-link" aria-label="Direct link to Transaction Supply Chain Transition Path" title="Direct link to Transaction Supply Chain Transition Path">​</a></h5>
+<p>The goal is to decentralize encryption and decryption responsibilities, ultimately moving decryption authority away from MEV Blocker. This transition follows three major steps:</p>
+<ol>
+<li>Step 1 - Integration with Builders:</li>
+</ol>
+<ul>
+<li>
+<p>Shutter&#x27;s decryption functionality will be integrated with Ethereum block builders. Builders take over requesting the decryption key from Shutter Network. This can be done with additional commitments, such as i.e. adding the transaction at the top of the block guaranteeing front-running protection.</p>
+</li>
+<li>
+<p>MEV Blocker acts purely as a transport hub, forwarding encrypted transactions to builders.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Step 2 - (Optional) Integration with Relays:</li>
+</ol>
+<ul>
+<li>
+<p>Relays, as intermediaries between builders and proposers, handle encrypted transactions and manage decryption key propagation.</p>
+</li>
+<li>
+<p>Relays ensure decrypted transactions are appended correctly to blocks without builder manipulation (see Step 2 architecture).</p>
+</li>
+</ul>
+<ol start="5">
+<li>Step 3 - Proposer Commitments:</li>
+</ol>
+<ul>
+<li>
+<p>Encrypted transactions are sent directly to the proposer. Proposers commit to including them in the next block at a specific position, as detailed in the Commit-Boost Architecture.</p>
+</li>
+<li>
+<p>This step relies on the proposer commitment mechanism to prevent front-running and guarantee inclusion.</p>
+</li>
+</ul>
+<p>Security Considerations and Limitations</p>
+<ol>
+<li>Centralized Decryption in Step 1:</li>
+</ol>
+<ul>
+<li>
+<p>While encryption and decryption occur solely within the MEV Blocker infrastructure, this centralization offers no immediate security gain.</p>
+</li>
+<li>
+<p>However, it creates a modular architecture that can evolve into a fully decentralized system.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Builder Misbehavior:</li>
+</ol>
+<ul>
+<li>As evidenced by prior MEV Blocker incidents (e.g., the 250 ETH loss due to builder misbehavior), there is a need for transparent oversight and auditing mechanisms.</li>
+</ul>
+<ol start="5">
+<li>Encryption Protocol Integrity:</li>
+</ol>
+<ul>
+<li>The encryption relies on Shutter Network&#x27;s services, ensuring transactions remain private throughout their lifecycle. Any compromise in Shutter&#x27;s threshold encryption scheme would affect transaction confidentiality.</li>
+</ul>
+<ol start="7">
+<li>Backward Compatibility:</li>
+</ol>
+<ul>
+<li>Initially, wallets lack support for the eth_sendEncryptedTransaction endpoint. The encryption RPC ensures usability during the transition phase.</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="summary">Summary<a href="#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary">​</a></h4>
+<p>This initial step introduces encrypted transaction support via a new Ethereum JSON-RPC endpoint, eth_sendEncryptedTransaction, and integrates it with MEV Blocker&#x27;s privacy infrastructure. While security improvements are limited at this stage, the architecture establishes a foundation for decentralized encrypted transaction handling. Future expansions will focus on integrating builders, relays, and proposers into the encrypted transaction supply chain, achieving comprehensive privacy and MEV resistance.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="step-2-relay-optional">Step 2: Relay (Optional)<a href="#step-2-relay-optional" class="hash-link" aria-label="Direct link to Step 2: Relay (Optional)" title="Direct link to Step 2: Relay (Optional)">​</a></h2>
+<p>This section outlines an adaptation of Ethereum&#x27;s Proposer-Builder Separation (PBS) architecture, specifically tailored to handle encrypted transactions. The design incorporates encrypted transaction handling into the MEV-Boost relay and leverages the Shutter Network&#x27;s Keyper system for secure key release and transaction decryption.</p>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="architecture-overview">Architecture Overview<a href="#architecture-overview" class="hash-link" aria-label="Direct link to Architecture Overview" title="Direct link to Architecture Overview">​</a></h5>
+<ol>
+<li>
+<p>Receiving Encrypted Transactions:<br>
+<!-- -->The relay receives encrypted transactions submitted by users. These transactions are stored securely and associated with their decryption methods and the expected inclusion order.</p>
+</li>
+<li>
+<p>Commitment to Transaction Inclusion:<br>
+<!-- -->The relay creates a commitment to the encrypted transactions, ensuring they will be included in a specific order within the block. This commitment is broadcast to the network.</p>
+</li>
+<li>
+<p>Key Release via Shutter Network:<br>
+<!-- -->The Shutter Network&#x27;s Keypers release the decryption keyshares for the transactions only after the relay&#x27;s commitment has been issued. These keys enable the relay to decrypt the transactions.</p>
+</li>
+<li>
+<p>Appending Decrypted Transactions:<br>
+<!-- -->Upon receiving a block proposal from a block builder, the relay appends the decrypted transactions to the block:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Transactions are appended in the committed order.</p>
+</li>
+<li>
+<p>The relay recalculates the block&#x27;s state root to reflect the additional transactions.</p>
+</li>
+</ul>
+<ol start="6">
+<li>
+<p>Submitting Modified Block to Proposer:<br>
+<!-- -->The relay forwards the modified block header and its bid to the proposer. The assumption is that the decrypted transactions will increase the block&#x27;s total bid value, making it more likely for the proposer to accept the block.</p>
+</li>
+<li>
+<p>Increased Bid Likelihood:<br>
+<!-- -->By appending high-value transactions, the relay enhances the economic appeal of the block for the proposer.</p>
+</li>
+</ol>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="relay-behavior-and-challenges">Relay Behavior and Challenges<a href="#relay-behavior-and-challenges" class="hash-link" aria-label="Direct link to Relay Behavior and Challenges" title="Direct link to Relay Behavior and Challenges">​</a></h5>
+<ul>
+<li>
+<p>Latency:<br>
+<!-- -->The process of decrypting transactions and recalculating the state root introduces a slight delay, meaning the relay is effectively submitting &quot;older&quot; block bids compared to other relays or builders. This latency can reduce the relay&#x27;s competitiveness in block auctions.</p>
+</li>
+<li>
+<p>Handling Rejected Blocks:<br>
+<!-- -->If the proposer does not accept the relay&#x27;s modified block, the relay must retain the decrypted transactions and attempt to include them in a subsequent block.</p>
+</li>
+<li>
+<p>Chain Reorganizations:<br>
+<!-- -->If the final block is signed by the proposer and released, but does not become part of the canonical chain for any reason, the transactions will have been broadcast in plaintext. As a result, a subsequent block can include them as part of a sandwich attack and remain valid. This fundamentally cannot be solved without a hard fork.</p>
+</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="trust-assumptions">Trust Assumptions<a href="#trust-assumptions" class="hash-link" aria-label="Direct link to Trust Assumptions" title="Direct link to Trust Assumptions">​</a></h5>
+<p>This architecture introduces specific trust assumptions regarding the relay&#x27;s behavior and the interactions with the Shutter Network:</p>
+<ol>
+<li>Relay Receives Decryption Key:</li>
+</ol>
+<ul>
+<li>
+<p>The relay relies on the Shutter Network&#x27;s Keypers to release the decryption keyshares at the correct time.</p>
+</li>
+<li>
+<p>Keyper misbehavior (e.g., delayed or failed key release) could disrupt the relay&#x27;s operations.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Relay Behavior:</li>
+</ol>
+<ul>
+<li>The relay is assumed to faithfully append decrypted transactions in the committed order and recalculate the state root accurately. Misbehavior, such as reordering transactions or tampering with the state, would undermine trust in the system.</li>
+</ul>
+<ol start="5">
+<li>Block Acceptance by Proposer:</li>
+</ol>
+<ul>
+<li>There is no guarantee that the proposer will accept the modified block. If rejected, the relay must hold onto the decrypted transactions and attempt inclusion in a later block.</li>
+</ul>
+<ol start="7">
+<li>Builder Cooperation:</li>
+</ol>
+<ul>
+<li>Builders must cooperate by providing valid block proposals for the relay to augment. If builders produce invalid or low-value blocks, the relay&#x27;s ability to enhance the bid and include encrypted transactions diminishes.</li>
+</ul>
+<h5 class="anchor anchorWithStickyNavbar_LWe7" id="benefits-and-limitations">Benefits and Limitations<a href="#benefits-and-limitations" class="hash-link" aria-label="Direct link to Benefits and Limitations" title="Direct link to Benefits and Limitations">​</a></h5>
+<p>Benefits:</p>
+<ul>
+<li>
+<p>Increases privacy and security of transactions.</p>
+</li>
+<li>
+<p>Leverages Shutter Network for robust key management.</p>
+</li>
+<li>
+<p>Enhances the total bid value for proposers, increasing the likelihood of block inclusion.</p>
+</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>
+<p>Latency due to decryption and state root recalculation may reduce competitiveness.</p>
+</li>
+<li>
+<p>Trust dependencies on the relay and Keyper behavior.</p>
+</li>
+<li>
+<p>Increased complexity in relay operations and coordination with builders.</p>
+</li>
+</ul>
+<p>This architecture highlights a promising approach to integrating encrypted transactions into Ethereum&#x27;s PBS system, leveraging existing components like MEV-Boost and Shutter Network while addressing challenges of latency and trust dependencies.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="step-2-proposer-commitments--restaking">Step 2 Proposer Commitments + Restaking<a href="#step-2-proposer-commitments--restaking" class="hash-link" aria-label="Direct link to Step 2 Proposer Commitments + Restaking" title="Direct link to Step 2 Proposer Commitments + Restaking">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="leveraging-proposer-commitments-to-enable-encrypted-transactions-with-shutter-integration">Leveraging Proposer Commitments to Enable Encrypted Transactions with Shutter Integration<a href="#leveraging-proposer-commitments-to-enable-encrypted-transactions-with-shutter-integration" class="hash-link" aria-label="Direct link to Leveraging Proposer Commitments to Enable Encrypted Transactions with Shutter Integration" title="Direct link to Leveraging Proposer Commitments to Enable Encrypted Transactions with Shutter Integration">​</a></h4>
+<p>This architecture describes a novel approach to integrating encrypted transactions into a proposer commitment model  that is ideally compatible with <a href="https://github.com/Commit-Boost" target="_blank" rel="noopener noreferrer">Commit-Boost</a>. To that end, the solution leverages the Shutter Network&#x27;s threshold encryption scheme and the<a href="https://boltprotocol.xyz/" target="_blank" rel="noopener noreferrer">  Bolt protocol</a> to ensure private transactions are included securely and transparently at the top of the block.</p>
+<p>Bolt protocol strives to be Ethereum&#x27;s leading proposer commitment protocol, allowing proposers to make trustless commitments about their blocks. At its core, Bolt is a fully-trustless sidecar protocol that enables proposers to sign commitments (e.g., messages or transactions) and establish them as constraints for outsourced block construction. Bolt is built on top of current MEV softwares---such as MEV-boost and commit-boost---and is fully compatible with the current PBS pipeline.</p>
+<p>With its modular architecture, Bolt will initially enable inclusion preconfirmation by the end of Q1 2025. Later, it will expand its feature set and, in partnership with Shutter, potentially enable encrypted transactions.</p>
+<p>We would like to emphasize that the architecture in this step effectively prevents malicious MEV while allowing for the extraction of good MEV via backrunning. Namely, once the block proposer has sent its commitments to include certain encrypted transactions, these transactions get decrypted by the Shutter Network and the decrypted transactions are sent to the Builders. While the Builders have to adhere to the constraints set by the proposer (in particular they have to include the committed transaction at the top of the block), they are otherwise free to build the block however they like. Especially, the Builders may capture backrunning MEV from the committed transactions.</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="architecture-overview-1">Architecture Overview<a href="#architecture-overview-1" class="hash-link" aria-label="Direct link to Architecture Overview" title="Direct link to Architecture Overview">​</a></h4>
+<ol>
+<li>
+<p>Sending Encrypted Transactions to Bolt Protocol:</p>
+<p>Encrypted transactions are submitted to the Bolt protocol (via one of the available RPCs), which coordinates their inclusion with the next block proposer. To enable Shutter integration, Bolt introduces a new, dedicated &quot;proposer commitment&quot; type. This ensures transactions remain confidential by withholding decryption keys until the proposer commits.</p>
+</li>
+<li>
+<p>Proposer Commitment:<br>
+<!-- -->The proposer commits to including the encrypted transaction at the top of the block (ToB) by signing a commitment. This commitment is broadcast and serves as a promise that the transaction will be prioritized.</p>
+</li>
+<li>
+<p>Key Release by Shutter Keypers:<br>
+<!-- -->Once the proposer&#x27;s commitment is confirmed, the Shutter Network&#x27;s Keypers release the decryption key. The key is sent securely to the Bolt sidecar.</p>
+</li>
+<li>
+<p>Transaction Decryption and Delivery:</p>
+</li>
+<li>
+<p>Bolt sidecar decrypts the transaction using the key.</p>
+</li>
+<li>
+<p>The decrypted transaction is transmitted to the block builder via the<a href="https://docs.boltprotocol.xyz/technical-docs/api/builder" target="_blank" rel="noopener noreferrer">  constraint API</a>.</p>
+</li>
+<li>
+<p>Builders are instructed to place the decrypted transaction at the top of the block.</p>
+</li>
+<li>
+<p>Block Construction and Proposer Validation:</p>
+</li>
+<li>
+<p>Block Construction: The builder constructs a block that adheres to the commitment by placing the transaction at the top. Note that Builders can still backrunning the committed transactions.</p>
+</li>
+<li>
+<p>Submission of Bids: Block builders submit bids and proofs of inclusion to relays.</p>
+</li>
+<li>
+<p>Relay Proofs: Relays provide a block header and the corresponding proofs of inclusion (ToB) to proposers for signature.</p>
+</li>
+<li>
+<p>Proposer Validation: The proposer validates the block to ensure it complies with the commitment. The proposer rejects the block if the proofs match the constraints.</p>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="trust-assumptions-1">Trust Assumptions<a href="#trust-assumptions-1" class="hash-link" aria-label="Direct link to Trust Assumptions" title="Direct link to Trust Assumptions">​</a></h4>
+<p>This architecture relies on the following trust assumptions:</p>
+<ol>
+<li>Proposer Commitment Enforcement:</li>
+</ol>
+<ul>
+<li>
+<p>Proposers are assumed to act honestly and include the transaction as committed.</p>
+</li>
+<li>
+<p>To enforce this, proposers must post collateral, which can be slashed if they fail to honor their commitment.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Decryption and Network Coordination:</li>
+</ol>
+<ul>
+<li>
+<p>The decryption process must occur promptly, ensuring that builders receive the transaction in time to include it.</p>
+</li>
+<li>
+<p>If the proposer cannot decrypt the transaction (e.g., due to a network outage), they must produce an empty block to avoid slashing.</p>
+</li>
+</ul>
+<ol start="5">
+<li>Attack Vector:</li>
+</ol>
+<ul>
+<li>A dishonest proposer might falsely claim they did not receive the decryption key, thereby delaying inclusion and front-running the transaction in the subsequent block. Mitigating this requires additional accountability measures.</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="restaking-collateral-for-proposer-commitments">Restaking Collateral for Proposer Commitments<a href="#restaking-collateral-for-proposer-commitments" class="hash-link" aria-label="Direct link to Restaking Collateral for Proposer Commitments" title="Direct link to Restaking Collateral for Proposer Commitments">​</a></h4>
+<p>To enforce proposer commitments, Shutter will leverage solutions like the Universal Registry Contract (URC), which allows validators to opt into new out-of-protocol slashing conditions backed by restaked collateral. This collateral can be provided by any restaking protocol, such as Eigenlayer or Symbiotic. The Bolt sidecar will enforce these extra constraint checks during block construction.</p>
+<p>Restaking offers two key benefits: Enhanced security through leveraging Ethereum&#x27;s existing staking infrastructure which reduces overhead for proposers, and strong economic incentives that ensure greater accountability by tying proposer behavior directly to their collateral.</p>
+<p>To enable trustless encrypted transactions, the following slashing conditions will be enforce:</p>
+<ul>
+<li>
+<p>The encrypted transaction is not included at the top of the block, violating the commitment.</p>
+</li>
+<li>
+<p>The proposer produces a block that fails to decrypt the transaction without sufficient justification (e.g., verified network outages).</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="risks-and-limitations">Risks and Limitations<a href="#risks-and-limitations" class="hash-link" aria-label="Direct link to Risks and Limitations" title="Direct link to Risks and Limitations">​</a></h4>
+<ol>
+<li>
+<p>Proposer Front-running:<br>
+<!-- -->A malicious proposer could intentionally delay decryption, produce an empty block, and include the transaction in their next block for personal gain.</p>
+</li>
+<li>
+<p>Network Latency:<br>
+<!-- -->Reliance on timely decryption and delivery via the Bolt protocol could introduce delays, potentially impacting block timeliness.</p>
+</li>
+<li>
+<p>Coordination Overhead:<br>
+<!-- -->Effective RPC mechanisms are required to ensure transactions are routed correctly to the next proposer, adding complexity.</p>
+</li>
+<li>
+<p>Empty Block Requirement:<br>
+<!-- -->The fallback requirement to produce an empty block during outages may lead to reduced chain throughput.</p>
+</li>
+<li>
+<p>Top of the Block Commitment:<br>
+<!-- -->The top of the block is a valuable spot for transaction inclusion,, and builders are unlikely to reserve this spot for any particular transaction in advance. However, proposers will only accept blocks that conform with their commitments, thereby enforcing the  inclusion of decrypted transactions at the top of the block.</p>
+</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="summary-1">Summary<a href="#summary-1" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary">​</a></h3>
+<p>The integration with bolt protocol provides a structured approach to encrypted transaction inclusion through proposer commitments. By integrating Shutter&#x27;s threshold encryption and leveraging restaking collateral for enforcement, the model ensures privacy, accountability, and economic incentives for honest proposer behavior. However, challenges such as proposer front-running and coordination overhead must be addressed to realize its full potential.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="step-3-in-protocol">Step 3: In-protocol<a href="#step-3-in-protocol" class="hash-link" aria-label="Direct link to Step 3: In-protocol" title="Direct link to Step 3: In-protocol">​</a></h2>
+<p>This architecture introduces an adaptation of Ethereum&#x27;s Beacon Chain by integrating Shutter-style threshold encryption directly into the protocol. A subset of validators acts as a Keyper set, responsible for releasing decryption keyshares. </p>
+<p>Because the economics and Keyper setup will most likely be different for this step, we separated the details of the in-protocol implementation into a section further down below.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="who-will-make-up-the-threshold-committee-1">Who Will Make Up the Threshold Committee<a href="#who-will-make-up-the-threshold-committee-1" class="hash-link" aria-label="Direct link to Who Will Make Up the Threshold Committee" title="Direct link to Who Will Make Up the Threshold Committee">​</a></h2>
+<p>In an encrypted mempool system, the threshold committee---what we call Keypers---is responsible for managing the encryption and decryption keys that secure transactions. Ideally, this committee would consist of a subset of Ethereum validators, leveraging their existing roles and stakes in the network to enhance security.</p>
+<p>One approach to forming this committee involves using silent threshold encryption, as detailed in the paper &quot;<a href="https://eprint.iacr.org/2024/263.pdf" target="_blank" rel="noopener noreferrer">Threshold Encryption with Silent Setup</a>&quot; by Sanjam Garg, Dimitris Kolonelos, Guru-Vamsi Policharla, and Mingyuan Wang. This method allows the joint public key of the threshold committee to be computed deterministically from the individual public keys of validators without requiring any interaction. This enables dynamic and asynchronous selection of Keypers from the validator set, making the system more scalable and flexible.</p>
+<p>However, silent threshold encryption doesn&#x27;t solve the problem of Sybil resistance. Validator centralization poses a significant risk---if too many Keypers are controlled by a single entity or a small group, they could collude to undermine the encryption scheme by prematurely decrypting transactions or withholding key shares. Without effective Sybil resistance, the system remains vulnerable to such collusion.</p>
+<p>Given the current centralization issues, a practical interim solution is to use a Decentralized Autonomous Organization (DAO) to select keypers. This DAO would be composed of diverse stakeholders from the Ethereum ecosystem, particularly those involved in the Proposer-Builder Separation (PBS) supply chain. By involving key participants, the DAO can help ensure that the threshold committee is representative and less susceptible to centralization risks.</p>
+<p>Moving forward, the development of mechanisms that enhance Sybil resistance and decentralization in the selection of Keypers is crucial. Possible strategies include:</p>
+<ul>
+<li>
+<p>Economic Incentives and Penalties: Requiring Keypers to stake collateral that can be slashed in case of misbehavior adds an economic layer of security on top of the cryptographic one. See below &quot;Further Improvements&quot;.</p>
+</li>
+<li>
+<p>Dynamic Committee Selection: Regularly rotating the Keyper set and selecting members randomly from the validator pool can reduce the risk of collusion.</p>
+</li>
+</ul>
+<p>While silent threshold encryption offers benefits like non-interactive setup and scalability, addressing Sybil resistance remains a critical challenge. By combining cryptographic innovations with governance structures like DAOs and economic incentives, we can work towards a more secure and decentralized threshold committee for Ethereum&#x27;s envisioned encrypted mempool.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="encrypting-locally">Encrypting Locally<a href="#encrypting-locally" class="hash-link" aria-label="Direct link to Encrypting Locally" title="Direct link to Encrypting Locally">​</a></h2>
+<p>For end-to-end encryption to function effectively, encryption should occur directly on the user&#x27;s device. This ensures that transaction details are protected before they leave the user&#x27;s control.</p>
+<p>Encryption can be implemented either:</p>
+<ul>
+<li>
+<p>In the Wallet: Users encrypt their transactions within their wallet application before submission.</p>
+</li>
+<li>
+<p>In the Dapp: The front-end application encrypts transaction data before passing it to the wallet.</p>
+</li>
+</ul>
+<p>Existing Example: <a href="https://github.com/shutter-network/shop-sdk" target="_blank" rel="noopener noreferrer">Shutter Network&#x27;s Shop SDK</a></p>
+<p>We&#x27;ve already developed a front-end SDK for our L2 implementation for the OP Stack. The <a href="https://github.com/shutter-network/shop-sdk" target="_blank" rel="noopener noreferrer">Shop SDK</a> simplifies the integration of encrypted transactions, showcasing how user-side encryption can be achieved efficiently. This serves as a blueprint for expanding encrypted transaction handling across other dapps and wallets.</p>
+<p>Challenges and Opportunities</p>
+<ul>
+<li>
+<p>Wallet and App Support: Adoption requires significant updates to wallet and dapp ecosystems to natively support encryption.</p>
+</li>
+<li>
+<p>User Experience: Seamless integration is critical to ensure that encryption doesn&#x27;t create friction for users.</p>
+</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="in-protocol-generalized-encrypted-mempool">In-Protocol Generalized Encrypted Mempool <a href="#in-protocol-generalized-encrypted-mempool" class="hash-link" aria-label="Direct link to In-Protocol Generalized Encrypted Mempool " title="Direct link to In-Protocol Generalized Encrypted Mempool ">​</a></h2>
+<p>Building on the proposal for an in-protocol threshold-encrypted mempool, we consider a more generalized approach that abstracts away the specific encryption mechanism. In this variant, the exact technology---whether threshold encryption, delay encryption, TEEs, or any other method---is not the focus. Instead, the key requirement is that the chosen mechanism reliably outputs the decryption key in time to decrypt transactions. Essentially, we treat the encryption mechanism as a black box that accepts input and produces the necessary decryption keys, allowing flexibility in implementation while maintaining the desired functionality.</p>
+<p>The advantage of such a generalized approach is that encryption mechanisms can be easily replaced. As mentioned before, each encryption mechanism for encrypted mempools relies on certain trust assumptions. With this generalized approach, we can choose and replace the mechanism easily depending on which trust assumptions are preferred. Likewise, if in the future it turns out that a mechanism is insecure, it can be replaced easily by a secure one. </p>
+<p>Indeed, we plan to write an Ethereum Improvement Proposal (EIP) for an in-protocol generalized encrypted mempool.</p>
+<p>The main challenge with such a generalized approach is that we must find the right level of generalization  such that  the framework is general enough to support all kinds of technologies (including future technologies) while still following the approach outlined in this paper.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="impact-on-economicsmev-value-flow">Impact on economics/MEV value flow<a href="#impact-on-economicsmev-value-flow" class="hash-link" aria-label="Direct link to Impact on economics/MEV value flow" title="Direct link to Impact on economics/MEV value flow">​</a></h2>
+<p>Validators play a crucial role in Ethereum&#x27;s block-building process, and their incentives must align with network and user needs. Committing to encrypted transactions offers distinct economic benefits:</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-direct-income-stream-priority-fees">1. Direct Income Stream: Priority Fees<a href="#1-direct-income-stream-priority-fees" class="hash-link" aria-label="Direct link to 1. Direct Income Stream: Priority Fees" title="Direct link to 1. Direct Income Stream: Priority Fees">​</a></h4>
+<p>Encrypted transactions bring an inherent economic value through priority fees. Users include these fees to incentivize validators to process their transactions promptly.</p>
+<ul>
+<li>
+<p>Competitive Advantage: If a validator refuses to commit to encrypted transactions, they forgo this revenue. The next validator in line can capture this order flow, reducing the refusing validator&#x27;s overall earnings.</p>
+</li>
+<li>
+<p>Increased Adoption Pressure: As more users route their transactions through encrypted mempools, validators face increasing pressure to support encrypted transactions or risk falling behind in profitability.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-indirect-income-stream-mev-opportunities">2. Indirect Income Stream: MEV Opportunities<a href="#2-indirect-income-stream-mev-opportunities" class="hash-link" aria-label="Direct link to 2. Indirect Income Stream: MEV Opportunities" title="Direct link to 2. Indirect Income Stream: MEV Opportunities">​</a></h4>
+<p>MEV (Maximal Extractable Value) arises when validators or searchers profit from transaction ordering, inclusion, or exclusion. Encrypted transactions maintain MEV opportunities, but with adjustments to the traditional flow.</p>
+<ul>
+<li>
+<p>CEX-DEX Arbitrage: Many encrypted transactions are related to market activities. The time delay between transaction creation and inclusion often causes price shifts on centralized exchanges (CEXs) and decentralized exchanges (DEXs). Searchers can backrun these transactions, capturing arbitrage opportunities.</p>
+</li>
+<li>
+<p>Profit Sharing: Searchers typically share profits with users and builders. In a system with an encrypted mempools, committee members (responsible for revealing decryption keys) could enforce profit-sharing agreements, potentially involving other stakeholders.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-alignment-with-user-preferences">3. Alignment with User Preferences<a href="#3-alignment-with-user-preferences" class="hash-link" aria-label="Direct link to 3. Alignment with User Preferences" title="Direct link to 3. Alignment with User Preferences">​</a></h4>
+<p>The ultimate decision-making power lies with users, who dictate the flow of transactions.</p>
+<ul>
+<li>
+<p>Existing Models: Systems like MEV Blocker already protect users by obfuscating transaction details during submission and sharing MEV profits with them. Encrypted transactions extend this model by ensuring user privacy and enabling broader profit-sharing mechanisms.</p>
+</li>
+<li>
+<p>Validator Pressure: Validators who refuse to support encrypted transactions miss out on order flow directed through encrypted mempools. Over time, the economic pressure may force widespread adoption.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-potential-impact-on-mev">4. Potential Impact on MEV<a href="#4-potential-impact-on-mev" class="hash-link" aria-label="Direct link to 4. Potential Impact on MEV" title="Direct link to 4. Potential Impact on MEV">​</a></h4>
+<p>Batched encrypted transactions introduce new dynamics in the MEV landscape:</p>
+<ul>
+<li>
+<p>Coincidence of Wants: Batches of transactions may cancel out overlapping intentions (e.g., two users executing opposing trades), potentially reducing the overall MEV generated. However, this does not eliminate the MEV opportunity; instead it redistributes it more equitably.</p>
+</li>
+<li>
+<p>Smaller Backrunning Profits: With encrypted transactions processed in batches, the average backrunning profit may be slightly lower than in today&#x27;s system, where individual transactions are isolated. This could marginally reduce validator earnings from MEV but improve fairness and efficiency.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="5-sustainability-and-ecosystem-growth">5. Sustainability and Ecosystem Growth<a href="#5-sustainability-and-ecosystem-growth" class="hash-link" aria-label="Direct link to 5. Sustainability and Ecosystem Growth" title="Direct link to 5. Sustainability and Ecosystem Growth">​</a></h4>
+<p>Encrypted mempools attract new order flow while offering enhanced privacy and fairness. Validators and builders embracing this system position themselves as key players in a more equitable Ethereum ecosystem.</p>
+<p>By integrating with them, validators gain access to priority fees and MEV opportunities while aligning with user demand for privacy. Over time, encrypted mempools could redefine the economics of Ethereum, driving adoption and fostering innovation in block-building practices.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="in-protocol-implementation-of-the-encrypted-mempool">In-protocol implementation of the encrypted mempool<a href="#in-protocol-implementation-of-the-encrypted-mempool" class="hash-link" aria-label="Direct link to In-protocol implementation of the encrypted mempool" title="Direct link to In-protocol implementation of the encrypted mempool">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="shutterized-beacon-chain-architecture-for-encrypted-transactions">Shutterized Beacon Chain Architecture for Encrypted Transactions<a href="#shutterized-beacon-chain-architecture-for-encrypted-transactions" class="hash-link" aria-label="Direct link to Shutterized Beacon Chain Architecture for Encrypted Transactions" title="Direct link to Shutterized Beacon Chain Architecture for Encrypted Transactions">​</a></h3>
+<p>This architecture introduces an adaptation of Ethereum&#x27;s Beacon Chain by integrating Shutter-style threshold encryption directly into the protocol. A subset of validators acts as a Keyper set, responsible for releasing decryption key shares. Attesters validate the key release and decide whether encrypted transactions become valid for execution.</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="architecture-overview-2">Architecture Overview<a href="#architecture-overview-2" class="hash-link" aria-label="Direct link to Architecture Overview" title="Direct link to Architecture Overview">​</a></h4>
+<ol>
+<li>
+<p>Keyper Set Formation:<br>
+<!-- -->A subset of Ethereum validators is selected to form the Keyper set. These validators manage the decryption key shares required to unlock encrypted transactions.</p>
+</li>
+<li>
+<p>Block Inclusion of Encrypted Transactions:<br>
+<!-- -->Encrypted transactions are submitted to the network and included in the block payload as ciphertext.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>The block proposer can include encrypted transactions, treating them as valid payloads under the new rules introduced in this architecture.</p>
+</li>
+<li>
+<p>No decryption is performed at this stage.</p>
+</li>
+</ul>
+<ol start="4">
+<li>Key Release Upon Block Publication:<br>
+<!-- -->After the block is published, the Keyper set releases the decryption key shares.</li>
+</ol>
+<ul>
+<li>
+<p>The keypers operate on a threshold encryption mechanism (e.g., t-out-of-n keys must be revealed to decrypt the transaction).</p>
+</li>
+<li>
+<p>Keyshares are propagated through the network.</p>
+</li>
+</ul>
+<ol start="6">
+<li>Attester Validation of Decryption Keys:<br>
+<!-- -->Attesters, who are already responsible for validating blocks and signatures, add the released decryption keys to their attestations:</li>
+</ol>
+<ul>
+<li>
+<p>If 2/3 of the attesters confirm they have received valid decryption keys, the encrypted transactions are decrypted and executed.</p>
+</li>
+<li>
+<p>If less than 2/3 of attesters validate the key, the encrypted transactions are discarded.</p>
+</li>
+</ul>
+<ol start="8">
+<li>Transaction Execution:</li>
+</ol>
+<ul>
+<li>
+<p>Upon validation of the decryption keys by the attesters, the encrypted transactions are decrypted, validated for protocol correctness (e.g., nonce, signature, gas limit), and executed.</p>
+</li>
+<li>
+<p>Invalid transactions are treated as non-existent.</p>
+</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="key-properties-and-benefits">Key Properties and Benefits<a href="#key-properties-and-benefits" class="hash-link" aria-label="Direct link to Key Properties and Benefits" title="Direct link to Key Properties and Benefits">​</a></h4>
+<ol>
+<li>
+<p>No Chain Stalling:<br>
+<!-- -->The architecture ensures that the chain does not stall even if decryption keys are not successfully propagated. If the attester majority fails to validate the keys, the encrypted transactions are discarded without affecting the rest of the block&#x27;s execution.</p>
+</li>
+<li>
+<p>Distributed Validator Decision-Making:<br>
+<!-- -->The attester committees, which are themselves subsets of validators, collectively decide on the validity of decryption keys. This aligns with Ethereum&#x27;s decentralized consensus mechanisms.</p>
+</li>
+<li>
+<p>Hard Fork Requirement:<br>
+<!-- -->To enable this architecture, a hard fork is required to allow ciphertext to be included as a valid block payload. This involves updates to the Ethereum protocol to define encrypted transactions and their validation rules.</p>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="trust-assumptions-2">Trust Assumptions<a href="#trust-assumptions-2" class="hash-link" aria-label="Direct link to Trust Assumptions" title="Direct link to Trust Assumptions">​</a></h4>
+<ol>
+<li>Keyper Set Behavior:</li>
+</ol>
+<ul>
+<li>
+<p>The Keyper set must behave honestly, releasing key shares promptly upon block publication.</p>
+</li>
+<li>
+<p>Misbehavior or collusion among Keypers could result in delayed or failed decryption.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Attester Majority Validation:</li>
+</ol>
+<ul>
+<li>The assumption is that 2/3 of attesters will act honestly, validating the key shares and deciding the fate of encrypted transactions based on observed network conditions.</li>
+</ul>
+<ol start="5">
+<li>Timely Key Propagation:</li>
+</ol>
+<ul>
+<li>The architecture assumes that the decryption key shares can propagate across the network in time for attesters to validate them during their 4-second attestation window.</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="advantages">Advantages<a href="#advantages" class="hash-link" aria-label="Direct link to Advantages" title="Direct link to Advantages">​</a></h4>
+<ol>
+<li>
+<p>Robustness to Network Delays:<br>
+<!-- -->Even if the key shares are not propagated in time, the chain continues with the remaining valid transactions. This ensures liveness and minimizes disruptions.</p>
+</li>
+<li>
+<p>Alignment with Ethereum&#x27;s Decentralized Governance:<br>
+<!-- -->Both the Keyper set and attesters are distributed subsets of validators, reducing reliance on centralized entities and increasing system robustness.</p>
+</li>
+<li>
+<p>Flexibility in Transaction Handling:<br>
+<!-- -->By discarding encrypted transactions that fail validation, the protocol maintains integrity and avoids executing potentially invalid or harmful transactions.</p>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="limitations-and-challenges">Limitations and Challenges<a href="#limitations-and-challenges" class="hash-link" aria-label="Direct link to Limitations and Challenges" title="Direct link to Limitations and Challenges">​</a></h4>
+<ol>
+<li>
+<p>Network Propagation Delays:<br>
+<!-- -->If key shares are delayed beyond the attesters&#x27; validation window, encrypted transactions are discarded. This could lead to user dissatisfaction and wasted block space.</p>
+</li>
+<li>
+<p>Validator Selection for Keyper Set:<br>
+<!-- -->Careful consideration is needed to ensure the Keyper set is sufficiently distributed and robust against collusion or censorship.</p>
+</li>
+<li>
+<p>Protocol Complexity:<br>
+<!-- -->Introducing encrypted transactions, Keyper sets, and decryption validation increases the protocol&#x27;s complexity and may require significant engineering efforts.</p>
+</li>
+<li>
+<p>Keyper Set reconfiguration:</p>
+</li>
+</ol>
+<p>In order to have a permissionless Keyper set there must be regular reconfiguration to allow new Keypers to join. This ceremony can be time consuming so it is an open question of how often it can be run.</p>
+<ol>
+<li>Hard Fork Requirements:<br>
+<!-- -->A hard fork is necessary to support ciphertext as a valid block payload, requiring broad community consensus and implementation effort.</li>
+</ol>
+<p>This Shutterized Beacon Chain design demonstrates a scalable approach to integrating encrypted transactions directly into Ethereum&#x27;s consensus layer. Leveraging the existing validator infrastructure and attestation mechanisms ensures privacy while maintaining liveness and decentralization. However, challenges such as timely key propagation, validator behavior, and protocol complexity must be addressed to realize its potential.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="open-questions">Open questions<a href="#open-questions" class="hash-link" aria-label="Direct link to Open questions" title="Direct link to Open questions">​</a></h2>
+<ol>
+<li>Optimizing Economic Incentives</li>
+</ol>
+<ul>
+<li>How can economic structures be designed to accelerate the adoption of encrypted mempools by validators, RPCs, apps, and users?</li>
+</ul>
+<ol start="3">
+<li>Back-Running MEV Distribution</li>
+</ol>
+<ul>
+<li>What is the optimal way to fairly and effectively distribute back-running MEV during Step 2?</li>
+</ul>
+<ol start="5">
+<li>Threshold Trust Assumption Mitigation</li>
+</ol>
+<ul>
+<li>How can the threshold trust assumption be minimized, and could sub-sampling from the validator set improve robustness?</li>
+</ul>
+<ol start="7">
+<li>Advanced Cryptography for Full Transaction Encryption</li>
+</ol>
+<ul>
+<li>What cryptographic techniques or advancements can be leveraged to achieve practical, fully encrypted transaction processing?</li>
+</ul>
+<ol start="9">
+<li>User-Side Encryption</li>
+</ol>
+<ul>
+<li>How can encryption processes be integrated into the user&#x27;s environment, such as in the dapp front-end or directly within wallets, to enhance privacy without sacrificing usability?</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="further-improvements">Further Improvements<a href="#further-improvements" class="hash-link" aria-label="Direct link to Further Improvements" title="Direct link to Further Improvements">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="integration-with-focil">Integration with FOCIL<a href="#integration-with-focil" class="hash-link" aria-label="Direct link to Integration with FOCIL" title="Direct link to Integration with FOCIL">​</a></h3>
+<p>Our solution for a threshold encrypted mempool on Ethereum L1 integrates well with <a href="https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870" target="_blank" rel="noopener noreferrer">FOCIL (Fork-Choice enforced Inclusion List)</a>. Essentially, in FOCIL a set of validators is selected into an inclusion list committee. Each member of the committee proposes an inclusion list and the block proposer eventually merges all inclusion lists into one global list. Attesters will then check if (1) they agree to the global inclusion list and (2) the block contains all transactions from the global inclusion list.<br>
+<!-- -->While FOCIL has been introduced for plain transactions, nothing prevents us from using it for encrypted transactions as well. In fact, FOCIL allows us to improve the censorship resistance of our solution: imagine a block proposer censors encrypted transactions simply because they are encrypted. Then FOCIL can force the proposer to include such transactions as well.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="preventing-collusion-in-threshold-cryptography">Preventing collusion in threshold cryptography<a href="#preventing-collusion-in-threshold-cryptography" class="hash-link" aria-label="Direct link to Preventing collusion in threshold cryptography" title="Direct link to Preventing collusion in threshold cryptography">​</a></h3>
+<p>The security of any threshold encryption scheme relies on the assumption that, at most, the threshold amount of decryption parties act maliciously. If more than this amount of parties collude, all security is lost. Shutter is no exception to this assumption, but we are actively working on solutions to prevent collusion:</p>
+<p>ShutterTEE: We are developing a system where Keypers store their decryption shares inside a Trusted Execution Environment (TEE) such that Keypers cannot access their decryption shares unless the TEE grants them access. That is, in order to obtain the decryption share, a Keyper must prove to its TEE that it requires the share at the current moment to ensure the correct execution of the Shutter protocol. This guarantees that Keypers receive their shares only when absolutely necessary, which prevents premature decryption of transactions.</p>
+<p>Secret Sharing with Snitching: We are exploring novel cryptographic primitives that allow us to detect and punish malicious behavior such as collusion. For instance, we have been looking into secret sharing with snitching (see our blog post), a novel secret-sharing primitive that allows us to identify colluding shareholders and punish (snitch on) them for malicious behavior. The financial punishment of malicious behavior provides additional economic security for threshold schemes.</p>
+<p>Utilizing Economic Security of Validator Set: A validator in Ethereum has a stake of 32 ETH, which acts as a form of economic security in case the validator misbehaves. Considering the size of Ethereum&#x27;s validator set (&gt;1 million), there is a significant potential to utilize this stake for additional economic security. For instance, if a validator commits to including a transaction at a certain position in the block but fails to fulfill that commitment, it can get financially punished. Similarly, we imagine a system where the Keyper set consists (partially) of validators whose stake can be used for financial punishment in case of premature decryption.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="stuck-in-the-mempool-privacy">Stuck in the mempool privacy<a href="#stuck-in-the-mempool-privacy" class="hash-link" aria-label="Direct link to Stuck in the mempool privacy" title="Direct link to Stuck in the mempool privacy">​</a></h3>
+<p>The Shutter protocol can operate in two different modes:</p>
+<ol>
+<li>
+<p>Per transaction encryption: In this mode, each transaction is encrypted under a unique encryption/decryption key pair. That is, for each encrypted transaction in a block, the Keypers must derive a decryption key, which results in significant communication overhead.</p>
+</li>
+<li>
+<p>Per epoch encryption: In this mode, a unique encryption/decryption key pair exists for each epoch. During an epoch, all transactions are encrypted using the epoch&#x27;s public key. Once the corresponding secret key is released, these transactions become publicly accessible. However, this approach poses a significant issue: encrypted transactions that fail to be included in the next block lose their privacy. As such, transactions are exposed and become vulnerable to front-running and sandwich attacks.</p>
+</li>
+</ol>
+<p>To address the problems of each mode, ensuring that transactions remain private as long as they are in the mempool and that decryption of all ciphertexts in a block can be done without huge communication overhead is necessary. To this end, a batched threshold encryption scheme can be employed. Batched threshold encryption allows the Keypers to select a batch of encrypted transactions from the mempool, and a decryption key is released exclusively for these selected transactions. Transactions that are not included in the batch remain encrypted and private, safeguarding them from potential attacks. At the same time, releasing the decryption key requires significantly less communication overhead than releasing a key for each encrypted transaction.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="recap">Recap<a href="#recap" class="hash-link" aria-label="Direct link to Recap" title="Direct link to Recap">​</a></h2>
+<p>The journey toward an encrypted mempool on Ethereum L1 tackles fundamental issues like censorship, front-running, and builder centralization, aiming to enhance fairness, privacy, and decentralization. While the vision of fully encrypted transactions is ambitious and not yet practical at scale, the proposed roadmap lays out concrete steps to move forward: starting with RPC integration, building through relays and proposer commitments, and ultimately embedding these capabilities directly into Ethereum&#x27;s protocol.</p>
+<p>This is just the beginning. We, the Shutter Network, Gnosis, MEV Blocker, Nethermind, Chainbound, and more, are actively collaborating on this effort and are committed to making it a reality. This initiative requires broad engagement and diverse perspectives to succeed. We invite core developers, validators, builders, relays, and everyone in the ecosystem to join the conversation, provide feedback, and help refine these ideas.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/shutter-network/shutter-docs/docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/shutter/integrations"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Integrations of Shutter</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/shutter/research/shutterized_beacon_chain"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Shutterized Beacon Chain</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#tldrtable-of-contents" class="table-of-contents__link toc-highlight">TL;DR/Table of Contents:</a></li><li><a href="#problem-1" class="table-of-contents__link toc-highlight">Problem</a><ul><li><a href="#big-picture-censorship-front-running-builder-centralization" class="table-of-contents__link toc-highlight">Big picture: Censorship, Front-Running, Builder Centralization</a></li><li><a href="#second-order-problems" class="table-of-contents__link toc-highlight">Second order problems</a></li></ul></li><li><a href="#the-endgame-of-encryption-ethereum-with-fully-configurable-decentralized-privacy" class="table-of-contents__link toc-highlight">The Endgame of Encryption: Ethereum with Fully Configurable, Decentralized Privacy</a></li><li><a href="#technologies-enabling-the-encrypted-mempool" class="table-of-contents__link toc-highlight">Technologies Enabling the Encrypted Mempool</a></li><li><a href="#shutter-high-level" class="table-of-contents__link toc-highlight">Shutter high level</a></li><li><a href="#new-practical-plan-threshold-encrypted-mempool-for-l1-using-proposer-commitments" class="table-of-contents__link toc-highlight">New practical plan: threshold encrypted mempool for L1 using proposer commitments</a><ul><li><a href="#overview-of-proposer-commitments" class="table-of-contents__link toc-highlight">Overview of Proposer Commitments</a></li><li><a href="#how-commit-boost-works" class="table-of-contents__link toc-highlight">How Commit-Boost Works</a></li><li><a href="#benefits-of-commit-boost" class="table-of-contents__link toc-highlight">Benefits of Commit-Boost</a></li><li><a href="#impacts-on-block-building" class="table-of-contents__link toc-highlight">Impacts on Block Building</a></li><li><a href="#challenges" class="table-of-contents__link toc-highlight">Challenges</a></li><li><a href="#conclusion" class="table-of-contents__link toc-highlight">Conclusion</a></li></ul></li><li><a href="#roadmap" class="table-of-contents__link toc-highlight">Roadmap</a><ul><li><a href="#step-1-rpc" class="table-of-contents__link toc-highlight">Step 1 RPC</a></li></ul></li><li><a href="#step-2-relay-optional" class="table-of-contents__link toc-highlight">Step 2: Relay (Optional)</a><ul><li><a href="#step-2-proposer-commitments--restaking" class="table-of-contents__link toc-highlight">Step 2 Proposer Commitments + Restaking</a></li><li><a href="#summary-1" class="table-of-contents__link toc-highlight">Summary</a></li></ul></li><li><a href="#step-3-in-protocol" class="table-of-contents__link toc-highlight">Step 3: In-protocol</a></li><li><a href="#who-will-make-up-the-threshold-committee-1" class="table-of-contents__link toc-highlight">Who Will Make Up the Threshold Committee</a></li><li><a href="#encrypting-locally" class="table-of-contents__link toc-highlight">Encrypting Locally</a></li><li><a href="#in-protocol-generalized-encrypted-mempool" class="table-of-contents__link toc-highlight">In-Protocol Generalized Encrypted Mempool </a></li><li><a href="#impact-on-economicsmev-value-flow" class="table-of-contents__link toc-highlight">Impact on economics/MEV value flow</a></li><li><a href="#in-protocol-implementation-of-the-encrypted-mempool" class="table-of-contents__link toc-highlight">In-protocol implementation of the encrypted mempool</a><ul><li><a href="#shutterized-beacon-chain-architecture-for-encrypted-transactions" class="table-of-contents__link toc-highlight">Shutterized Beacon Chain Architecture for Encrypted Transactions</a></li></ul></li><li><a href="#open-questions" class="table-of-contents__link toc-highlight">Open questions</a></li><li><a href="#further-improvements" class="table-of-contents__link toc-highlight">Further Improvements</a><ul><li><a href="#integration-with-focil" class="table-of-contents__link toc-highlight">Integration with FOCIL</a></li><li><a href="#preventing-collusion-in-threshold-cryptography" class="table-of-contents__link toc-highlight">Preventing collusion in threshold cryptography</a></li><li><a href="#stuck-in-the-mempool-privacy" class="table-of-contents__link toc-highlight">Stuck in the mempool privacy</a></li></ul></li><li><a href="#recap" class="table-of-contents__link toc-highlight">Recap</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title"></div><ul class="footer__items clean-list"><li class="footer__item"><b>Shutter is a threshold encryption protocol with a wide variety of applications, including: malicious MEV prevention, censorship resistance, voting integrity, and gaming fairness.</b></li></ul></div><div class="col footer__col"><div class="footer__title">About</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.shutter.network/privacy-policy" target="_blank" rel="noopener noreferrer" class="footer__link-item">Privacy Policy</a></li><li class="footer__item"><a href="https://www.shutter.network/imprint" target="_blank" rel="noopener noreferrer" class="footer__link-item">Imprint</a></li><li class="footer__item"><a href="mailto:contact@shutter.network" target="_blank" rel="noopener noreferrer" class="footer__link-item">Contact Us</a></li></ul></div><div class="col footer__col"><div class="footer__title">Products</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.shutter.network/shielded-trading" target="_blank" rel="noopener noreferrer" class="footer__link-item">Shielded Trading</a></li><li class="footer__item"><a href="https://www.shutter.network/shielded-voting" target="_blank" rel="noopener noreferrer" class="footer__link-item">Shielded Voting</a></li></ul></div><div class="col footer__col"><div class="footer__title">Learn</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://blog.shutter.network/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Blog</a></li><li class="footer__item"><a href="https://github.com/shutter-network" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub</a></li></ul></div><div class="col footer__col"><div class="footer__title">Socials</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://shutternetwork.discourse.group/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Forum<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://x.com/ShutterNetwork" target="_blank" rel="noopener noreferrer" class="footer__link-item">X (Twitter)<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://discord.gg/Fx7m5cUcua" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div></div></footer></div>
+</body>
+</html>
