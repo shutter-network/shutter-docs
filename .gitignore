@@ -1,0 +1,7 @@
+node_modules/
+.docusaurus/
+.DS_Store
+
+.yarn
+package-lock.json
+yarn-error.log
