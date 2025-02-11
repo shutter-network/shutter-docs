@@ -23,6 +23,8 @@ const config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "shutter-network", // Usually your GitHub org/user name.
   projectName: "shutter-docs", // Usually your repo name.
+  deploymentBranch: "gh-pages",
+  trailingSlash: false,
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
