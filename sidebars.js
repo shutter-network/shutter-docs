@@ -6,11 +6,7 @@ export default {
       collapsible: true,
       collapsed: false,
       className: "sidebar-item",
-      items: [
-        "shutter/index",
-        "shutter/products",
-        "shutter/integrations",
-      ],
+      items: ["shutter/index", "shutter/products", "shutter/integrations"],
     },
     {
       type: "category",
@@ -49,6 +45,12 @@ export default {
       collapsible: true,
       collapsed: false,
       items: ["protocol/index", "protocol/overview"],
+    },
+    {
+      type: "category",
+      label: "Shutter API",
+      className: "sidebar-title",
+      items: ["protocol/api/index", "protocol/api/use_cases", "protocol/api/how_it_works", "protocol/api/get_started", "protocol/api/glossary"],
     },
   ],
 };

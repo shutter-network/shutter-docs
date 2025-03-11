@@ -81,6 +81,9 @@ const config = {
         disableSwitch: true,
         respectPrefersColorScheme: false,
       },
+      prism: {
+        additionalLanguages: ['bash'],
+      },
       navbar: {
         title: "Docs",
         logo: {
