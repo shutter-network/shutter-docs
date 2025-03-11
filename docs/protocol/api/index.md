@@ -42,3 +42,10 @@ Cryptographic techniques such as **threshold encryption** and **distributed key 
 Traditionally, implementing such cryptographic workflows **requires deep expertise in encryption and complex coordination mechanisms**. The **Shutter API abstracts this complexity** and makes integrating these security guarantees as simple as calling an API.
 
 The Shutter API provides a **trust-minimized** way for developers to implement **privacy, fairness, and security** in decentralized applications. Whether for **governance, gaming, DeFi, or auctions**, it enables dApps to integrate **threshold encryption** without requiring deep cryptographic expertise.
+
+## Disclaimer
+This software is in its early stages of development. Users are strongly advised to exercise caution and not entrust any assets or sensitive information of high value to this API until further maturity and decentralization are achieved.
+
+Please note that all threshold cryptography systems and multi-party computation (MPC) frameworks inherently rely on a threshold trust assumption. While the Shutter API currently utilizes a decentralized set of Keypers, the network is still small and not fully decentralized at this time. We expect additional Keypers to join and enhance the network's resilience soon.
+
+This project is released as open source and provided "as is" without any warranties, express or implied. The developers and contributors assume no liability for any issues, losses, or damages arising from the use or misuse of this API. Use at your own risk.
