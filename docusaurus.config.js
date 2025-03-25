@@ -37,6 +37,8 @@ const config = {
     locales: ["en"],
   },
 
+  plugins: ['docusaurus-plugin-matomo'],
+
   presets: [
     [
       "classic",
@@ -46,8 +48,7 @@ const config = {
           sidebarPath: "./sidebars.js",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/shutter-network/shutter-docs",
+          editUrl: "https://github.com/shutter-network/shutter-docs",
         },
         blog: {
           showReadingTime: true,
@@ -57,8 +58,7 @@ const config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/shutter-network/shutter-docs",
+          editUrl: "https://github.com/shutter-network/shutter-docs",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -74,6 +74,15 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      metadata: [
+        { name: "keywords", content: "cooking, blog" },
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "google-site-verification",
+          content: "vniF73ij92Xco4_iHggmpNOrSP0bEbJfxonBETjemrQ",
+        },
+        { name: "msvalidate.01", content: "461226232A0CE4B34E124EE5F4510557" },
+      ],
       // Replace with your project's social card
       image: "img/shutter_hero_banner.png",
       colorMode: {
@@ -82,7 +91,7 @@ const config = {
         respectPrefersColorScheme: false,
       },
       prism: {
-        additionalLanguages: ['bash'],
+        additionalLanguages: ["bash"],
       },
       navbar: {
         title: "Docs",
@@ -177,6 +186,12 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+      },
+      matomo: {
+        matomoUrl: "https://shutter.matomo.cloud/",
+        siteId: "6",
+        phpLoader: "matomo.php",
+        jsLoader: "matomo.js",
       },
     }),
 };
