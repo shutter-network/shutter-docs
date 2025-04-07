@@ -37,7 +37,7 @@ const config = {
     locales: ["en"],
   },
 
-  plugins: ['docusaurus-plugin-matomo'],
+  plugins: ["docusaurus-plugin-matomo"],
 
   presets: [
     [
@@ -75,13 +75,22 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       metadata: [
-        { name: "keywords", content: "cooking, blog" },
-        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "keywords",
+          content: "shutter, ethereum, threshold encryption, encrypted mempool",
+        },
+        {
+          name: "twitter:card",
+          content: "summary_large_image",
+        },
         {
           name: "google-site-verification",
           content: "vniF73ij92Xco4_iHggmpNOrSP0bEbJfxonBETjemrQ",
         },
-        { name: "msvalidate.01", content: "461226232A0CE4B34E124EE5F4510557" },
+        {
+          name: "msvalidate.01",
+          content: "461226232A0CE4B34E124EE5F4510557",
+        },
       ],
       // Replace with your project's social card
       image: "img/shutter_hero_banner.png",
@@ -100,13 +109,80 @@ const config = {
           src: "img/Shutter_Main_Logotype_White.png",
         },
         items: [
-          { to: "/docs/shutter", label: "Network", position: "left" },
-          { to: "/docs/dao", label: "DAO", position: "left" },
-          { to: "/docs/protocol", label: "Protocol", position: "left" },
           {
-            href: "https://calendly.com/loringharkness/30min",
+            type: "dropdown",
+            label: "Network",
+            collapsed: false,
+            position: "left",
+            items: [
+              {
+                label: "Overview",
+                collapsed: false,
+                to: "docs/shutter/",
+              },
+              {
+                label: "Products",
+                collapsed: false,
+                to: "docs/shutter/products",
+              },
+              {
+                label: "Integrations",
+                collapsed: false,
+                to: "docs/shutter/integrations",
+              },
+              {
+                label: "Research",
+                collapsed: false,
+                to: "docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum",
+              },
+            ],
+          },
+          {
+            type: "dropdown",
+            label: "DAO",
+            collapsed: false,
+            position: "left",
+            items: [
+              {
+                label: "Overview",
+                collapsed: false,
+                to: "docs/dao",
+              },
+              {
+                label: "Shutter DAO 0x36",
+                collapsed: false,
+                to: "docs/dao/0x36",
+              },
+            ],
+          },
+          {
+            type: "dropdown",
+            label: "Protocol",
+            collapsed: false,
+            position: "left",
+            items: [
+              {
+                label: "Overview",
+                collapsed: false,
+                to: "docs/protocol/overview",
+              },
+              {
+                label: "A Distributed Solution to a Shared Problem",
+                collapsed: false,
+                to: "docs/protocol",
+              },
+              {
+                label: "API",
+                collapsed: false,
+                to: "docs/protocol/api",
+              },
+            ],
+          },
+          {
             label: "Schedule a Demo",
             position: "right",
+            href:
+              "https://calendly.com/loringharkness/30-minute-shutter-api-demo",
           },
         ],
       },

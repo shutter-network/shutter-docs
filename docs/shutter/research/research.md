@@ -1,6 +1,6 @@
 ---
 title: Research
-description: My document description
+description: Shutter Research
 sidebar_label: 'Research'
 sidebar_position: 7
 ---

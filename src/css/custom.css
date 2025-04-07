@@ -24,6 +24,7 @@
   --ifm-navbar-link-color: #f0f0f0;
   --ifm-navbar-link-hover-color: #FDE12D;
   --ifm-navbar-link-active-color: #FDE12D;
+  --ifm-menu-color-background-active: rgba(0, 0, 0, 0.2);
   --ifm-button-border-radius: 2px;
   --font-title: "Space Grotesk";
   --font-base: "Archivo";
@@ -190,4 +191,27 @@ p {
 
 .table-of-contents li ul li strong:hover {
   color: var(--shutter-blue);
+}
+
+.clean-btn {
+  color: var(--shutter-white);
+}
+
+@media (max-width: 575px) {
+  .menu__link {
+    color: var(--shutter-white);
+  }
+  .menu__link:hover {
+    color: var(--shutter-white);
+  }
+  .theme-doc-sidebar-item-link a {
+    color: var(--shutter-white);
+  }
+  .menu__list-item-collapsible a {
+    color: var(--shutter-white);
+  }
+  .menu__caret {
+    filter: var(--shutter-white);
+    color: red;
+  }
 }

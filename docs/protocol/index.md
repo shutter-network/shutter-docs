@@ -1,7 +1,7 @@
 ---
-title: Shutter Protocol
-description: Shutter Protocol
-sidebar_label: 'Shutter Protocol'
+title: A Distributed Solution to a Shared Problem
+description: A Distributed Solution to a Shared Problem
+sidebar_label: 'A Distributed Solution to a Shared Problem'
 sidebar_position: 1
 ---
 
