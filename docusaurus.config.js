@@ -171,13 +171,10 @@ const config = {
                 collapsed: false,
                 to: "docs/protocol",
               },
-              {
-                label: "API",
-                collapsed: false,
-                to: "docs/protocol/api",
-              },
             ],
           },
+            {to: 'docs/shutter/research/the_road_towards_an_encrypted_mempool_on_ethereum', label: 'Encrypted Mempool', position: 'left'},
+            {to: 'docs/protocol/api', label: 'API', position: 'left'},
           {
             label: "Schedule a Demo",
             position: "right",
