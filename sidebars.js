@@ -55,5 +55,15 @@ export default {
       className: "sidebar-title",
       items: ["protocol/api/index", "protocol/api/use_cases", "protocol/api/how_it_works", "protocol/api/get_started", "protocol/api/glossary"],
     },
+    {
+      type: "category",
+      label: "Tutorials",
+      collapsible: true,
+      collapsed: false,
+      className: "sidebar-title",
+      items: [
+        "shutter-api-examples/hello-world/README", "shutter-api-examples/rock-paper-scissors/README"
+      ],
+    },
   ],
 };
