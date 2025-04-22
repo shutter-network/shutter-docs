@@ -1,0 +1,3 @@
+[submodule "docs/shutter-api-examples"]
+	path = docs/shutter-api-examples
+	url = https://github.com/shutter-network/shutter-api-examples.git
