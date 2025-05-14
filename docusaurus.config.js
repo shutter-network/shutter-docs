@@ -249,8 +249,8 @@ const config = {
                 href: "https://x.com/ShutterNetwork",
               },
               {
-                label: "Discord",
-                href: "https://discord.gg/Fx7m5cUcua",
+                label: "Telegram",
+                href: "http://t.me/shutter_network",
               },
             ],
           },
