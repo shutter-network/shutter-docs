@@ -9,6 +9,8 @@ import Admonition from '@theme/Admonition';
 
 # Shutter API Overview
 
+You can also check out [shutter_api_for_llms.txt](https://docs.shutter.network/shutter_api_for_llms.txt), which is designed to work with current web standards, enabling fast and accurate responses for seamless communication with AI models.
+
 ## Introduction
 
 Shutter Network is launching Shutter API, a threshold encryption service that allows developers to integrate fairness, privacy, and security into their decentralized applications. By providing access to a decentralized encryption service powered by Keypers, Shutter API ensures that sensitive data remains private until it is meant to be revealed. Unlike private mempools or centralized encryption services, Shutter API minimizes trust assumptions while maintaining transparency and verifiability.
