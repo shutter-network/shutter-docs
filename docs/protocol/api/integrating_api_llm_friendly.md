@@ -1,4 +1,16 @@
+---
+title: Integrating Shutter API and SDK for dApp Development
+description: Integrating Shutter API and SDK for dApp Development
+sidebar_label: "Integrating Shutter API and SDK for dApp Development"
+sidebar_position: 2
+---
+
 # Integrating Shutter API and Shutter SDK for dApp Development
+
+:::note
+
+    This document is designed to be LLM friendly, work with current web standards, enabling fast and accurate responses for seamless communication with AI models.
+:::
 
 This guide is designed to teach you (or a generative AI) how to integrate the Shutter API and Shutter SDK into your decentralized application (dApp). The Shutter protocol provides a secure and decentralized commit-and-reveal mechanism that leverages threshold encryption, distributed cryptographic operations, and multi-party computation (MPC) techniques.
 
@@ -41,18 +53,18 @@ Before integrating Shutter into your dApp, ensure you have:
 -   API Endpoint Access
 
     For example:
+    -   Chiado (testnet)
+        -   API Base URL: https://shutter-api.chiado.staging.shutter.network/api/
+        -   Registry Contract Address: 0x2693a4Fb363AdD4356e6b80Ac5A27fF05FeA6D9F
+        -   API Address: 0xb9C303443c9af84777e60D5C987AbF0c43844918
 
--   Chiado:
-  -   API Base URL: https://shutter-api.chiado.staging.shutter.network/api/
-  -   Registry Contract Address: 0x2693a4Fb363AdD4356e6b80Ac5A27fF05FeA6D9F
-  -   API Address: 0xb9C303443c9af84777e60D5C987AbF0c43844918
+    -   Mainnet (Gnosis)
+        -   API Base URL: https://shutter-api.shutter.network/api/
+        -   Registry Contract Address: 0x694e5de9345d39C148DA90e6939A3fd2142267D9
+        -   API Address: 0x228DefCF37Da29475F0EE2B9E4dfAeDc3b0746bc
 
--   Mainnet (Gnosis):
-  -   API Base URL: https://shutter-api.shutter.network/api/
-  -   Registry Contract Address: 0x694e5de9345d39C148DA90e6939A3fd2142267D9
-  -   API Address: 0x228DefCF37Da29475F0EE2B9E4dfAeDc3b0746bc
-  -   Familiarity with RESTful APIs and Ethereum-based dApp development.
-  -   Installation of Node.js and npm (if you plan to use the TypeScript SDK).
+-   Familiarity with RESTful APIs and Ethereum-based dApp development.
+-   Installation of Node.js and npm (if you plan to use the TypeScript SDK).
 
 * * * * *
 
@@ -73,7 +85,7 @@ Method:  POST
 #### Example Request
 
 ```bash
-curl  -X  POST  https://<API_BASE_URL>/register_identity
+curl  -X  POST  https://`API_BASE_URL`/register_identity
 
 -H  "Content-Type:  application/json"
 
@@ -104,7 +116,7 @@ curl  -X  POST  https://<API_BASE_URL>/register_identity
 }
 ```
 
-Note: Replace <API_BASE_URL> with the appropriate API base URL (Chiado or Mainnet).
+Note: Replace `API_BASE_URL` with the appropriate API base URL (Chiado or Mainnet).
 
 * * * * *
 
@@ -120,7 +132,7 @@ Method:  GET
 #### Example Request
 
 ```bash
-curl  -X  GET  "https://<API_BASE_URL>/get_data_for_encryption?address=0xb9C303443c9af84777e60D5C987AbF0c43844918&identityPrefix=0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
+curl  -X  GET  "https://`API_BASE_URL`/get_data_for_encryption?address=0xb9C303443c9af84777e60D5C987AbF0c43844918&identityPrefix=0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
 ```
 
 #### Example Response
@@ -155,7 +167,7 @@ Method:  GET
 #### Example Request
 
 ```bash
-curl  -X  GET  "https://<API_BASE_URL>/get_decryption_key?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
+curl  -X  GET  "https://`API_BASE_URL`/get_decryption_key?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
 ```
 
 #### Example Response
@@ -186,7 +198,7 @@ Method:  GET
 #### Example Request
 
 ```bash
-curl  -X  GET  "https://<API_BASE_URL>/decrypt_commitment?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75&encryptedCommitment=0x03b5685a460a95ba628e04b24155d6722f7c4e376a1627f714a4ae9cecd2982e005eff12ac8150b8842c29f8d5eaf4d0da0b626f762b4826d779d8969b577acb28df96cab026aa57c00cd74b07ca51e8c0c1a59933e29a728311900ebfc26c6804260914c96cb10dbd6d2ed3f6cb77788a74b5aae5f4ce6f40be53310a0524d42d5a6f03b5c1517ec097553733e228276fcdfc4b569f7ef4311a461d68819d634c"
+curl  -X  GET  "https://`API_BASE_URL`/decrypt_commitment?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75&encryptedCommitment=0x03b5685a460a95ba628e04b24155d6722f7c4e376a1627f714a4ae9cecd2982e005eff12ac8150b8842c29f8d5eaf4d0da0b626f762b4826d779d8969b577acb28df96cab026aa57c00cd74b07ca51e8c0c1a59933e29a728311900ebfc26c6804260914c96cb10dbd6d2ed3f6cb77788a74b5aae5f4ce6f40be53310a0524d42d5a6f03b5c1517ec097553733e228276fcdfc4b569f7ef4311a461d68819d634c"
 ```
 
 #### Example Response
@@ -430,10 +442,13 @@ Yes. By default, the API uses the account address to compute the identity. If yo
 
 ## Additional Resources
 
--   Swagger Documentation:
-  -   [Chiado Swagger Docs](https://shutter-api.chiado.staging.shutter.network/docs/index.html)
-  -   [Mainnet Swagger Docs](https://shutter-api.shutter.network/docs/index.html)
--   Shutter SDK Repository:\
-    [GitHub - Shutter SDK](https://github.com/shutter-network/shutter-sdk)
--   Registry Contract Code:
-  -   [ShutterRegistry.sol on GitHub](https://github.com/shutter-network/contracts/blob/main/src/shutter-service/ShutterRegistry.sol#L1C1-L86C2)
+-   Swagger Documentation
+    -   [Chiado Swagger Docs](https://shutter-api.chiado.staging.shutter.network/docs/index.html)
+    -   [Mainnet Swagger Docs](https://shutter-api.shutter.network/docs/index.html)
+-   Shutter SDK Repository
+    -   [GitHub - Shutter SDK](https://github.com/shutter-network/shutter-sdk)
+-   Registry Contract Code
+    -   [ShutterRegistry.sol on GitHub](https://github.com/shutter-network/contracts/blob/main/src/shutter-service/ShutterRegistry.sol#L1C1-L86C2)
+-   Shutter API Examples
+    - [Shutter Hello World Tutorial](https://github.com/shutter-network/shutter-api-examples/blob/6dad08cf26878abeee7b8866b545f8ebb0eea17b/hello-world/README.md)
+    - [Shutter Rock Paper Scissors Tutorial](https://github.com/shutter-network/shutter-api-examples/blob/6dad08cf26878abeee7b8866b545f8ebb0eea17b/rock-paper-scissors/README.md)

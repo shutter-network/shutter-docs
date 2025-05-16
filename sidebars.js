@@ -53,7 +53,7 @@ export default {
       label: "Shutter API",
       collapsed: false,
       className: "sidebar-title",
-      items: ["protocol/api/index", "protocol/api/use_cases", "protocol/api/how_it_works", "protocol/api/get_started", "protocol/api/glossary"],
+      items: ["protocol/api/index", "protocol/api/use_cases", "protocol/api/how_it_works", "protocol/api/get_started", "protocol/api/integrating_api_llm_friendly", "protocol/api/glossary"],
     },
     {
       type: "category",
