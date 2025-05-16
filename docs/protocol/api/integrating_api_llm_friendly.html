@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.7.0">
 <title data-rh="true">Integrating Shutter API and SDK for dApp Development | Shutter Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" property="og:image" content="https://docs.shutter.network/img/shutter_hero_banner.png"><meta data-rh="true" name="twitter:image" content="https://docs.shutter.network/img/shutter_hero_banner.png"><meta data-rh="true" property="og:url" content="https://docs.shutter.network/docs/protocol/api/integrating_api_llm_friendly"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="shutter, ethereum, threshold encryption, encrypted mempool"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" name="google-site-verification" content="vniF73ij92Xco4_iHggmpNOrSP0bEbJfxonBETjemrQ"><meta data-rh="true" name="msvalidate.01" content="461226232A0CE4B34E124EE5F4510557"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Integrating Shutter API and SDK for dApp Development | Shutter Docs"><meta data-rh="true" name="description" content="Integrating Shutter API and SDK for dApp Development"><meta data-rh="true" property="og:description" content="Integrating Shutter API and SDK for dApp Development"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.shutter.network/docs/protocol/api/integrating_api_llm_friendly"><link data-rh="true" rel="alternate" href="https://docs.shutter.network/docs/protocol/api/integrating_api_llm_friendly" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.shutter.network/docs/protocol/api/integrating_api_llm_friendly" hreflang="x-default"><link rel="preconnect" href="https://shutter.matomo.cloud/">
 <script>var _paq=window._paq=window._paq||[];_paq.push(["setRequestMethod","POST"]),_paq.push(["trackPageView"]),_paq.push(["enableLinkTracking"]),_paq.push(["enableHeartBeatTimer"]),function(){var e="https://shutter.matomo.cloud/";_paq.push(["setRequestMethod","POST"]),_paq.push(["setTrackerUrl",e+"matomo.php"]),_paq.push(["setSiteId","6"]);var t=document,a=t.createElement("script"),p=t.getElementsByTagName("script")[0];a.type="text/javascript",a.async=!0,a.src=e+"matomo.js",p.parentNode.insertBefore(a,p)}()</script><link rel="stylesheet" href="/assets/css/styles.029d87c6.css">
-<script src="/assets/js/runtime~main.9070d2ae.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.4f1dd165.js" defer="defer"></script>
 <script src="/assets/js/main.dd83cead.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -18,25 +18,25 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview-of-shutter">Overview of Shutter<a href="#overview-of-shutter" class="hash-link" aria-label="Direct link to Overview of Shutter" title="Direct link to Overview of Shutter">​</a></h2>
 <p>The Shutter system facilitates secure commit-and-reveal workflows using:</p>
 <ul>
-<li>Threshold Encryption: No single entity can compromise the encrypted data.</li>
-<li>Distributed Keypers: Nodes that monitor on-chain events and handle decryption key releases.</li>
-<li>API Endpoints &amp; SDK: Simplified interfaces for dApp developers to integrate encryption and decryption functionalities.</li>
+<li><strong>Threshold Encryption</strong>: No single entity can compromise the encrypted data.</li>
+<li><strong>Distributed Keypers</strong>: Nodes that monitor on-chain events and handle decryption key releases.</li>
+<li><strong>API Endpoints &amp; SDK</strong>: Simplified interfaces for dApp developers to integrate encryption and decryption functionalities.</li>
 </ul>
 <p>The system consists of:</p>
 <ul>
-<li>Registry Contract: Where identities and time-based decryption triggers are registered.</li>
-<li>Keypers: Responsible for cryptographic operations and decentralized key management.</li>
-<li>Shutter API: Provides endpoints for encryption and decryption operations.</li>
-<li>Shutter SDK: A TypeScript library that abstracts encryption/decryption operations, easing integration in modern dApps.</li>
+<li><strong>Registry Contract</strong>: Where identities and time-based decryption triggers are registered.</li>
+<li><strong>Keypers</strong>: Responsible for cryptographic operations and decentralized key management.</li>
+<li><strong>Shutter API</strong>: Provides endpoints for encryption and decryption operations.</li>
+<li><strong><a href="https://github.com/shutter-network/shutter-sdk" target="_blank" rel="noopener noreferrer">Shutter SDK</a></strong>: A TypeScript library that abstracts encryption/decryption operations, easing integration in modern dApps.</li>
 </ul>
 <hr>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="system-architecture">System Architecture<a href="#system-architecture" class="hash-link" aria-label="Direct link to System Architecture" title="Direct link to System Architecture">​</a></h2>
 <p>Key components include:</p>
 <ul>
-<li>Client dApp: Your application that calls the Shutter API or uses the SDK.</li>
-<li>Registry Contract: Deployed on-chain (e.g., Chiado or Gnosis) that holds identity and trigger information.</li>
-<li>Shutter API: Endpoints for identity registration, encryption data retrieval, key retrieval, and decryption.</li>
-<li>Keypers: Nodes that perform threshold cryptography.</li>
+<li><strong>Client dApp</strong>: Your application that calls the Shutter API or uses the SDK.</li>
+<li><strong>Registry Contract</strong>: Deployed on-chain (e.g., Chiado or Gnosis) that holds identity and trigger information.</li>
+<li><strong>Shutter API</strong>: Endpoints for identity registration, encryption data retrieval, key retrieval, and decryption.</li>
+<li><strong>Keypers</strong>: Nodes that perform threshold cryptography.</li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="prerequisites-and-setup">Prerequisites and Setup<a href="#prerequisites-and-setup" class="hash-link" aria-label="Direct link to Prerequisites and Setup" title="Direct link to Prerequisites and Setup">​</a></h2>
 <p>Before integrating Shutter into your dApp, ensure you have:</p>
@@ -129,32 +129,32 @@
 <p>When building a new dApp with the Shutter API, follow these steps:</p>
 <ol>
 <li>
-<p>Set Up Your Environment:</p>
+<p><strong>Set Up Your Environment</strong></p>
 <p>Ensure you have access to the appropriate API endpoints (Chiado or Mainnet) and that your project includes a web3 provider for interacting with the registry contract.</p>
 </li>
 <li>
-<p>Register an Identity:</p>
+<p><strong>Register an Identity</strong></p>
 <p>Use the /register_identity endpoint to register a new identity and set a decryption trigger.</p>
 <p>Tip: If you want full control over your address, consider registering directly with the registry contract.</p>
 </li>
 <li>
-<p>Retrieve Encryption Data:</p>
+<p><strong>Retrieve Encryption Data</strong></p>
 <p>Once your identity is registered, call /get_data_for_encryption to obtain the parameters needed to encrypt commitments.</p>
 </li>
 <li>
-<p>Encrypt Commitments:</p>
+<p><strong>Encrypt Commitments</strong></p>
 <p>Use either the provided SDK (TypeScript) or native implementations (Go, etc.) to encrypt your sensitive messages or commitments before storing or transmitting them.</p>
 </li>
 <li>
-<p>Store and Manage Encrypted Data:</p>
+<p><strong>Store and Manage Encrypted Data</strong></p>
 <p>Persist the encrypted commitments within your dApp (for example, on-chain, in IPFS, or a centralized database) until the decryption trigger is activated.</p>
 </li>
 <li>
-<p>Retrieve and Decrypt Data:</p>
+<p><strong>Retrieve and Decrypt Data</strong></p>
 <p>After the trigger time passes, use the /get_decryption_key endpoint to fetch the decryption key, and then call /decrypt_commitment or use the SDK&#x27;s decrypt function to reveal the original message.</p>
 </li>
 <li>
-<p>User Interaction and UI:</p>
+<p><strong>User Interaction and UI</strong></p>
 <p>Integrate WebSocket or polling mechanisms to notify your users when decryption keys become available. Future releases of Shutter will enhance real-time notifications.</p>
 </li>
 </ol>
@@ -162,15 +162,15 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="future-features-and-considerations">Future Features and Considerations<a href="#future-features-and-considerations" class="hash-link" aria-label="Direct link to Future Features and Considerations" title="Direct link to Future Features and Considerations">​</a></h2>
 <ul>
 <li>
-<p>Event-Based &amp; Block-Based Triggers:</p>
+<p><strong>Event-Based &amp; Block-Based Triggers</strong></p>
 <p>In future versions, decryption triggers may be based on blockchain events or block numbers, offering more flexibility.</p>
 </li>
 <li>
-<p>Real-Time Notifications:</p>
+<p><strong>Real-Time Notifications</strong></p>
 <p>Planned WebSocket integrations will enable real-time notifications for key releases.</p>
 </li>
 <li>
-<p>Enhanced Decentralization:</p>
+<p><strong>Enhanced Decentralization</strong></p>
 <p>As more Keypers join the network, the decentralization and resilience of the system will continue to improve.</p>
 </li>
 </ul>
