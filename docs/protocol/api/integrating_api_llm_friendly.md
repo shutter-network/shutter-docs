@@ -24,16 +24,16 @@ The Shutter API is in early development stage. Do not use it to manage high-valu
 
 The Shutter system facilitates secure commit-and-reveal workflows using:
 
--   Threshold Encryption: No single entity can compromise the encrypted data.
--   Distributed Keypers: Nodes that monitor on-chain events and handle decryption key releases.
--   API Endpoints & SDK: Simplified interfaces for dApp developers to integrate encryption and decryption functionalities.
+-   **Threshold Encryption**: No single entity can compromise the encrypted data.
+-   **Distributed Keypers**: Nodes that monitor on-chain events and handle decryption key releases.
+-   **API Endpoints & SDK**: Simplified interfaces for dApp developers to integrate encryption and decryption functionalities.
 
 The system consists of:
 
--   Registry Contract: Where identities and time-based decryption triggers are registered.
--   Keypers: Responsible for cryptographic operations and decentralized key management.
--   Shutter API: Provides endpoints for encryption and decryption operations.
--   Shutter SDK: A TypeScript library that abstracts encryption/decryption operations, easing integration in modern dApps.
+-   **Registry Contract**: Where identities and time-based decryption triggers are registered.
+-   **Keypers**: Responsible for cryptographic operations and decentralized key management.
+-   **Shutter API**: Provides endpoints for encryption and decryption operations.
+-   **[Shutter SDK](https://github.com/shutter-network/shutter-sdk)**: A TypeScript library that abstracts encryption/decryption operations, easing integration in modern dApps.
 
 * * * * *
 
@@ -41,10 +41,10 @@ The system consists of:
 
 Key components include:
 
--   Client dApp: Your application that calls the Shutter API or uses the SDK.
--   Registry Contract: Deployed on-chain (e.g., Chiado or Gnosis) that holds identity and trigger information.
--   Shutter API: Endpoints for identity registration, encryption data retrieval, key retrieval, and decryption.
--   Keypers: Nodes that perform threshold cryptography.
+-   **Client dApp**: Your application that calls the Shutter API or uses the SDK.
+-   **Registry Contract**: Deployed on-chain (e.g., Chiado or Gnosis) that holds identity and trigger information.
+-   **Shutter API**: Endpoints for identity registration, encryption data retrieval, key retrieval, and decryption.
+-   **Keypers**: Nodes that perform threshold cryptography.
 
 ## Prerequisites and Setup
 
@@ -376,33 +376,33 @@ Building a New dApp with Shutter API
 
 When building a new dApp with the Shutter API, follow these steps:
 
-1.  Set Up Your Environment:
+1.  **Set Up Your Environment**
 
     Ensure you have access to the appropriate API endpoints (Chiado or Mainnet) and that your project includes a web3 provider for interacting with the registry contract.
 
-2.  Register an Identity:
+2.  **Register an Identity**
 
     Use the /register_identity endpoint to register a new identity and set a decryption trigger.
 
     Tip: If you want full control over your address, consider registering directly with the registry contract.
 
-3.  Retrieve Encryption Data:
+3.  **Retrieve Encryption Data**
 
     Once your identity is registered, call /get_data_for_encryption to obtain the parameters needed to encrypt commitments.
 
-4.  Encrypt Commitments:
+4.  **Encrypt Commitments**
 
     Use either the provided SDK (TypeScript) or native implementations (Go, etc.) to encrypt your sensitive messages or commitments before storing or transmitting them.
 
-5.  Store and Manage Encrypted Data:
+5.  **Store and Manage Encrypted Data**
 
     Persist the encrypted commitments within your dApp (for example, on-chain, in IPFS, or a centralized database) until the decryption trigger is activated.
 
-6.  Retrieve and Decrypt Data:
+6.  **Retrieve and Decrypt Data**
 
     After the trigger time passes, use the /get_decryption_key endpoint to fetch the decryption key, and then call /decrypt_commitment or use the SDK's decrypt function to reveal the original message.
 
-7.  User Interaction and UI:
+7.  **User Interaction and UI**
 
     Integrate WebSocket or polling mechanisms to notify your users when decryption keys become available. Future releases of Shutter will enhance real-time notifications.
 
@@ -410,15 +410,15 @@ When building a new dApp with the Shutter API, follow these steps:
 
 ## Future Features and Considerations
 
--   Event-Based & Block-Based Triggers:
+-   **Event-Based & Block-Based Triggers**
 
     In future versions, decryption triggers may be based on blockchain events or block numbers, offering more flexibility.
 
--   Real-Time Notifications:
+-   **Real-Time Notifications**
 
     Planned WebSocket integrations will enable real-time notifications for key releases.
 
--   Enhanced Decentralization:
+-   **Enhanced Decentralization**
 
     As more Keypers join the network, the decentralization and resilience of the system will continue to improve.
 
