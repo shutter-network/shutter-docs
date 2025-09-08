@@ -8,6 +8,13 @@ sidebar_position: 1
 # Overview of a Shutter DAO: Blueprint and Implementation
 
 A Shutter DAO represents a cornerstone of Shutter's vision for decentralized, community-driven governance. By leveraging the principles of decentralization and collaborative decision-making, the Shutter DAO ensures that the management of Shutter's cryptographic infrastructure aligns with the collective will of its stakeholders. Central to this initiative is the **Shutter DAO blueprint**, a comprehensive guide designed to facilitate the creation and operation of a Shutter DAO. This document explores the foundational aspects of the Shutter DAO blueprint, its governance structure, operational phases, and highlights **Shutter DAO 0x36**, the first implementation of this framework.
+<ul>
+<li><a href="https://shutternetwork.discourse.group/" target="_blank" rel="noopener noreferrer">Shutter Forum</a></li>
+<li><a href="https://etherscan.io/token/0xe485e2f1bab389c08721b291f6b59780fec83fd7" target="_blank" rel="noopener noreferrer">SHU token on Ethereum</a></li>
+<li><a href="https://gnosisscan.io/token/0x8CCd277Cc638E7e17F8100cE583cBcEf42007Dca" target="_blank" rel="noopener noreferrer">SHU token on Gnosis Chain</a></li>
+<li><a href="https://basescan.org/token/0x6774dfc16e1d9b6ce5b0aec4ffed37a0daef0602" target="_blank" rel="noopener noreferrer">SHU token on Base</a></li>
+<li><a href="https://optimistic.etherscan.io/token/0xaf1d71bf947709315655514467d5158e5d3046d5" target="_blank" rel="noopener noreferrer">SHU token on OP</a></li>
+</ul>
 
 * * * * *
 
