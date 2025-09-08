@@ -9,6 +9,13 @@ An In-Depth Overview of Shutter DAO 0x36
 ========================================
 
 Shutter DAO 0x36 stands as the first live implementation of the Shutter DAO blueprint, embodying the principles of decentralization, fairness, and transparency that are central to Shutter's mission. As a pioneering decentralized autonomous organization (DAO), it plays a pivotal role in the governance and operation of Shutter's threshold encryption technology, setting the standard for future DAOs in the ecosystem. This document provides a detailed overview of Shutter DAO 0x36, exploring its inception, governance mechanisms, role in the Shutter ecosystem, and its broader impact.
+<ul>
+<li><a href="https://shutternetwork.discourse.group/" target="_blank" rel="noopener noreferrer">Shutter Forum</a></li>
+<li><a href="https://etherscan.io/token/0xe485e2f1bab389c08721b291f6b59780fec83fd7" target="_blank" rel="noopener noreferrer">SHU token on Ethereum</a></li>
+<li><a href="https://gnosisscan.io/token/0x8CCd277Cc638E7e17F8100cE583cBcEf42007Dca" target="_blank" rel="noopener noreferrer">SHU token on Gnosis Chain</a></li>
+<li><a href="https://basescan.org/token/0x6774dfc16e1d9b6ce5b0aec4ffed37a0daef0602" target="_blank" rel="noopener noreferrer">SHU token on Base</a></li>
+<li><a href="https://optimistic.etherscan.io/token/0xaf1d71bf947709315655514467d5158e5d3046d5" target="_blank" rel="noopener noreferrer">SHU token on OP</a></li>
+</ul>
 
 * * * * *
 
