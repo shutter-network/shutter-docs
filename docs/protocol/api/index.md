@@ -19,9 +19,11 @@ Blockchain technology was designed to eliminate trust, yet many Web3 application
 
 Shutter API represents an evolution from Shutter’s previous protocol-level integrations. While earlier implementations focused on encrypted mempools to prevent MEV attacks, they required protocol-level adoption. The API, in contrast, allows any developer to integrate threshold encryption directly into their applications, making it more accessible for a wide range of use cases.
 
-The system works through a commit-and-reveal process, where a user encrypts data such as a bid, vote, or game move and submits it either on or off-chain. This encrypted commitment is registered in a registry managed by the Shutter API. At a predefined time or event, decryption keys are released by a threshold of independent Keypers, ensuring that no single party has control over when the information is revealed. This approach prevents front-running, manipulation, and premature information leaks, ensuring fairness in every interaction.
+The system operates using a commit-and-reveal process. In this process, a user encrypts data such as a bid, vote, or game move and submits it either on-chain or off-chain. This encrypted commitment is recorded in a registry managed by the Shutter API. **Decryption keys are released either at a predetermined time or when a specific on-chain event occurs, as verified by the Keyper network.** This method prevents front-running, manipulation, and premature information leaks, ensuring fairness in every interaction.
 
 Developers can integrate Shutter API into various applications, such as decentralized finance platforms that want to protect traders from MEV attacks, DAOs looking to implement private and tamper-proof voting, and gaming applications that require secrecy in game mechanics. The API also enables new use cases, such as parimutuel betting, sealed RFPs for corporate procurement, and fair auction mechanisms that eliminate the Free Option Problem, ensuring that bids remain confidential until the deadline.
+
+**The Shutter API also introduces event-based decryption triggers**, which allow encrypted data to be automatically revealed when specific on-chain conditions are met. This feature enables programmable, state-dependent privacy. For example, it can reveal a document after a payment is made, unlock a game secret when a milestone is reached, or release encrypted content when a contract emits a particular event.
 
 Unlike solutions based on Trusted Execution Environments (TEEs), which introduce a single point of failure and rely on specialized hardware, Shutter API provides a fully decentralized approach that does not require trusting any central entity. It operates as a distributed threshold encryption network, where independent Keypers collaboratively generate and release encryption keys, making it a truly trust-minimized solution.
 
@@ -33,11 +35,12 @@ Cryptographic techniques such as **threshold encryption** and **distributed key 
 
 <Admonition type="note" title={null} icon={null}>
       <p>
-      - **Private voting** that remains concealed until a set deadline
-      - **Sealed-bid auctions** where bids cannot be seen before closing
-      - **Front-running protection** by encrypting transactions until they are finalized
-      - **Fair games** where player moves are hidden until all actions are taken
-      - **Private trading** that prevents information leaks before execution
+      - **Private voting** that remains concealed until a set deadline  
+      - **Sealed-bid auctions** where bids cannot be seen before closing  
+      - **Front-running protection** by encrypting transactions until they are finalized  
+      - **Fair games** where player moves are hidden until all actions are taken  
+      - **Private trading** that prevents information leaks before execution  
+      - **Event-based decryption** allows data to be revealed only after certain on-chain events, such as payments, contract approvals, or milestone completions.
       </p>
 </Admonition>
 
