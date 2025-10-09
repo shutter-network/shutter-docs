@@ -17,6 +17,11 @@ The **Shutter API** provides developers with access to a **threshold encryption 
 
 This document explores the many ways developers can integrate the Shutter API into their applications, detailing both high-level use cases and the technical mechanisms that enable them.  
 
+**Decryption trigger types**
+
+- **Time-based triggers**: the decryption key is released after a future timestamp or block height.
+- **Event-based triggers**: The decryption key is released when Keypers observe a corresponding on-chain event defined by an **EventTriggerDefinition (ETD)**. An ETD specifies the emitting **contract address**, the **event signature** (topic0), optional matches for **indexed arguments** (topic1-topic3), and optional **conditions** regarding non-indexed arguments (such as numeric comparisons or byte equality). Each ETD has a **Time-to-Live (TTL)**, meaning it is tracked for a limited period of time.
+
 ## Why Threshold Encryption?  
 
 Decentralized applications often require privacy and fairness guarantees, but traditional blockchain environments expose all transactions and commitments publicly. This results in:  
@@ -29,6 +34,7 @@ By using **Shutter API**, developers can remove these vulnerabilities and introd
 
 ## Use Cases
 
+___
 
 > ### MEV
 
@@ -65,21 +71,19 @@ Shielded Trading encrypts transaction details upon submission, rendering them un
 
 ___
 
-Shielded Trading can be implemented in two main ways—fully on-chain or off-chain—depending on the structure of the trading platform.
+Shielded Trading can be implemented in two ways: fully on-chain or off-chain, depending on the trading platform's structure.
 
 <Admonition type="note" title={null} icon={null}>
       <p>
       ###### 1. Fully On-Chain (Two-Transaction Model)
-      This approach mirrors the structure of earlier Shutter integrations, where the user first encrypts their trade intent (e.g., a limit order) and submits it on-chain. Later, once the decryption condition is met (e.g., end of a batch or time window), a second transaction is sent to execute the decrypted trade.
-      This provides transparency and verifiability but may require higher gas costs due to the two-step process.
+      The user first encrypts their trade intent and submits it on-chain. Later, once the decryption condition is met—such as the end of a batch window—a second transaction executes the decrypted trade. This approach ensures transparency and verifiability; however, it may incur higher gas fees due to the two-step process.
       </p>
 </Admonition>
 
 <Admonition type="note" title={null} icon={null}>
       <p>
       ###### 2. Off-Chain Commit-Reveal (Snapshot-Style Model)
-In this model, encrypted orders are submitted off-chain, such as into a private order book. When the trading round or matching session concludes, Shutter’s Keyper network decrypts the orders, which are then collectively processed on-chain.
-This model reduces gas overhead and allows for more complex batching or auction logic, similar to how Snapshot implements Shielded Voting.
+      Orders are encrypted and submitted to an off-chain order book. At the end of the session, Keypers decrypt the orders, which are then processed on-chain. This approach reduces gas fees and allows for complex batching or auction logic, similar to Snapshot Shielded Voting.
       </p>
 </Admonition>
 
@@ -243,6 +247,8 @@ This approach eliminates the advantage of fast bots and gas wars, making Web3 pu
       </p>
 </Admonition>
 
+___
+
 > ### Voting
 
 #### Shielded Voting
@@ -300,6 +306,44 @@ By following this encryption process, Shielded Voting prevents vote manipulation
       Now, contrast this with a sealed ballot system, where each person votes in a private voting booth. In this system, no one knows how others voted until all ballots are collected and revealed simultaneously. This approach prevents bias, influence, and vote manipulation, ensuring a true representation of public opinion.
       </p>
 </Admonition>
+
+#### Event-Triggered DAO Decision Transparency
+##### Post-Execution Reveal of Results and Rationale
+
+Some governance processes should remain confidential until execution. With event-driven triggers, the decryption key is released when the DAO emits a terminal event, such as `ProposalExecuted` or `VoteClosed`.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - Define an ETD using the DAO contract address and event signature, with the option to filter by `proposalId`.
+  - Set the TTL to match the voting window.
+
+  ###### Commit
+  - Encrypt the vote or supporting document and submit.
+
+  ###### Reveal
+  - When the target event occurs, Keypers match the Event Trigger Data (ETD) and release the decryption key.
+  - Results and documents are disclosed in a single step.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Shielded vote results** revealed only after execution
+- **Confidential proposal rationale** opened after success
+- **Release of escrowed reports** connected to specific governance milestones.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### The Signed-But-Sealed Contract
+      Picture two organizations negotiating a partnership. Representatives sign their approvals, but the signed contract is placed in a locked safe that’s programmed to open only after both finance teams confirm funds and legal marks the checklist complete. Until that “all clear,” nobody can peek—no rumors, no last-minute lobbying, no gaming the process.
+
+      Event-triggered disclosure works the same way for DAOs. Members submit encrypted approvals and rationale tied to a proposal. When the governance system emits a terminal event—such as <code>VoteClosed</code> or <code>ProposalExecuted</code>—the safe “opens”: Keypers release the decryption key, and every approval and explanation becomes public simultaneously. The result—no early influence, and complete accountability at reveal.
+      </p>
+</Admonition>
+
+___
 
 > ### Auctions
 
@@ -366,6 +410,48 @@ Prevents market makers and platforms from pre-revealing high-value bids.
       This is exactly how Shutter API's sealed-bid auction system works—every bid remains private until the auction ends, creating a level playing field for all participants.
       </p>
 </Admonition>
+
+#### Event-Triggered Auction Settlement Reveal
+##### Decrypt Bids When the Auction Contract Closes
+
+In an auction contract that utilizes event-based triggers, it is the contract itself that indicates when to make the information public.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD includes the auction contract address along with the `AuctionClosed` topic.
+  - Optional filters for `auctionId`.
+
+  ###### Commit Bids
+  - Participants encrypt their bids and submit them during the designated time window.
+
+  ###### Reveal on Settlement
+  - When the `AuctionClosed` event is triggered, the Keypers will release the key.
+  - All bids are decrypted, and the settlement verifiably.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **NFT marketplaces** that integrate a sealed-bid mode.
+- **Treasury sales** that include a verified closing.
+- **On-chain auctions in the style of Christie's** that prevent pre-reveal leaks.
+
+Now as you can see from the page I just provided to you (and of course you should have already spotted this earlier when I was asking you to make your edits similar to the previous entries), all the old, time-based, entries have an "Example" section, but these are missing from the event-based entries that you came up with.
+
+Please now create two options for an example for the "Event-Triggered Auction Settlement Reveal" entry. Here is an example of how to do it from the older content, the example for the "Shielded Voting" entry. I expect the same format, length, details and style for all the examples that I'm asking you to provide to me. Please give your reply completely in rich text format only.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### The Curtain Drop at the Auction House
+      Imagine a gallery running a sealed-bid sale for a rare painting. Collectors hand the auctioneer their bids in sealed envelopes throughout the evening. Everyone can see that envelopes are piling up, but no one—buyers, staff, or even the auctioneer—opens any of them early. The room hums with speculation, yet the numbers stay hidden.
+
+      When the auctioneer finally drops the gavel to close the sale, the stage manager gives a clear signal: it’s over. Only at that exact moment are all the envelopes opened at once and the true winner revealed. Event-triggered settlement works the same way on-chain: bids remain encrypted until the contract emits AuctionClosed. That single event is the “curtain drop” Keypers are waiting for—once it fires, they release the decryption key and every bid is revealed simultaneously, preventing leaks, sniping, or last-minute manipulation.
+      </p>
+</Admonition>
+
+___
 
 > ### Gaming
 
@@ -650,6 +736,76 @@ Importantly, the randomness is not user-supplied or application-specific, making
       </p>
 </Admonition>
 
+#### Event-Triggered Game Round Completion
+##### Reveal Moves When the Game Emits RoundComplete
+
+Utilize an ETD synchronized with `RoundComplete` for reveals to occur precisely when the game indicates that the round has ended.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD includes the game contract and the `RoundComplete` topic, and it may optionally include `roundId`.
+
+  ###### Commit
+  - Players encrypt their moves for the round and then submit them.
+
+  ###### Reveal
+  - When `RoundComplete` is emitted, the Keypers release the key, and the moves are revealed.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **PvP tournaments** featuring strict round deadlines.
+- **League play** where the contract signals the end of the round.
+- **Audience-friendly reveals** synchronized with game events.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### Sealed Orders on the Battlefield
+      Picture two commanders planning maneuvers during a fog-shrouded skirmish. Each writes sealed orders—flank left, hold position, retreat—and passes them to a neutral marshal who places them in a locked chest at center field. Both armies reposition, but the exact tactics remain unknown. Scouts report that orders were filed, yet nobody can read them early or alter their own plans in response.
+
+      At the agreed signal—a trumpet blast marking the end of the planning phase—the marshal turns a key and opens the chest. All envelopes are read aloud simultaneously, and the battle resolves from those revealed choices. On-chain, the game contract’s `RoundComplete` event is that trumpet blast: once it sounds, Keypers release the decryption key and every player’s move is revealed in one step, ensuring fair resolution without mid-round information leaks or reactive counterplays.
+      </p>
+</Admonition>
+
+#### Achievement-Based NFT Reveal
+##### Unlock Artwork or Metadata After On-Chain Achievements
+
+Keep NFT visuals or traits hidden until a player accomplishes something that the game contract verifies.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD corresponds to events such as `LevelUp`, `CompletedQuest`, or similar occurrences for the player.
+
+  ###### Commit
+  - The sensitive metadata or artwork associated with the NFT remains encrypted.
+
+  ###### Reveal
+  - Upon the achievement event, the Keypers release the key, and the NFT is updated.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Dynamic NFTs** that evolve based on progress.
+- **Badge systems** that are unlocked after reaching verified milestones.
+- **Collectibles that are available for a limited time** and are associated with in-game events.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### The Turnstile at the Digital Museum
+      Imagine standing in the grand lobby of a museum. You can see the doors to the special exhibition—posters, teasers, and a short trailer playing on a screen—but the turnstile to enter is locked. Nothing you or the attendant can do will open it early. Then your ticket is scanned, the turnstile clicks, and the doors slide open for you—instantly, verifiably, and without anyone’s manual intervention.
+
+      After the warrior levels up, the game contract emits `LevelUp` tied to that wallet and item. In that moment, the scabbard is withdrawn and the blade catches the light: encrypted metadata decrypts to reveal new visuals and traits—glowing filigree, bonus stats, and a fresh animation set. Because the reveal key only becomes available when the event is recorded, no one can front-run the upgrade or counterfeit prestige; the sword’s true form appears exactly when the achievement is earned.
+      </p>
+</Admonition>
+
+___
+
 > ### Access Control
 
 #### Time-Locked Gifts
@@ -788,6 +944,182 @@ This structure ensures that encrypted data can be programmatically unlocked by s
       </p>
 </Admonition>
 
+#### Event-Triggered Payment-Gated Content Unlock
+##### Decrypt on Verified Payment Events
+
+Restrict access to content based on an on-chain payment detected by an ETD, such as an ERC20 `Transfer` to a creator with an amount that meets or exceeds a specified threshold.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD includes the token contract address and the `Transfer` topic.
+  - Ensure that the match for `to` is equal to `creator` and that the `value` is greater than or equal to `price`.
+
+  ###### Commit
+  - Encrypt the content key or payload associated with the buyer's identity.
+
+  ###### Reveal
+  - When the payment event is confirmed, the Keypers release the key, allowing the buyer to unlock the content.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Paid digital goods**
+  - Access to the document, video, or dataset will be granted only after payment is completed.
+- **Subscription unlocks**
+  - Access keys are rotated at the end of each billing period following a renewal payment.
+- **Creator content**
+  - A gated media platform similar to OnlyFans, where payment is required for access.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Turnstile at the Digital Museum
+  Imagine standing in the grand lobby of a museum. You can see the doors to the special exhibition, posters, teasers, and a short trailer playing on a screen, but the turnstile to enter is locked. Nothing you or the attendant can do will open it early. Then your ticket is scanned, the turnstile clicks, and the doors slide open for you, instantly, verifiably, and without anyone’s manual intervention.
+
+  That is how payment-gated unlocks work on-chain. You “buy a ticket” by sending the required amount (for example, ≥10 USDC) to the creator’s address. When the contract emits the `Transfer` event that matches the price and destination, the Keypers release the decryption key, and the gallery doors open: the high-res file, stream, or NFT metadata reveals for your wallet. Before that exact moment, the content remains a teaser behind glass, visible enough to prove it exists, yet sealed against leaks, favoritism, or off-chain gatekeepers.
+  </p>
+</Admonition>
+
+#### Subscription or Membership Renewal
+##### Conditional Access Based on Renewal Events
+
+Decrypt new session keys only after a `SubscriptionPaid` event or staking renewal event is emitted by the membership contract.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD corresponds with the membership contract event and the subscriber's address.
+
+  ###### Commit
+  - The materials for the next period are still encrypted and cannot be accessed.
+
+  ###### Reveal
+  - When a renewal event occurs, the decryption key is issued to the member.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Token-gated communities**
+- **Decentralized SaaS**
+- **Private group chats and forums**
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Keycard That Renews Itself
+  Picture an office building where members use a smart keycard to enter a private floor. The elevator panel shows the floor exists, the doors are there, and you can even see people inside — but if your membership hasn’t renewed, the card reader stays red. The moment your dues are paid, the building’s access system updates and the light turns green, no receptionist or manual override required.
+
+  That is how renewal-gated access works on-chain. Your wallet sends the renewal — a staking top-up or a `SubscriptionPaid` event from the membership contract — and when that exact event is emitted for your address, the Keypers release the new decryption key. The doors “beep open” for the next period: private forum keys, chat invites, or premium API tokens decrypt for your account. Until that verifiable event arrives, the space remains visible as a teaser but sealed against leaks, backdoors, or special treatment.
+  </p>
+</Admonition>
+
+#### License or Access Token Activation
+##### Software Keys After NFT or License Purchase
+
+Release an activation key when the `LicenseMinted` event or similar events are emitted by the sales contract.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD corresponds to the minting event and the buyer's address.
+
+  ###### Commit
+  - The encrypted license or API key has been prepared for the buyer.
+
+  ###### Reveal
+  - During the minting event, the key is assigned to the buyer's identity.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Software-as-NFT**
+- **Subscription passes**
+- **Decentralized DRM**
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Tamper-Sealed Software Crate
+  Picture downloading an app that arrives like a sealed wooden crate — you can lift it, read the label, even shake it — but the contents stay locked until a registrar stamps your purchase. When you buy the license NFT, the sales contract emits `LicenseMinted(buyer)`, which is the registrar’s stamp. At that exact moment, the Keypers release the activation secret tied to your wallet, and the crate’s seal pops: premium features, configuration bundles, or API credentials decrypt inside the app.
+
+  Before that on-chain signal, nothing budges. Trial mode is visible and fully installed, yet the premium payload remains opaque — no support agent, side channel, or “please hurry” message can open it. The license itself serves as the auditable switch — the activation secret appears only after the verifiable mint event, preventing early leaks while keeping onboarding instant once you’ve paid.
+  </p>
+</Admonition>
+
+#### Escrow or Deal Finalization
+##### Unlock Documents When Escrow Conditions Are Met
+
+Disclose confidential documents when the `PaymentReleased` or `DealCompleted` events are triggered by the escrow contract.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - ETD focuses on events related to the settlement of escrow contracts.
+
+  ###### Commit
+  - Encrypt deliverables or intellectual property for the buyer's identity.
+
+  ###### Reveal
+  - Upon the settlement event, the decryption key is released, and the assets are unlocked.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Decentralized commerce**
+- **Legal or IP transfers**
+- **DAO-to-DAO agreements**
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Dual-Stamp Briefcase
+  Picture a briefcase with two physical seals, one from the seller and one from the escrow agent. The briefcase sits on the conference table in full view. The buyer can inspect the case number, read the label, and even weigh it, but the documents inside remain locked. When both conditions are satisfied on-chain, delivery confirmed and funds settled, the contract emits `DealCompleted`. That event is the second stamp snapping into place. Keypers observe it and release the shared decryption key, and the briefcase opens for the buyer: trademarks, manufacturing specs, or compliance certificates decrypt instantly.
+
+  Until that precise event, the seals hold. There are no partial peeks, no selective sharing, and no pressure to “trust” a ZIP sent over chat. The closing event converts settlement into access, providing a clean, tamper-evident handoff where escrowed assets become usable the instant the deal truly finalizes.
+  </p>
+</Admonition>
+
+#### Multi-Party Unlock (Collaborative Reveal)
+##### Decrypt After Multisig Execution
+
+Require a multisig approval before revealing content, using events like `Execution(address,bytes)` from Safe or similar wallets.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD corresponds to the multisig execution event and the optional calldata hash.
+
+  ###### Commit
+  - Securely encrypt any shared documents or memos related to the action.
+
+  ###### Reveal
+  - When the multisig transaction is executed, the key is made available to all participants.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **DAO treasury operations**
+- **Shared custody**
+- **Project coordination**
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Co-signed Safe Deposit Box
+  Imagine a safe deposit box that requires stamps from several officers of a DAO. The box sits in plain view, tagged with a reference number that everyone can audit, yet it stays locked while signatures are gathered. As each officer signs, their stamp is recorded on-chain in the multisig. The moment the final stamp lands, the wallet broadcasts the approved transaction and emits `Execution(address,bytes)`. That event is the bank clerk turning both handles together. Keypers observe it and publish the decryption key that matches the executed call, and the files inside the box decrypt for every stakeholder.
+
+  Until that exact execution event, nothing leaks. A single officer cannot open the box early, and a curious observer cannot infer the contents. The collective approval is the only gate, and the event is the hinge. Once it swings, transfer memos, legal terms, or treasury instructions become readable instantly and verifiably for the entire group.
+  </p>
+</Admonition>
+
+___
+
 > ### Forecasting & Prediction
 
 #### Encrypted Prediction
@@ -865,6 +1197,76 @@ This structure removes information asymmetry, prevents late-stage strategic adju
       This is exactly how Shutter API's Encrypted Prediction works—forecasts remain hidden until they are meant to be revealed.
       </p>
 </Admonition>
+
+#### Oracle-Driven Data Release
+##### Reveal Only After Trusted Oracle Events
+
+Utilize oracle events, like `AnswerUpdated`, to initiate the decryption of forecasts or settlements.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - ETD refers to the oracle contract and event, and it may include optional filters for feed or round.
+
+  ###### Commit
+  - Encrypt forecasts or settlement instructions.
+
+  ###### Reveal
+  - When the oracle event occurs as expected, the Keypers will release the key and the settlement proceeds.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Prediction market reveals** tied to external data.
+- **Insurance or weather contracts**.
+- **Oracle-based settlements** that eliminate the need for time-based estimations.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Weather Station Seal
+  Imagine a coastal town that runs a parametric insurance pool for storms. Policies and payout instructions are sealed inside digital envelopes that everyone can audit by ID, although the text stays unreadable. A trusted weather oracle monitors rainfall and wind speed, and when a threshold is reached it emits an `AnswerUpdated` event with the verified measurement. That event is the weather station sealing the logbook and filing the official report. Keypers match the event to the registered trigger and publish the decryption key for the affected policies. Claims open for all covered wallets at once, and payouts proceed according to the revealed instructions.
+
+  Until that oracle report arrives, nothing leaks. Adjusters cannot cherry pick files, policyholders cannot jump the line, and observers cannot infer coverage details. The oracle provides the evidence, the event is the gate, and the synchronized reveal keeps settlement fair and transparent.
+  </p>
+</Admonition>
+
+#### Insurance Claim or Coverage Activation
+##### Decrypt Policy or Payout Info After Verified Claim Events
+
+When a claim oracle emits the event `ClaimEvent(policyId, verified=true)`, it indicates that you should reveal the necessary documents or provide payout instructions.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD corresponds to the insurance oracle event and the `policyId`.
+
+  ###### Commit
+  - Encrypt claim details for the beneficiary identity.
+
+  ###### Reveal
+  - Upon verification of the claim, Keypers will release the key, allowing the claimant to unlock the information.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Parametric insurance**.
+- **DeFi protection markets**.
+- **Coverage verification**.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Grounded Flight File
+  Imagine a traveler who bought delay coverage for a business trip. The policy text, the claim form, and the payout instructions are sealed in a digital envelope that everyone can see by policy ID, but no one can read. An aviation oracle watches the flight and, when the delay meets the covered threshold, it emits `ClaimEvent(policyId, verified=true)`. That event is the airline desk stamping an official delay notice. Keypers match the event to the registered trigger, then publish the decryption key for that policy. The envelope opens, the claimant sees the approved steps, and the payout can be executed without back and forth.
+
+  Before the oracle signal arrives, nothing leaks. Adjusters cannot peek at sensitive details, claimants cannot front run the process, and observers cannot infer coverage terms. The oracle provides the fact, the on chain event is the gate, and the synchronized reveal keeps settlement neutral and verifiable.
+  </p>
+</Admonition>
+
+___
 
 > ### Coordination & Workflows
 
@@ -1016,12 +1418,114 @@ This process guarantees the confidentiality of all bids until the final decision
       </p>
 </Admonition>
 
+#### Crowdfunding or Fundraising Milestone
+##### Reveal After Goal Reached
+
+Decrypt the roadmaps or the reward details when the campaign contract emits the event `GoalReached`.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - ETD focuses on the campaign contract and the goal event.
+
+  ###### Commit
+  - Encrypt milestone materials for backers.
+
+  ###### Reveal
+  - When the goal is reached, Keypers will release the key, allowing backers to unlock the content.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **DAO treasury fundraising**.
+- **Collective investment rounds**.
+- **Charity projects** with milestone-based reveals.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Curtain-Raise Roadmap
+  Imagine a public fundraiser for an open-source project. The team promises a detailed roadmap and budget breakdown, but keeps both sealed in a visible, unreadable envelope that references the campaign ID. Backers contribute while a pool contract tracks progress. When total contributions meet the target, the contract emits `GoalReached(campaignId)`. That event is the stage manager lifting the curtain. Keypers match the registered trigger for that campaign and publish the decryption key. The envelope opens, the roadmap and budget become readable to everyone, and execution can begin with shared context.
+
+  Before the target is met, nothing leaks. Potential rivals cannot scrutinize milestones, early backers cannot trade on privileged information, and organizers cannot reveal only favorable parts. The contract provides the fact, the on-chain event acts as the gate, and the synchronized reveal keeps the process neutral and verifiable for all participants.
+  </p>
+</Admonition>
+
+#### Collective Unlock (Threshold of Interest)
+##### Group-Driven Reveal After Participation Threshold
+
+Disclose a secret once N participants have either made a deposit or expressed interest through a `ThresholdReached` event.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - The ETD matches the pool contract with the threshold event.
+
+  ###### Commit
+  - Encrypt the shared secret or content.
+
+  ###### Reveal
+  - When the interest threshold is reached, the Keypers will release the decryption key.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Group-buy unlocks**.
+- **Crowd challenges**.
+- **Token-gated reveals** where community signals demand.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Crowd Key Turns at One Hundred
+  Picture a community group-buy for a premium research dataset. Interested buyers each deposit into a shared pool, and every deposit is recorded against a specific pool ID. The encrypted download key sits on chain, visible but unreadable. When the hundredth buyer joins, the pool contract emits `ThresholdReached(poolId, 100)`. Keypers match the registered trigger, publish the decryption key for that pool, and everyone who participated can open the same sealed package at the same moment.
+
+  Before the threshold event, no one can peek at the files, and no insider can claim an advantage. If the target is never met, contributions are returned by the contract and the sealed package stays closed. The count is public, the bar is explicit, the reveal happens once the crowd actually arrives.
+  </p>
+</Admonition>
+
+#### Reward Claim Unlock
+##### Reveal Claim Proofs After On-Chain Actions
+
+Decrypt the per-user claim proofs whenever the `RewardClaimed` or `StakeCompleted` events occur.
+
+##### Transaction Flow Overview
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### Register Event Trigger
+  - ETD filters by user and action event.
+
+  ###### Commit
+  - Encrypt claim proofs or reward data.
+
+  ###### Reveal
+  - On event, Keypers release the key and the user unlocks their reward info.
+  </p>
+</Admonition>
+
+##### Real-World Applications
+- **Gaming achievements**.
+- **Loyalty programs**.
+- **DeFi yield verification**.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+  <p>
+  ###### The Staker’s Milestone Envelope
+  Picture a DeFi loyalty program where users stake LP tokens to unlock tiered perks. For each staker, the protocol prepares a sealed pack that contains a per-user Merkle proof for fee rebates, a coupon code for partner services, and a nonce for one-time redemption. The pack sits on chain and is linked to the user’s address. When the staker’s position hits the required duration or amount, the staking contract emits `StakeCompleted(user, tier)`. That event is the milestone bell. Keypers detect the matching trigger and release the decryption key, so the user can immediately view and redeem their rewards.
+
+  Until the milestone is reached, there is no selective disclosure. No early access for whales, no guessing from partial metadata, and no gaming of the queue. The measurement is automatic, the event is the switch, and the reveal is tied directly to a verified threshold so the program remains neutral, auditable, and resistant to front running.
+  </p>
+</Admonition>
+
 ---
 
 ## Conclusion  
 
 The **Shutter API** provides a **powerful and flexible encryption layer** for a wide variety of Web3 applications. By integrating threshold encryption, dApps can **prevent manipulation, enhance fairness, and protect user data** without requiring complex cryptographic knowledge.  
 
-Developers can start using the Shutter API today to **improve trading security, enable fair governance, build trustless games, and implement confidential smart account interactions**.  
+Developers can begin utilizing the Shutter API today to **improve trading security, enable fair governance, build trustless games, and facilitate confidential smart account interactions**.  
 
 To learn more and start building, visit the [Quick Start Guide to Shutter API](get_started/)  
