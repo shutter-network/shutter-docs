@@ -97,7 +97,9 @@ A hardware-based solution that provides a secure enclave for running private com
 ---
 
 #### **Event-Based Encryption Triggers**  
-Shutter API allows encryption to be **triggered by predefined events**, such as **all players submitting moves in a game**, rather than just time-based triggers. This ensures that decryption happens only when all conditions are met.  
+The Shutter API enables encryption to be **triggered by predefined events**, such as **when all players submit their moves in a game**, instead of relying solely on time-based triggers. This approach ensures that decryption occurs only when all specified conditions are met.
+
+Decryption is **released when a specific on-chain event is observed** by the Keypers. These events are compared against a registered **Event Trigger Definition (ETD)**, which details the emitter contract, the event signature, and includes optional indexed topic filters as well as conditions for non-indexed arguments. This functionality is useful for various applications, such as payment-gated content, enhancing DAO transparency after a proposal is executed, settling auctions once they are closed, or revealing game rounds upon completion.
 
 ---
 
