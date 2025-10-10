@@ -39,7 +39,9 @@ npm install @shutter-network/shutter-sdk
 
 Shutter API provides **a simple workflow** for encrypting commitments, ensuring fairness and security in decentralized applications. The process consists of three main steps:
 
-### 1\. **Setup: Register an Identity and Decryption Time**
+### 1\. **Setup**
+
+#### **Option 1: Register an Identity and Decryption Time**
 
 The first step is to register an **identity** on-chain and specify a **decryption timestamp**. This ensures that encrypted data remains locked until the designated time.
 
@@ -67,6 +69,48 @@ This request registers an identity and sets a future timestamp when the decrypti
 }
 ```
 
+#### **Option 2: Register an Identity with an Event Trigger (ETD)**
+
+Instead of a time trigger, you can register an **Event Trigger Definition (ETD)**. The identity will decrypt when Keypers observe a matching on-chain event from a specific contract.
+
+##### API Call: Register Identity with ETD
+
+```bash
+curl -X POST https://shutter-api.shutter.network/register_identity\
+-H "Content-Type: application/json"\
+-d '{
+  "trigger": {
+    "type": "event",
+    "etd": {
+      "contract": "0xA1b2c3D4e5F6a7B8c9D0E1f2A3b4C5d6E7f8A9B0",
+      "eventSignature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "indexedTopics": [null, null, "0x000000000000000000000000feed0000000000000000000000000000cafe"],
+      "conditions": [{"arg":"value","op":"gte","value":"10000000"}],
+      "ttl": 86400
+    }
+  },
+  "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
+}'
+```
+
+##### API Response
+
+```json
+{
+  "eon": 2,
+  "eon_key": "0x9ab65437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e6622aa",
+  "identity": "0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121",
+  "tx_hash": "0x6d54be9940b784b10c9a0c95c6ed1d6df8a8c1d2a78b7d9a0c7e6f5d4c3b2a19"
+}
+```
+
+:::note **Notes**
+
+-   `eventSignature` is the Keccak-256 topic0 of the event.
+-   `indexedTopics` positions map to topic1 to topic3. Use `null` for wildcards.
+-   `conditions` apply to non-indexed arguments, for example numeric comparisons.
+-   `ttl` is the number of seconds to track the event after registration.
+:::
 * * * * *
 
 ### 2\. **Encrypt and Submit the Commitment**
@@ -119,6 +163,30 @@ const decryptedData = await decrypt(encryptedData, epochSecretKey);
 console.log("Decryption successful:", decryptedData);
 ```
 
+#### Alternative: **Decrypt After Event Trigger**
+
+For ETD identities, the key is released when a matching on-chain event is observed within the TTL window.
+
+##### Optionally check identity status
+
+```bash
+curl -X GET "https://shutter-api.shutter.network/get_identity_status?identity=0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121"
+```
+
+Example response:
+
+```json
+{ "status": "satisfied", "triggerType": "event", "observedAt": 1735045061 }
+```
+
+##### Retrieve decryption key
+
+```bash
+curl -X GET "https://shutter-api.shutter.network/get_decryption_key?identity=0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121"
+```
+
+Use the same SDK `decrypt` call as above to reveal the plaintext.
+
 * * * * *
 
 Next Steps
@@ -130,6 +198,7 @@ Now that you have successfully encrypted and decrypted data using the **Shutter 
 -   **Sealed-Bid Auctions:** Prevent bidders from seeing each other's offers.
 -   **Fair On-Chain Gaming:** Ensure secret moves remain private until revealed.
 -   **MEV Protection in DeFi:** Keep transactions private to prevent front-running.
+-   **Event-gated flows:** Payment-gated content unlock, DAO decision transparency, game round completion, oracle-driven settlement.
 
 Explore the full documentation and API references to customize and scale your integration:
 
