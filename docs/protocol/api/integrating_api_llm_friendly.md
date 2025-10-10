@@ -1,3 +1,4 @@
+
 ---
 title: Integrating Shutter API and SDK for dApp Development
 description: Integrating Shutter API and SDK for dApp Development
@@ -46,6 +47,8 @@ Key components include:
 -   **Shutter API**: Endpoints for identity registration, encryption data retrieval, key retrieval, and decryption.
 -   **Keypers**: Nodes that perform threshold cryptography.
 
+*Event-based triggers note*: In addition to time-based triggers, Shutter also supports **event-based triggers**. Decryption is released when Keypers observe a matching on-chain event defined through an **Event Trigger Definition (ETD)**.
+
 ## Prerequisites and Setup
 
 Before integrating Shutter into your dApp, ensure you have:
@@ -91,9 +94,9 @@ curl  -X  POST  https://`API_BASE_URL`/register_identity
 
 -d  '{
 
-  "decryptionTimestamp":  1735044061,
+  "decryptionTimestamp":  1735044061,
 
-  "identityPrefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
+    "identityPrefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
 
 }'
 ```
@@ -102,21 +105,101 @@ curl  -X  POST  https://`API_BASE_URL`/register_identity
 
 ```
 {
+  "eon":  1,
 
-  "eon":  1,
+  "eon_key":  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
 
-  "eon_key":  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
+  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
 
-  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
+  "identity_prefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
 
-  "identity_prefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
-
-  "tx_hash":  "0x3026ad202ca611551377eef069fb6ed894eae65329ce73c56f300129694f12ba"
-
+  "tx_hash":  "0x3026ad202ca611551377eef069fb6ed894eae65329ce73c56f300129694f12ba"
 }
 ```
 
 Note: Replace `API_BASE_URL` with the appropriate API base URL (Chiado or Mainnet).
+
+* * * * *
+
+### Registering an Identity with an Event-Based Trigger (ETD)
+
+To release decryption when a specific on-chain event occurs, use an **Event Trigger Definition**. In this definition, you specify the contract that emits the event, the event signature, and any optional indexed topic filters. You can also set conditions on non-indexed arguments if needed. Additionally, you will establish a Time-To-Live (TTL) to limit how long the Keypers will monitor the trigger.
+
+```
+Endpoint:  /register_event_trigger
+Method:  POST
+```
+
+#### Example Request
+
+```
+curl -X POST https://`API_BASE_URL`/register_event_trigger\
+-H "Content-Type: application/json"\
+-d '{
+  "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
+  "etd": {
+    "contract": "0x1234567890abcdef1234567890abcdef12345678",
+    "eventSignature": "0x4bb278f3a1a2c3f4d5e6a7b8c9d0e1f2a3b4c5d6e7f8090a1b2c3d4e5f607182",
+    "indexedTopics": [
+      "0x000000000000000000000000228DefCF37Da29475F0EE2B9E4dfAeDc3b0746bc",
+      null,
+      null
+    ],
+    "conditions": [
+      {"argIndex": 2, "op": ">=", "value": "1000000000000000000"}
+    ],
+    "ttl": 86400
+  }
+}'
+```
+
+#### Example Response
+
+```
+{
+  "identity": "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
+
+  "eon": 1,
+
+  "eon_key": "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
+
+  "epoch_id": "0x88f2495d1240f9c5523db589996a50a4984ee7a08a8a8f4b269e4345b383310a",
+
+  "tx_hash": "0xabcdad202ca611551377eef069fb6ed894eae65329ce73c56f300129694f1abc"
+
+}
+```
+
+* * * * *
+
+### Checking Trigger Status
+
+Query the current status of a time-based or event-based identity. Useful for polling your UI.
+
+```
+Endpoint:  /get_trigger_status
+Method:  GET
+```
+
+#### Example Request
+
+```bash
+curl -X GET "https://`API_BASE_URL`/get_trigger_status?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
+```
+
+#### Example Response
+
+```
+{
+  "identity": "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
+
+  "type": "event",
+
+  "status": "Satisfied",
+
+  "observedAt": 1735045061
+}
+```
 
 * * * * *
 
@@ -139,17 +222,15 @@ curl  -X  GET  "https://`API_BASE_URL`/get_data_for_encryption?address=0xb9C3034
 
 ```
 {
+  "eon":  1,
 
-  "eon":  1,
+  "eon_key":  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
 
-  "eon_key":  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
+  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
 
-  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
+  "identity_prefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
 
-  "identity_prefix":  "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
-
-  "epoch_id":  "0x88f2495d1240f9c5523db589996a50a4984ee7a08a8a8f4b269e4345b383310abd2dc1cd9c9c2b8718ed3f486d5242f5"
-
+  "epoch_id":  "0x88f2495d1240f9c5523db589996a50a4984ee7a08a8a8f4b269e4345b383310abd2dc1cd9c9c2b8718ed3f486d5242f5"
 }
 ```
 
@@ -157,7 +238,7 @@ curl  -X  GET  "https://`API_BASE_URL`/get_data_for_encryption?address=0xb9C3034
 
 ### Retrieving the Decryption Key
 
-Once the specified decryption timestamp has passed, you can retrieve the decryption key. This key is used later to decrypt the encrypted commitments.
+Once the specified decryption timestamp has passed, or an ETD matched event has been observed, you can retrieve the decryption key. This key is used later to decrypt the encrypted commitments.
 
 ```
 Endpoint:  /get_decryption_key
@@ -174,15 +255,14 @@ curl  -X  GET  "https://`API_BASE_URL`/get_decryption_key?identity=0x8c232eae4f9
 
 ```
 {
+  "decryption_key":  "0x99a805fc26812c13041126b25e91eccf3de464d1df7a95d1edca8831a9ec02dd",
 
-  "decryption_key":  "0x99a805fc26812c13041126b25e91eccf3de464d1df7a95d1edca8831a9ec02dd",
+  "decryption_timestamp":  1735044061,
 
-  "decryption_timestamp":  1735044061,
-
-  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
-
+  "identity":  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
 }
 ```
+
 
 * * * * *
 
@@ -205,9 +285,7 @@ curl  -X  GET  "https://`API_BASE_URL`/decrypt_commitment?identity=0x8c232eae4f9
 
 ```
 {
-
-  "decrypted_message":  "0x706c6561736520686964652074686973206d657373616765"
-
+  "decrypted_message":  "0x706c6561736520686964652074686973206d657373616765"
 }
 ```
 
@@ -233,25 +311,22 @@ Below is a sample code snippet that demonstrates how to use the SDK to encrypt d
 
 ```typescript
 import  {  encryptData  }  from  "@shutter-network/shutter-sdk";
-
 import  {  stringToHex  }  from  "viem";
 
 //  Define  the  encryption  data  from  the  API
-
 const  eonKeyHex  =  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255";
-
 const  identityPreimageHex  =  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75";
-
 const  message  =  "please  hide  this  message";
-
 const  sigmaHex  =  "0x312c10b186086d502ba683cffc2ae650d53b508904b3c430df8e7d5aa336c0f5";
 
 //  Encrypt  the  message
-
 const  encryptedCommitment  =  await  encryptData(message,  eonKeyHex,  identityPreimageHex,  sigmaHex);
-
 console.log("Encrypted  Commitment:",  encryptedCommitment);
 ```
+
+:::note [Note]
+If you are using an event-based trigger, the encryption step is identical. What changes is how and when you request the decryption key because availability is tied to the ETD that you registered.
+:::
 
 * * * * *
 
@@ -263,15 +338,16 @@ To decrypt an encrypted commitment, use the decrypt function provided by the SDK
 import  {  decrypt  }  from  "@shutter-network/shutter-sdk";
 
 const  encryptedData  =  "0x03a975256b0098bc981da31762a73e50a07c79f5bf3e17c44121b9567033cedaf9e203f0300b709dec3458a88baa18963c0e503f437bff7adb31231941585ea1bb14e8ce98c7dc1471666e4b07c592cbeda30acc22f23dcb84d58d41848e72af0804d348d5c5cb65a52dc3b697ea4caae9679b97e395a30807f9657ebc85bbf2fcadaa9a458a86bffb78dde89f7626a26eb84f4781d3b6759c06629ea321a8b757";
-
 const  decryptionKey  =  "0x81cfcfceebfc69b3cb3fe074f4b3751e7844f6d62b3040563ccb3a2430110f259d109519c73682735f4c02651492c740";
 
 //  Decrypt  the  data
-
 const  decryptedData  =  await  decrypt(encryptedData,  decryptionKey);
-
 console.log("Decrypted  Message:",  decryptedData);
 ```
+
+:::note [Note]
+For event-based triggers, first poll or subscribe to trigger status, then request the decryption key and run the same decrypt flow.
+:::
 
 * * * * *
 
@@ -284,88 +360,64 @@ package  main
 
 import  (
 
-  "crypto/rand"
+  "crypto/rand"
 
-  "encoding/hex"
+  "encoding/hex"
 
-  "fmt"
+  "fmt"
 
-  "log"
+  "log"
 
-  "strings"
+  "strings"
 
-  "github.com/shutter-network/shutter/shlib/shcrypto"
+
+  "github.com/shutter-network/shutter/shlib/shcrypto"
 
 )
 
 func  main()  {
+  //  Encryption  data  from  the  Shutter  API
+  identityHex  :=  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
+  eonPublicKeyHex  :=  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255"
+  message  :=  []byte("please  hide  this  message")
 
-  //  Encryption  data  from  the  Shutter  API
+  identityHex  =  strings.TrimPrefix(identityHex,  "0x")
+  eonPublicKeyHex  =  strings.TrimPrefix(eonPublicKeyHex,  "0x")
 
-  identityHex  :=  "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
+  //  Convert  hex  strings  to  bytes
+  identity,  err  :=  hex.DecodeString(identityHex)
+  if  err  !=  nil  {
+    log.Fatalf("Failed  to  decode  identity:  %v",  err)
+  }
 
-  eonPublicKeyHex  :=  "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255"
+  eonPublicKeyBytes,  err  :=  hex.DecodeString(eonPublicKeyHex)
+  if  err  !=  nil  {
+    log.Fatalf("Failed  to  decode  eon  public  key:  %v",  err)
+  }
 
-  message  :=  []byte("please  hide  this  message")
+  //  Unmarshal  the  public  key
+  eonPublicKey  :=  &shcrypto.EonPublicKey{}
+  if  err  :=  eonPublicKey.Unmarshal(eonPublicKeyBytes);  err  !=  nil  {
+    log.Fatalf("Failed  to  unmarshal  EonPublicKey:  %v",  err)
+  }
 
-  identityHex  =  strings.TrimPrefix(identityHex,  "0x")
+  //  Compute  the  Epoch  ID  from  the  identity
+  epochID  :=  shcrypto.ComputeEpochID(identity)
 
-  eonPublicKeyHex  =  strings.TrimPrefix(eonPublicKeyHex,  "0x")
+  //  Generate  a  random  sigma  value
+  sigma,  err  :=  shcrypto.RandomSigma(rand.Reader)
+  if  err  !=  nil  {
+    log.Fatalf("Failed  to  generate  random  sigma:  %v",  err)
+  }
 
-  //  Convert  hex  strings  to  bytes
+  //  Encrypt  the  message
+  encryptedCommitment  :=  shcrypto.Encrypt(message,  eonPublicKey,  epochID,  sigma)
 
-  identity,  err  :=  hex.DecodeString(identityHex)
+  //  Marshal  the  encrypted  commitment  and  encode  to  hex
+  encryptedCommitmentBytes  :=  encryptedCommitment.Marshal()
+  encryptedCommitmentHex  :=  "0x"  +  hex.EncodeToString(encryptedCommitmentBytes)
 
-  if  err  !=  nil  {
-
-    log.Fatalf("Failed  to  decode  identity:  %v",  err)
-
-  }
-
-  eonPublicKeyBytes,  err  :=  hex.DecodeString(eonPublicKeyHex)
-
-  if  err  !=  nil  {
-
-    log.Fatalf("Failed  to  decode  eon  public  key:  %v",  err)
-
-  }
-
-  //  Unmarshal  the  public  key
-
-  eonPublicKey  :=  &shcrypto.EonPublicKey{}
-
-  if  err  :=  eonPublicKey.Unmarshal(eonPublicKeyBytes);  err  !=  nil  {
-
-    log.Fatalf("Failed  to  unmarshal  EonPublicKey:  %v",  err)
-
-  }
-
-  //  Compute  the  Epoch  ID  from  the  identity
-
-  epochID  :=  shcrypto.ComputeEpochID(identity)
-
-  //  Generate  a  random  sigma  value
-
-  sigma,  err  :=  shcrypto.RandomSigma(rand.Reader)
-
-  if  err  !=  nil  {
-
-    log.Fatalf("Failed  to  generate  random  sigma:  %v",  err)
-
-  }
-
-  //  Encrypt  the  message
-
-  encryptedCommitment  :=  shcrypto.Encrypt(message,  eonPublicKey,  epochID,  sigma)
-
-  //  Marshal  the  encrypted  commitment  and  encode  to  hex
-
-  encryptedCommitmentBytes  :=  encryptedCommitment.Marshal()
-
-  encryptedCommitmentHex  :=  "0x"  +  hex.EncodeToString(encryptedCommitmentBytes)
-
-  fmt.Printf("Encrypted  Commitment:  %s\n",  encryptedCommitmentHex)
-
+  fmt.Printf("Encrypted  Commitment:  %s\n",  encryptedCommitmentHex)
 }
 ```
 
@@ -386,6 +438,8 @@ When building a new dApp with the Shutter API, follow these steps:
 
     Tip: If you want full control over your address, consider registering directly with the registry contract.
 
+    *Event-based option*: You can also register an identity with an ETD using **/register_event_trigger** so that decryption keys are released when a matching on-chain event is observed.
+
 3.  **Retrieve Encryption Data**
 
     Once your identity is registered, call /get_data_for_encryption to obtain the parameters needed to encrypt commitments.
@@ -400,7 +454,7 @@ When building a new dApp with the Shutter API, follow these steps:
 
 6.  **Retrieve and Decrypt Data**
 
-    After the trigger time passes, use the /get_decryption_key endpoint to fetch the decryption key, and then call /decrypt_commitment or use the SDK's decrypt function to reveal the original message.
+    After the trigger time passes, or after the ETD condition is observed, use the /get_decryption_key endpoint to fetch the decryption key, and then call /decrypt_commitment or use the SDK's decrypt function to reveal the original message.
 
 7.  **User Interaction and UI**
 
@@ -410,9 +464,9 @@ When building a new dApp with the Shutter API, follow these steps:
 
 ## Future Features and Considerations
 
--   **Event-Based & Block-Based Triggers**
+-   **Event-Based Triggers**
 
-    In future versions, decryption triggers may be based on blockchain events or block numbers, offering more flexibility.
+    Event-based decryption via ETD is supported. Best practice is to constrain ETDs using indexed topic filters and conditions, and to set a reasonable TTL.
 
 -   **Real-Time Notifications**
 
@@ -437,6 +491,10 @@ Using threshold encryption and distributed key management, Shutter ensures that 
 ### Can I use my own address for identity registration?
 
 Yes. By default, the API uses the account address to compute the identity. If you prefer to use your own address, register directly with the registry contract.
+
+### How do event-based triggers differ from time-based triggers?
+
+Time-based triggers release decryption keys after a future timestamp. Event-based triggers release keys when Keypers observe an on-chain event that matches your ETD. Both flows use the same encryption and decryption steps. What changes is how availability of the decryption key is determined.
 
 * * * * *
 
