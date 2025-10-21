@@ -445,16 +445,6 @@ In an auction contract that utilizes event-based triggers, it is the contract it
       </p>
 </Admonition>
 
-##### Example
-<Admonition type="note" title={null} icon={null}>
-      <p>
-      ###### The Sealed Bids and the Clockwork Bell
-      Picture a hall where bidders place sealed notes into a locked chest beside the auction lot. A clockwork bell is wired to the auction contract itself; when the sale officially ends, the bell strikes. Until then, the chest is visible but impossible to open—no curator, no guard, no VIP can peek inside.
-
-      On-chain, that bell strike is the <code>AuctionClosed</code> event. You register its observation as the trigger (via <code>/register_event_identity</code>), bidders commit encrypted offers during the window, and when the event fires, Keypers publish the decryption key. All notes are read at once, the highest valid offer wins, and there was never a chance for early leaks, last-second sniping, or backroom reveals.
-      </p>
-</Admonition>
-
 ___
 
 > ### Gaming
@@ -610,6 +600,133 @@ This method prevents pre-reveal move sniping, ensures unpredictable randomness, 
       - Only after everyone has finalized their moves is the box opened, revealing the true result.
 
       This is exactly how Shutter API's Fair On-Chain Gaming works—game outcomes, actions, and randomness remain sealed until the appropriate moment, ensuring an even playing field.
+      </p>
+</Admonition>
+
+#### Parimutuel Betting
+##### Fair & Manipulation-Resistant Wagering
+Parimutuel betting is a popular system used in horse racing, sports betting, and prediction markets. In this system, all bets are combined into a pool, and the winnings are distributed based on the total amount wagered. Unlike fixed-odds betting, where payouts are predetermined, parimutuel odds fluctuate dynamically according to the bets placed. However, this system can be susceptible to strategic manipulation and insider exploitation.
+
+:::warning[Common problems in traditional parimutuel betting]
+- **Late-Stage Betting Exploits**
+  - Players wait until the last moment to place bets, adjusting based on the current odds.
+- **Odds Manipulation**
+  - Early bettors can strategically place large bets to shift the odds in their favor.
+- **Insider Advantage**
+  - Market operators or validators may see bets before they are finalized, allowing them to adjust their positions accordingly.
+:::
+
+:::tip[With Shutter API's encrypted parimutuel betting, bets remain completely hidden until the pool closes]
+- No one can adjust their bets based on the current odds.
+- Bets are only revealed after the betting window closes, ensuring fairness.
+- The final odds reflect true market sentiment, free from last-minute manipulation.
+:::
+
+Consider this system as if you are placing your bet in a sealed envelope—no one can see how much you've wagered until all envelopes are opened simultaneously, ensuring that no one can manipulate the odds before the final reveal.
+
+##### Transaction Flow Overview
+Parimutuel betting with Shutter API's commit-reveal encryption ensures that wagers remain confidential until the betting period ends.
+
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### Commitment Phase (Bet Placement)
+      - Players encrypt their bets before submitting them to the betting smart contract.
+      - The encrypted bet is stored on-chain but remains unreadable to all other players, validators, and the market operator.
+      ###### Waiting Period (Betting Pool Open)
+      - Players can see the total number of participants but not the individual bets.
+      - No one can adjust their wagers based on others' betting patterns.
+      ###### Reveal Phase (Pool Closure & Odds Calculation)
+      - When the betting window closes, the decryption key is released by Shutter's distributed Keyper network.
+      - All bets are revealed simultaneously, and final odds are calculated based on total wagers in the pool.
+      - The winnings are distributed fairly, based on the final odds.
+      </p>
+</Admonition>
+
+This method prevents last-minute betting exploits, guarantees privacy, and ensures that no player can manipulate the market before the final odds are locked in.
+
+##### Real-World Applications of Parimutuel Betting
+- **Horse Racing & Traditional Sports Betting**
+  - Ensures fair parimutuel odds without last-minute betting exploits.
+  - Prevents sportsbooks from adjusting odds based on insider knowledge.
+- **Decentralized Prediction Markets**
+  - Keeps market participants' wagers hidden until the event concludes.
+  - Ensures manipulation-free forecasting in political and financial markets.
+- **Crypto & NFT Betting Pools**
+  - Allows users to place bets on NFT rarities or token price movements without others seeing their predictions.
+  - Prevents whales from manipulating outcomes by front-loading bets.
+- **On-Chain Fantasy Sports & eSports Betting**
+  - Guarantees that no one can adjust their fantasy league wagers based on early game results.
+  - Keeps betting odds stable until all positions are locked in.
+- **Yield-Based Betting & DeFi Risk Pools**
+  - Used in DeFi insurance pools, where participants bet on protocol risks or security events.
+  - Ensures fair distribution of payouts based on final pool outcomes.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### A Blindfolded Auction for Betting
+      Imagine a group of friends betting on a mystery box auction, where the final price is determined by the total amount wagered. If they could see each other's bids before submitting their own, they might:
+      - Adjust their bets to manipulate the final price.
+      - Wait until the last second to place their wager, ensuring they get the best possible deal.
+      - Use insider knowledge to game the system.
+
+      Now, imagine instead:
+      - All bets are placed inside locked boxes and submitted without revealing the amounts.
+      - When the betting period ends, all boxes are opened at the same time, and the final price is determined fairly.
+      - No one knew what others were betting, so the final result was free from manipulation.
+
+      This is exactly how Shutter API's Parimutuel Betting system works—bets remain hidden until the pool closes, ensuring fair odds and trust-minimized betting outcomes.
+      </p>
+</Admonition>
+
+#### Randomness Generation
+##### Threshold-Generated Randomness for Games and Protocols
+Randomness plays a critical role in gaming, lotteries, NFT mints, and many on-chain applications where fairness and unpredictability are essential. However, generating reliable randomness on a public blockchain is notoriously difficult due to its transparent and deterministic nature. Traditional approaches, such as relying on block hashes or centralized oracles, introduce vulnerabilities and trust assumptions.
+
+Shutter API offers a unique solution: it provides access to random values generated directly through the threshold decryption process by a decentralized network of Keypers. These values can be accessed via API calls and used as a reliable randomness source in any off-chain or on-chain application.
+
+This randomness is not derived from encrypting a pre-defined value and later decrypting it—instead, the decryption key itself (produced as part of Shutter’s distributed key generation) serves as the source of randomness. Because the key is generated collaboratively through a secure threshold process, it is unpredictable, unbiased, and cannot be influenced by any single actor.
+
+##### Transaction Flow Overview
+The Shutter API enables access to trust-minimized randomness by exposing the randomness inherent in its threshold key generation process.
+
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### Identity Registration (Randomness Setup)
+      - A developer registers a new encryption identity with a decryption trigger condition (e.g. a future timestamp or event).
+      ###### Wait for Decryption (Key Generation by Keypers)
+      - The network of Keypers collaborates to compute a threshold decryption key. Until the condition is met, the key—and thus the randomness—is not available to anyone.
+      ###### Randomness Retrieval (Reveal Phase)
+      - Once the trigger condition is satisfied, the Keypers publish the decryption key associated with the identity.
+      - This decryption key itself is used as the random value, which can be consumed by applications to drive logic in games, draws, lotteries, and more.
+      </p>
+</Admonition>
+
+Importantly, the randomness is not user-supplied or application-specific, making it tamper-resistant and suitable for a wide range of verifiable use cases.
+
+##### Real-World Applications of Randomness Generation
+- **Provably Fair Blockchain Games**
+  - Use random values to resolve outcomes such as dice rolls, loot drops, monster spawns, or card shuffles—without giving validators or players the chance to manipulate the result.
+- **NFT Minting and Trait Assignment**
+  - Assign rarities and attributes to NFTs using unbiased randomness. Prevents early insiders from predicting or gaming the minting process.
+- **Prize Draws, Lotteries, and Raffles**
+  - Run secure giveaways where winners are selected based on a truly unpredictable value, with public verifiability.
+- **DAO Governance and Random Selection**
+  - Select random committee members, grant reviewers, or jurors in decentralized governance processes.
+- **Randomized Event Triggers in Smart Contracts**
+  - Trigger in-game or protocol-level events at unpredictable times to keep user interactions dynamic and trustless.
+- **Betting Games and Gambling dApps**
+  - Use random outcomes to determine winners in parimutuel pools, roulette-style games, or dice games, ensuring fairness across participants.
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### The Dice Roll That No One Can Rig
+      Imagine a turn-based strategy game where players roll a die to determine how many spaces they can move. If the die roll is public or predictable, a savvy player might time their actions or manipulate the outcome in their favor.
+
+      Now consider a die that is rolled in secret by a neutral, trusted group, and the result is only revealed once it's time to act. No one can influence or predict it—players commit to their strategies blind, and only after that is the die roll shown.
+
+      This is what Shutter’s randomness generation achieves. The randomness comes from the threshold-generated decryption key, created by a decentralized set of Keypers. No participant or developer can bias it. It’s just fair randomness—generated collaboratively, revealed at the right time.
       </p>
 </Admonition>
 
