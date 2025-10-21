@@ -43,11 +43,10 @@ The Shutter protocol provides a robust and secure commit-and-reveal workflow by 
 <Admonition type="note" title={null} icon={null}>
       <p>
       -   **Register Identity with Timestamp**: Allows clients to register identities and decryption triggers seamlessly.
-      -   **Register Identity with Event Trigger (ETD)**: This feature enables clients to register identities that decrypt upon the observation of a specific on-chain event.
+      -   **Register Event Identity (event-based trigger)**: Register identities that are decrypted upon observing a specific on-chain event by submitting an encoded `eventDefinition` via `/register_event_identity`.
       -   **Retrieve Encryption Data**: Enables retrieval of encryption data for specific identities.
       -   **Retrieve Decryption Keys**: Provides access to decryption keys once trigger conditions are met.
       -   **Decrypt Commitments**: Facilitates direct decryption of commitments using stored decryption keys.
-      -   **Get Identity Status**: Indicates if an identity is pending, satisfied, expired by TTL, or finalized.
       </p>
 </Admonition>
 
@@ -115,7 +114,7 @@ Before using Shutter's encryption, a dApp must **register an identity and specif
 :::tip[How it works]
 
 1. For time-based identities, the developer sends a request to the Shutter API to **register an identity with a decryption timestamp**.
-2. For event-based identities, the developer sends a request to **register an identity with an Event Trigger Definition (ETD)**, which specifies which on-chain event will unlock decryption and how long it should be tracked.
+2. For event-based identities, the developer sends a request to register an event identity via `/register_event_identity`, submitting an encoded `eventDefinition` that specifies the on-chain event to monitor and a TTL for tracking.
 3. The API **submits this registration to the on-chain registry contract**.
 4. The **Keypers monitor the registry** and initiate the **threshold key generation process**.
 5. Once successful, the registry **stores the identity and its associated trigger**.
@@ -132,31 +131,19 @@ The Shutter API can optionally **cover the gas fees** for this transaction.
 curl -X POST https://API_BASE_URL/register_identity \
 -H "Content-Type: application/json" \
 -d '{
-  "trigger": {
-    "type": "time",
-    "decryptionTimestamp": 1735044061
-  },
+  "decryptionTimestamp": 1735044061,
   "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
 }'
 ```
 
-> ##### Event-based (inline ETD)
+> ##### Event-based (register event identity)
 
 ```bash
-curl -X POST https://API_BASE_URL/register_identity \
--H "Content-Type: application/json" \
+curl -X POST https://API_BASE_URL/register_event_identity\
+-H "Content-Type: application/json"\
 -d '{
-  "trigger": {
-    "type": "event",
-    "etd": {
-      "contract": "0xA1b2c3D4e5F6a7B8c9D0E1f2A3b4C5d6E7f8A9B0",
-      "eventSignature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "indexedTopics": [null, "0x000000000000000000000000feed0000000000000000000000000000cafe", null],
-      "conditions": [{"arg":"value","op":"gte","value":"10000000"}],
-      "ttl": 86400
-    }
-  },
-  "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
+  "eventDefinition": "0x808ba62b3fb085eae2e58888828d5aa5d0d8d3cc44dcb1750e3664468a1288c38501d8d9e5d89930656b6ce9aa13b6a311031b89963b83d95588e26e5e8a9aeef2b9c1b07740d24bbd7aef9935fde194e05aff41fe6e3529de9a4b81779ddf4bed488b753efabe29aa7407bf131a7f744f2cf0429b0a200b1d369791fae3c740d62edd422b649a41660a6f0bd4310ecad617fb8ba626970934bd473c4dcc7784fac7ed66c4576590c76e70af4f3d99ea1361669349beb8cbb3346e9cc821435d",
+  "identityPrefix": "0x32fdbd2ca52e171f77db2757ff6200cd8446350f927a3ad46c0565483dd8b41c"
 }'
 ```
 

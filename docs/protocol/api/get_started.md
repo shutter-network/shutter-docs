@@ -69,27 +69,18 @@ This request registers an identity and sets a future timestamp when the decrypti
 }
 ```
 
-#### **Option 2: Register an Identity with an Event Trigger (ETD)**
+#### **Option 2: Register an Identity with an Event Trigger (WIP)**
 
-Instead of a time trigger, you can register an **Event Trigger Definition (ETD)**. The identity will decrypt when Keypers observe a matching on-chain event from a specific contract.
+Instead of using a time trigger, you can register an identity that decrypts when Keypers observe a corresponding on-chain event within a TTL window. Utilize the **`/register_event_identity`** endpoint with an encoded `eventDefinition`.
 
-##### API Call: Register Identity with ETD
+##### API Call: Register Event Identity
 
 ```bash
-curl -X POST https://shutter-api.shutter.network/register_identity\
+curl -X POST https://shutter-api.shutter.network/register_event_identity\
 -H "Content-Type: application/json"\
 -d '{
-  "trigger": {
-    "type": "event",
-    "etd": {
-      "contract": "0xA1b2c3D4e5F6a7B8c9D0E1f2A3b4C5d6E7f8A9B0",
-      "eventSignature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "indexedTopics": [null, null, "0x000000000000000000000000feed0000000000000000000000000000cafe"],
-      "conditions": [{"arg":"value","op":"gte","value":"10000000"}],
-      "ttl": 86400
-    }
-  },
-  "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0"
+  "eventDefinition": "0x808ba62b3fb085eae2e58888828d5aa5d0d8d3cc44dcb1750e3664468a1288c38501d8d9e5d89930656b6ce9aa13b6a311031b89963b83d95588e26e5e8a9aeef2b9c1b07740d24bbd7aef9935fde194e05aff41fe6e3529de9a4b81779ddf4bed488b753efabe29aa7407bf131a7f744f2cf0429b0a200b1d369791fae3c740d62edd422b649a41660a6f0bd4310ecad617fb8ba626970934bd473c4dcc7784fac7ed66c4576590c76e70af4f3d99ea1361669349beb8cbb3346e9cc821435d",
+  "identityPrefix": "0x32fdbd2ca52e171f77db2757ff6200cd8446350f927a3ad46c0565483dd8b41c"
 }'
 ```
 
@@ -97,20 +88,14 @@ curl -X POST https://shutter-api.shutter.network/register_identity\
 
 ```json
 {
-  "eon": 2,
-  "eon_key": "0x9ab65437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e6622aa",
-  "identity": "0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121",
-  "tx_hash": "0x6d54be9940b784b10c9a0c95c6ed1d6df8a8c1d2a78b7d9a0c7e6f5d4c3b2a19"
+  "eon": 1,
+  "eon_key": "0x9348cbe5372c1b467bfe60d6c678bbe1aed74a90b93f857b2db1b6a5dac5cd95",
+  "identity": "0xdfb9b97b2ff057a1fdff173e10e974ffb16c28105f0524b33e8a6906c6c81dc0",
+  "identityPrefix": "0x32fdbd2ca52e171f77db2757ff6200cd8446350f927a3ad46c0565483dd8b41c",
+  "tx_hash": "0xf7cb7ef13edee67735bba17d5ff84546a1ac7547b3d2a9f1d15e4d1b2e9f303c"
 }
 ```
 
-:::note **Notes**
-
--   `eventSignature` is the Keccak-256 topic0 of the event.
--   `indexedTopics` positions map to topic1 to topic3. Use `null` for wildcards.
--   `conditions` apply to non-indexed arguments, for example numeric comparisons.
--   `ttl` is the number of seconds to track the event after registration.
-:::
 * * * * *
 
 ### 2\. **Encrypt and Submit the Commitment**
@@ -163,29 +148,9 @@ const decryptedData = await decrypt(encryptedData, epochSecretKey);
 console.log("Decryption successful:", decryptedData);
 ```
 
-#### Alternative: **Decrypt After Event Trigger**
+#### Alternative: **Decrypt After Event Trigger (WIP)**
 
-For ETD identities, the key is released when a matching on-chain event is observed within the TTL window.
-
-##### Optionally check identity status
-
-```bash
-curl -X GET "https://shutter-api.shutter.network/get_identity_status?identity=0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121"
-```
-
-Example response:
-
-```json
-{ "status": "satisfied", "triggerType": "event", "observedAt": 1735045061 }
-```
-
-##### Retrieve decryption key
-
-```bash
-curl -X GET "https://shutter-api.shutter.network/get_decryption_key?identity=0x5f77b7e72f3d2c5b1a0f1c2a33b6f4a1b9d8c7e6f5a4b3c29181716151413121"
-```
-
-Use the same SDK `decrypt` call as above to reveal the plaintext.
+For identities registered with **`/register_event_identity`**, the decryption key is released when a corresponding on-chain event is observed within the time-to-live (TTL) window.
 
 * * * * *
 

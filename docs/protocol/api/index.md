@@ -23,7 +23,11 @@ The system operates using a commit-and-reveal process. In this process, a user e
 
 Developers can integrate Shutter API into various applications, such as decentralized finance platforms that want to protect traders from MEV attacks, DAOs looking to implement private and tamper-proof voting, and gaming applications that require secrecy in game mechanics. The API also enables new use cases, such as parimutuel betting, sealed RFPs for corporate procurement, and fair auction mechanisms that eliminate the Free Option Problem, ensuring that bids remain confidential until the deadline.
 
-**The Shutter API also introduces event-based decryption triggers**, which allow encrypted data to be automatically revealed when specific on-chain conditions are met. This feature enables programmable, state-dependent privacy. For example, it can reveal a document after a payment is made, unlock a game secret when a milestone is reached, or release encrypted content when a contract emits a particular event.
+**The Shutter API introduces event-based decryption triggers**, allowing encrypted data to be automatically revealed when specific on-chain conditions are met. This feature enables programmable, state-dependent privacy. For instance, it can reveal a document after a payment is made, unlock a game secret when a milestone is achieved, or release encrypted content when a contract emits a particular event.
+
+**Currently, event-based triggers can be accessed through a single API endpoint: `POST /register_event_identity`. This endpoint registers an identity linked to an encoded event definition (`eventDefinition`). Keys will be released only if the observed event matches the definition within its time-to-live (TTL) window and the condition has not been met before.**
+
+Please note that event-based triggers are still a work in progress; at this time, there are no separate endpoints for "register event trigger" or "get trigger status."
 
 Unlike solutions based on Trusted Execution Environments (TEEs), which introduce a single point of failure and rely on specialized hardware, Shutter API provides a fully decentralized approach that does not require trusting any central entity. It operates as a distributed threshold encryption network, where independent Keypers collaboratively generate and release encryption keys, making it a truly trust-minimized solution.
 

@@ -1,4 +1,3 @@
-
 ---
 title: Integrating Shutter API and SDK for dApp Development
 description: Integrating Shutter API and SDK for dApp Development
@@ -123,33 +122,21 @@ Note: Replace `API_BASE_URL` with the appropriate API base URL (Chiado or Mainne
 
 ### Registering an Identity with an Event-Based Trigger (ETD)
 
-To release decryption when a specific on-chain event occurs, use an **Event Trigger Definition**. In this definition, you specify the contract that emits the event, the event signature, and any optional indexed topic filters. You can also set conditions on non-indexed arguments if needed. Additionally, you will establish a Time-To-Live (TTL) to limit how long the Keypers will monitor the trigger.
+To release decryption when a specific on-chain event occurs, use an **Event Trigger Definition**. For alignment with the current API, submit the encoded **`eventDefinition`** using **`/register_event_identity`** (WIP). The encoding is a concatenation of the contract address, topic0, and the RLP-encoded matchers (use provided tooling when available). You also supply an `identityPrefix`.
 
 ```
-Endpoint:  /register_event_trigger
+Endpoint:  /register_event_identity
 Method:  POST
 ```
 
 #### Example Request
 
 ```
-curl -X POST https://`API_BASE_URL`/register_event_trigger\
+curl -X POST https://`API_BASE_URL`/register_event_identity\
 -H "Content-Type: application/json"\
 -d '{
-  "identityPrefix": "0x79bc8f6b4fcb02c651d6a702b7ad965c7fca19e94a9646d21ae90c8b54c030a0",
-  "etd": {
-    "contract": "0x1234567890abcdef1234567890abcdef12345678",
-    "eventSignature": "0x4bb278f3a1a2c3f4d5e6a7b8c9d0e1f2a3b4c5d6e7f8090a1b2c3d4e5f607182",
-    "indexedTopics": [
-      "0x000000000000000000000000228DefCF37Da29475F0EE2B9E4dfAeDc3b0746bc",
-      null,
-      null
-    ],
-    "conditions": [
-      {"argIndex": 2, "op": ">=", "value": "1000000000000000000"}
-    ],
-    "ttl": 86400
-  }
+  "eventDefinition": "0x808ba62b3fb085eae2e58888828d5aa5d0d8d3cc44dcb1750e3664468a1288c38501d8d9e5d89930656b6ce9aa13b6a311031b89963b83d95588e26e5e8a9aeef2b9c1b07740d24bbd7aef9935fde194e05aff41fe6e3529de9a4b81779ddf4bed488b753efabe29aa7407bf131a7f744f2cf0429b0a200b1d369791fae3c740d62edd422b649a41660a6f0bd4310ecad617fb8ba626970934bd473c4dcc7784fac7ed66c4576590c76e70af4f3d99ea1361669349beb8cbb3346e9cc821435d",
+  "identityPrefix": "0x32fdbd2ca52e171f77db2757ff6200cd8446350f927a3ad46c0565483dd8b41c"
 }'
 ```
 
@@ -157,47 +144,15 @@ curl -X POST https://`API_BASE_URL`/register_event_trigger\
 
 ```
 {
-  "identity": "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
-
   "eon": 1,
 
-  "eon_key": "0x57af5437a84ef50e5ed75772c18ae38b168bb07c50cadb65fc6136604e662255",
+  "eon_key": "0x9348cbe5372c1b467bfe60d6c678bbe1aed74a90b93f857b2db1b6a5dac5cd95",
 
-  "epoch_id": "0x88f2495d1240f9c5523db589996a50a4984ee7a08a8a8f4b269e4345b383310a",
+  "identity": "0xdfb9b97b2ff057a1fdff173e10e974ffb16c28105f0524b33e8a6906c6c81dc0",
 
-  "tx_hash": "0xabcdad202ca611551377eef069fb6ed894eae65329ce73c56f300129694f1abc"
+  "identityPrefix": "0x32fdbd2ca52e171f77db2757ff6200cd8446350f927a3ad46c0565483dd8b41c",
 
-}
-```
-
-* * * * *
-
-### Checking Trigger Status
-
-Query the current status of a time-based or event-based identity. Useful for polling your UI.
-
-```
-Endpoint:  /get_trigger_status
-Method:  GET
-```
-
-#### Example Request
-
-```bash
-curl -X GET "https://`API_BASE_URL`/get_trigger_status?identity=0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75"
-```
-
-#### Example Response
-
-```
-{
-  "identity": "0x8c232eae4f957259e9d6b68301d529e9851b8642874c8f59d2bd0fb84a570c75",
-
-  "type": "event",
-
-  "status": "Satisfied",
-
-  "observedAt": 1735045061
+  "tx_hash": "0xf7cb7ef13edee67735bba17d5ff84546a1ac7547b3d2a9f1d15e4d1b2e9f303c"
 }
 ```
 
@@ -263,7 +218,6 @@ curl  -X  GET  "https://`API_BASE_URL`/get_decryption_key?identity=0x8c232eae4f9
 }
 ```
 
-
 * * * * *
 
 ### Decrypting Commitments
@@ -301,7 +255,7 @@ The Shutter SDK is a TypeScript library that simplifies the encryption and decry
 
 To install the Shutter SDK in your project, run:
 
-`npm  install  @shutter-network/shutter-sdk`
+`npm install @shutter-network/shutter-sdk`
 
 * * * * *
 
@@ -346,7 +300,7 @@ console.log("Decrypted  Message:",  decryptedData);
 ```
 
 :::note [Note]
-For event-based triggers, first poll or subscribe to trigger status, then request the decryption key and run the same decrypt flow.
+For event-based triggers, wait until the event condition is met, then request the decryption key and execute the same decryption flow.
 :::
 
 * * * * *
@@ -369,7 +323,6 @@ import  (
   "log"
 
   "strings"
-
 
   "github.com/shutter-network/shutter/shlib/shcrypto"
 
@@ -438,7 +391,7 @@ When building a new dApp with the Shutter API, follow these steps:
 
     Tip: If you want full control over your address, consider registering directly with the registry contract.
 
-    *Event-based option*: You can also register an identity with an ETD using **/register_event_trigger** so that decryption keys are released when a matching on-chain event is observed.
+    *Event-based option*: You can register an identity with an ETD using **/register_event_identity** by submitting the encoded `eventDefinition` along with your `identityPrefix`.
 
 3.  **Retrieve Encryption Data**
 

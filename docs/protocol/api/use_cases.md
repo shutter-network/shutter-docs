@@ -316,8 +316,7 @@ Some governance processes should remain confidential until execution. With event
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - Define an ETD using the DAO contract address and event signature, with the option to filter by `proposalId`.
-  - Set the TTL to match the voting window.
+  - Define an ETD using the DAO contract address and event signature, with the option to filter by `proposalId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the vote or supporting document and submit.
@@ -420,8 +419,7 @@ In an auction contract that utilizes event-based triggers, it is the contract it
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the auction contract address along with the `AuctionClosed` topic.
-  - Optional filters for `auctionId`.
+  - The ETD includes the auction contract address along with the `AuctionClosed` topic. Optional filters for `auctionId` (**register via `/register_event_identity`**).
 
   ###### Commit Bids
   - Participants encrypt their bids and submit them during the designated time window.
@@ -437,10 +435,6 @@ In an auction contract that utilizes event-based triggers, it is the contract it
 - **Treasury sales** that include a verified closing.
 - **On-chain auctions in the style of Christie's** that prevent pre-reveal leaks.
 
-Now as you can see from the page I just provided to you (and of course you should have already spotted this earlier when I was asking you to make your edits similar to the previous entries), all the old, time-based, entries have an "Example" section, but these are missing from the event-based entries that you came up with.
-
-Please now create two options for an example for the "Event-Triggered Auction Settlement Reveal" entry. Here is an example of how to do it from the older content, the example for the "Shielded Voting" entry. I expect the same format, length, details and style for all the examples that I'm asking you to provide to me. Please give your reply completely in rich text format only.
-
 ##### Example
 <Admonition type="note" title={null} icon={null}>
       <p>
@@ -448,6 +442,16 @@ Please now create two options for an example for the "Event-Triggered Auction Se
       Imagine a gallery running a sealed-bid sale for a rare painting. Collectors hand the auctioneer their bids in sealed envelopes throughout the evening. Everyone can see that envelopes are piling up, but no one—buyers, staff, or even the auctioneer—opens any of them early. The room hums with speculation, yet the numbers stay hidden.
 
       When the auctioneer finally drops the gavel to close the sale, the stage manager gives a clear signal: it’s over. Only at that exact moment are all the envelopes opened at once and the true winner revealed. Event-triggered settlement works the same way on-chain: bids remain encrypted until the contract emits AuctionClosed. That single event is the “curtain drop” Keypers are waiting for—once it fires, they release the decryption key and every bid is revealed simultaneously, preventing leaks, sniping, or last-minute manipulation.
+      </p>
+</Admonition>
+
+##### Example
+<Admonition type="note" title={null} icon={null}>
+      <p>
+      ###### The Sealed Bids and the Clockwork Bell
+      Picture a hall where bidders place sealed notes into a locked chest beside the auction lot. A clockwork bell is wired to the auction contract itself; when the sale officially ends, the bell strikes. Until then, the chest is visible but impossible to open—no curator, no guard, no VIP can peek inside.
+
+      On-chain, that bell strike is the <code>AuctionClosed</code> event. You register its observation as the trigger (via <code>/register_event_identity</code>), bidders commit encrypted offers during the window, and when the event fires, Keypers publish the decryption key. All notes are read at once, the highest valid offer wins, and there was never a chance for early leaks, last-second sniping, or backroom reveals.
       </p>
 </Admonition>
 
@@ -506,7 +510,7 @@ This structure removes turn-based bias, prevents unfair move selection, and ensu
   - Ensures that combat actions remain hidden until all players have locked in their choices.
   - Prevents last-minute strategic counterpicking of moves.
 - **Hidden Role & Social Deduction Games (Mafia, Werewolf, Daoplomacy)**
-  - Keeps player roles and actions hidden until the correct moment.
+  - Keeps player roles and actions hidden until the reveal phase.
   - Prevents bias or leaks that could ruin the secrecy of the game.
 - **Tournaments & Competitive Matchmaking**
   - Ensures that players submit their game choices (e.g., characters, weapons, skills) without pre-revealing them.
@@ -609,133 +613,6 @@ This method prevents pre-reveal move sniping, ensures unpredictable randomness, 
       </p>
 </Admonition>
 
-#### Parimutuel Betting
-##### Fair & Manipulation-Resistant Wagering
-Parimutuel betting is a popular system used in horse racing, sports betting, and prediction markets. In this system, all bets are combined into a pool, and the winnings are distributed based on the total amount wagered. Unlike fixed-odds betting, where payouts are predetermined, parimutuel odds fluctuate dynamically according to the bets placed. However, this system can be susceptible to strategic manipulation and insider exploitation.
-
-:::warning[Common problems in traditional parimutuel betting]
-- **Late-Stage Betting Exploits**
-  - Players wait until the last moment to place bets, adjusting based on the current odds.
-- **Odds Manipulation**
-  - Early bettors can strategically place large bets to shift the odds in their favor.
-- **Insider Advantage**
-  - Market operators or validators may see bets before they are finalized, allowing them to adjust their positions accordingly.
-:::
-
-:::tip[With Shutter API's encrypted parimutuel betting, bets remain completely hidden until the pool closes]
-- No one can adjust their bets based on the current odds.
-- Bets are only revealed after the betting window closes, ensuring fairness.
-- The final odds reflect true market sentiment, free from last-minute manipulation.
-:::
-
-Consider this system as if you are placing your bet in a sealed envelope—no one can see how much you've wagered until all envelopes are opened simultaneously, ensuring that no one can manipulate the odds before the final reveal.
-
-##### Transaction Flow Overview
-Parimutuel betting with Shutter API's commit-reveal encryption ensures that wagers remain confidential until the betting period ends.
-
-<Admonition type="note" title={null} icon={null}>
-      <p>
-      ###### Commitment Phase (Bet Placement)
-      - Players encrypt their bets before submitting them to the betting smart contract.
-      - The encrypted bet is stored on-chain but remains unreadable to all other players, validators, and the market operator.
-      ###### Waiting Period (Betting Pool Open)
-      - Players can see the total number of participants but not the individual bets.
-      - No one can adjust their wagers based on others' betting patterns.
-      ###### Reveal Phase (Pool Closure & Odds Calculation)
-      - When the betting window closes, the decryption key is released by Shutter's distributed Keyper network.
-      - All bets are revealed simultaneously, and final odds are calculated based on total wagers in the pool.
-      - The winnings are distributed fairly, based on the final odds.
-      </p>
-</Admonition>
-
-This method prevents last-minute betting exploits, guarantees privacy, and ensures that no player can manipulate the market before the final odds are locked in.
-
-##### Real-World Applications of Parimutuel Betting
-- **Horse Racing & Traditional Sports Betting**
-  - Ensures fair parimutuel odds without last-minute betting exploits.
-  - Prevents sportsbooks from adjusting odds based on insider knowledge.
-- **Decentralized Prediction Markets**
-  - Keeps market participants' wagers hidden until the event concludes.
-  - Ensures manipulation-free forecasting in political and financial markets.
-- **Crypto & NFT Betting Pools**
-  - Allows users to place bets on NFT rarities or token price movements without others seeing their predictions.
-  - Prevents whales from manipulating outcomes by front-loading bets.
-- **On-Chain Fantasy Sports & eSports Betting**
-  - Guarantees that no one can adjust their fantasy league wagers based on early game results.
-  - Keeps betting odds stable until all positions are locked in.
-- **Yield-Based Betting & DeFi Risk Pools**
-  - Used in DeFi insurance pools, where participants bet on protocol risks or security events.
-  - Ensures fair distribution of payouts based on final pool outcomes.
-
-##### Example
-<Admonition type="note" title={null} icon={null}>
-      <p>
-      ###### A Blindfolded Auction for Betting
-      Imagine a group of friends betting on a mystery box auction, where the final price is determined by the total amount wagered. If they could see each other's bids before submitting their own, they might:
-      - Adjust their bets to manipulate the final price.
-      - Wait until the last second to place their wager, ensuring they get the best possible deal.
-      - Use insider knowledge to game the system.
-
-      Now, imagine instead:
-      - All bets are placed inside locked boxes and submitted without revealing the amounts.
-      - When the betting period ends, all boxes are opened at the same time, and the final price is determined fairly.
-      - No one knew what others were betting, so the final result was free from manipulation.
-
-      This is exactly how Shutter API's Parimutuel Betting system works—bets remain hidden until the pool closes, ensuring fair odds and trust-minimized betting outcomes.
-      </p>
-</Admonition>
-
-#### Randomness Generation
-##### Threshold-Generated Randomness for Games and Protocols
-Randomness plays a critical role in gaming, lotteries, NFT mints, and many on-chain applications where fairness and unpredictability are essential. However, generating reliable randomness on a public blockchain is notoriously difficult due to its transparent and deterministic nature. Traditional approaches, such as relying on block hashes or centralized oracles, introduce vulnerabilities and trust assumptions.
-
-Shutter API offers a unique solution: it provides access to random values generated directly through the threshold decryption process by a decentralized network of Keypers. These values can be accessed via API calls and used as a reliable randomness source in any off-chain or on-chain application.
-
-This randomness is not derived from encrypting a pre-defined value and later decrypting it—instead, the decryption key itself (produced as part of Shutter’s distributed key generation) serves as the source of randomness. Because the key is generated collaboratively through a secure threshold process, it is unpredictable, unbiased, and cannot be influenced by any single actor.
-
-##### Transaction Flow Overview
-The Shutter API enables access to trust-minimized randomness by exposing the randomness inherent in its threshold key generation process.
-
-<Admonition type="note" title={null} icon={null}>
-      <p>
-      ###### Identity Registration (Randomness Setup)
-      - A developer registers a new encryption identity with a decryption trigger condition (e.g. a future timestamp or event).
-      ###### Wait for Decryption (Key Generation by Keypers)
-      - The network of Keypers collaborates to compute a threshold decryption key. Until the condition is met, the key—and thus the randomness—is not available to anyone.
-      ###### Randomness Retrieval (Reveal Phase)
-      - Once the trigger condition is satisfied, the Keypers publish the decryption key associated with the identity.
-      - This decryption key itself is used as the random value, which can be consumed by applications to drive logic in games, draws, lotteries, and more.
-      </p>
-</Admonition>
-
-Importantly, the randomness is not user-supplied or application-specific, making it tamper-resistant and suitable for a wide range of verifiable use cases.
-
-##### Real-World Applications of Randomness Generation
-- **Provably Fair Blockchain Games**
-  - Use random values to resolve outcomes such as dice rolls, loot drops, monster spawns, or card shuffles—without giving validators or players the chance to manipulate the result.
-- **NFT Minting and Trait Assignment**
-  - Assign rarities and attributes to NFTs using unbiased randomness. Prevents early insiders from predicting or gaming the minting process.
-- **Prize Draws, Lotteries, and Raffles**
-  - Run secure giveaways where winners are selected based on a truly unpredictable value, with public verifiability.
-- **DAO Governance and Random Selection**
-  - Select random committee members, grant reviewers, or jurors in decentralized governance processes.
-- **Randomized Event Triggers in Smart Contracts**
-  - Trigger in-game or protocol-level events at unpredictable times to keep user interactions dynamic and trustless.
-- **Betting Games and Gambling dApps**
-  - Use random outcomes to determine winners in parimutuel pools, roulette-style games, or dice games, ensuring fairness across participants.
-
-##### Example
-<Admonition type="note" title={null} icon={null}>
-      <p>
-      ###### The Dice Roll That No One Can Rig
-      Imagine a turn-based strategy game where players roll a die to determine how many spaces they can move. If the die roll is public or predictable, a savvy player might time their actions or manipulate the outcome in their favor.
-
-      Now consider a die that is rolled in secret by a neutral, trusted group, and the result is only revealed once it's time to act. No one can influence or predict it—players commit to their strategies blind, and only after that is the die roll shown.
-
-      This is what Shutter’s randomness generation achieves. The randomness comes from the threshold-generated decryption key, created by a decentralized set of Keypers. No participant or developer can bias it. It’s just fair randomness—generated collaboratively, revealed at the right time.
-      </p>
-</Admonition>
-
 #### Event-Triggered Game Round Completion
 ##### Reveal Moves When the Game Emits RoundComplete
 
@@ -745,7 +622,7 @@ Utilize an ETD synchronized with `RoundComplete` for reveals to occur precisely 
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the game contract and the `RoundComplete` topic, and it may optionally include `roundId`.
+  - The ETD includes the game contract and the `RoundComplete` topic, and it may optionally include `roundId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Players encrypt their moves for the round and then submit them.
@@ -779,7 +656,7 @@ Keep NFT visuals or traits hidden until a player accomplishes something that the
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to events such as `LevelUp`, `CompletedQuest`, or similar occurrences for the player.
+  - The ETD corresponds to events such as `LevelUp`, `CompletedQuest`, or similar occurrences for the player (**register via `/register_event_identity`**).
 
   ###### Commit
   - The sensitive metadata or artwork associated with the NFT remains encrypted.
@@ -953,8 +830,7 @@ Restrict access to content based on an on-chain payment detected by an ETD, such
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the token contract address and the `Transfer` topic.
-  - Ensure that the match for `to` is equal to `creator` and that the `value` is greater than or equal to `price`.
+  - The ETD includes the token contract address and the `Transfer` topic. Ensure that the match for `to` is equal to `creator` and that the `value` is greater than or equal to `price` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the content key or payload associated with the buyer's identity.
@@ -991,7 +867,7 @@ Decrypt new session keys only after a `SubscriptionPaid` event or staking renewa
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds with the membership contract event and the subscriber's address.
+  - The ETD corresponds with the membership contract event and the subscriber's address (**register via `/register_event_identity`**).
 
   ###### Commit
   - The materials for the next period are still encrypted and cannot be accessed.
@@ -1025,7 +901,7 @@ Release an activation key when the `LicenseMinted` event or similar events are e
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the minting event and the buyer's address.
+  - The ETD corresponds to the minting event and the buyer's address (**register via `/register_event_identity`**).
 
   ###### Commit
   - The encrypted license or API key has been prepared for the buyer.
@@ -1059,7 +935,7 @@ Disclose confidential documents when the `PaymentReleased` or `DealCompleted` ev
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD focuses on events related to the settlement of escrow contracts.
+  - ETD focuses on events related to the settlement of escrow contracts (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt deliverables or intellectual property for the buyer's identity.
@@ -1093,7 +969,7 @@ Require a multisig approval before revealing content, using events like `Executi
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the multisig execution event and the optional calldata hash.
+  - The ETD corresponds to the multisig execution event and the optional calldata hash (**register via `/register_event_identity`**).
 
   ###### Commit
   - Securely encrypt any shared documents or memos related to the action.
@@ -1207,7 +1083,7 @@ Utilize oracle events, like `AnswerUpdated`, to initiate the decryption of forec
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD refers to the oracle contract and event, and it may include optional filters for feed or round.
+  - ETD refers to the oracle contract and event, and it may include optional filters for feed or round (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt forecasts or settlement instructions.
@@ -1241,7 +1117,7 @@ When a claim oracle emits the event `ClaimEvent(policyId, verified=true)`, it in
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the insurance oracle event and the `policyId`.
+  - The ETD corresponds to the insurance oracle event and the `policyId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt claim details for the beneficiary identity.
@@ -1427,7 +1303,7 @@ Decrypt the roadmaps or the reward details when the campaign contract emits the 
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD focuses on the campaign contract and the goal event.
+  - ETD focuses on the campaign contract and the goal event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt milestone materials for backers.
@@ -1461,7 +1337,7 @@ Disclose a secret once N participants have either made a deposit or expressed in
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD matches the pool contract with the threshold event.
+  - The ETD matches the pool contract with the threshold event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the shared secret or content.
@@ -1495,7 +1371,7 @@ Decrypt the per-user claim proofs whenever the `RewardClaimed` or `StakeComplete
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD filters by user and action event.
+  - ETD filters by user and action event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt claim proofs or reward data.
