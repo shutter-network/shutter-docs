@@ -1,4 +1,3 @@
-
 ---
 title: Integrating Shutter API and SDK for dApp Development
 description: Integrating Shutter API and SDK for dApp Development
