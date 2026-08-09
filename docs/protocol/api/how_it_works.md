@@ -7,6 +7,12 @@ sidebar_position: 2
 
 import Admonition from '@theme/Admonition';
 
+:::note
+
+The [shutter-api README](https://github.com/shutter-network/shutter-api/blob/main/README.md) is the up-to-date API reference. This page may not be up-to-date.
+
+:::
+
 # How Shutter API Works
 
 ## Introduction

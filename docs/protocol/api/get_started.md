@@ -5,6 +5,12 @@ sidebar_label: 'Get Started'
 sidebar_position: 4
 ---
 
+:::note
+
+The [shutter-api README](https://github.com/shutter-network/shutter-api/blob/main/README.md) is the up-to-date API reference. This page may not be up-to-date.
+
+:::
+
 # Quick Start Guide to Shutter API  
 
 ## Introduction  

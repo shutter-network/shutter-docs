@@ -10,6 +10,12 @@ sidebar_position: 2
 
 :::note
 
+The [shutter-api README](https://github.com/shutter-network/shutter-api/blob/main/README.md) is the up-to-date API reference. This page may not be up-to-date.
+
+:::
+
+:::note
+
     This document is designed to be LLM friendly, work with current web standards, enabling fast and accurate responses for seamless communication with AI models.
 :::
 

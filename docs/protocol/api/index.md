@@ -7,6 +7,12 @@ sidebar_position: 1
 
 import Admonition from '@theme/Admonition';
 
+:::note
+
+The [shutter-api README](https://github.com/shutter-network/shutter-api/blob/main/README.md) is the up-to-date API reference. This page may not be up-to-date.
+
+:::
+
 # Shutter API Overview
 
 You can also check out [shutter_api_for_llms.txt](https://docs.shutter.network/shutter_api_for_llms.txt), which is designed to work with current web standards, enabling fast and accurate responses for seamless communication with AI models.
