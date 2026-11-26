@@ -41,9 +41,9 @@ In gaming, the Shutter protocol provides players with a level playing field by e
 
 ## Integration and Scalability
 
-The Shutter protocol is designed to integrate seamlessly with existing blockchain platforms and applications. It does not require significant changes to the underlying protocol, making it accessible to developers and projects across Layer 1 and Layer 2 ecosystems. Notably, the protocol has been integrated into the Gnosis Chain and Snapshot, demonstrating its scalability and adaptability.
+The Shutter protocol is designed to integrate seamlessly with existing blockchain platforms and applications. It does not require significant changes to the underlying protocol, making it accessible to developers and projects across Layer 1 and Layer 2 ecosystems. Notably, the protocol has been integrated into Snapshot, and it formerly ran on Gnosis Chain, demonstrating its scalability and adaptability.
 
-On the Gnosis Chain, the Shutter protocol enhances transaction confidentiality, ensuring that users are protected from front running and censorship. Its integration with Snapshot enables shielded voting, providing DAOs with a secure and transparent mechanism for collective decision-making.
+On Gnosis Chain, the Shutter protocol ran an encrypted mempool for over two years, protecting users from front running and censorship. It was decommissioned on 25 November 2026, because Gnosis Chain's move to a rollup in the Ethereum Economic Zone brings protocol changes that are incompatible with the implementation ([announcement](https://blog.shutter.network/decommissioning-the-encrypted-mempool-on-gnosis-chain/)). The protocol's integration with Snapshot enables shielded voting, providing DAOs with a secure and transparent mechanism for collective decision-making.
 
 The protocol's ability to scale and adapt to diverse environments is further enhanced by its efficient cryptographic processes. By optimizing the generation and management of cryptographic keys, Shutter minimizes computational overhead and ensures that its solutions remain practical for high-volume blockchain networks.
 

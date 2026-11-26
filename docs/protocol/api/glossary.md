@@ -73,7 +73,7 @@ A TypeScript library that simplifies **local encryption and decryption** using S
 ---
 
 #### **Encrypted Mempool**  
-A blockchain mempool where **pending transactions remain encrypted** until validators commit to their inclusion. This prevents MEV attacks like **front-running and sandwiching**, ensuring fair transaction execution. Shutter has implemented an **encrypted mempool on Gnosis Chain**, with future expansion plans for **Ethereum and Layer 2 rollups**.  
+A blockchain mempool where **pending transactions remain encrypted** until validators commit to their inclusion. This prevents MEV attacks like **front-running and sandwiching**, ensuring fair transaction execution. Shutter ran an **encrypted mempool on Gnosis Chain** for over two years until it was decommissioned in November 2026, and is now working on bringing encrypted transactions to **Ethereum**.  
 
 ---
 

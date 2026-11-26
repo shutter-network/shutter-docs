@@ -61,7 +61,7 @@ Shutter distinguishes itself from competitors by effectively tackling the key co
 
 -   July 2024 
 
--   Shielded Trading Beta launched on Gnosis Chain
+-   Shielded Trading Beta launched on Gnosis Chain (decommissioned November 2026)
 
 -   Sept 2024
 

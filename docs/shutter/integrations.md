@@ -9,6 +9,10 @@ toc_max_heading_level: 3
 
 # Shutterized Gnosis Chain and Snapshot Integration
 
+:::note
+The encrypted mempool on Gnosis Chain was decommissioned on 25 November 2026. Gnosis Chain is moving to a rollup in the Ethereum Economic Zone, and the protocol changes this brings are incompatible with Shutter's encrypted mempool implementation. The Gnosis Chain section below describes how the integration worked while it was live. [Read the announcement](https://blog.shutter.network/decommissioning-the-encrypted-mempool-on-gnosis-chain/).
+:::
+
 Shutter's innovative threshold encryption technology addresses critical challenges in blockchain systems, such as front running, malicious MEV, and vote manipulation. Its power lies not only in its core technology but also in its ability to integrate seamlessly into existing blockchain platforms and applications. Two of the most notable integrations of Shutter are the **Shutterized Gnosis Chain** and the integration with **Snapshot**, both of which highlight the transformative potential of Shutter's solutions.
 
 This document explores these integrations in detail, focusing on their functionality, benefits, and impact on the blockchain ecosystem.
@@ -17,9 +21,9 @@ This document explores these integrations in detail, focusing on their functiona
 
 ## Shutterized Gnosis Chain: Enhancing Security and Fairness
 
-### What Is the Shutterized Gnosis Chain?
+### What Was the Shutterized Gnosis Chain?
 
-The Shutterized Gnosis Chain represents a pivotal implementation of Shutter's encryption technology at the Layer 1 level. By incorporating Shutter's threshold encryption into the Gnosis Chain, this integration ensures that transactions are shielded from malicious actors, making Gnosis Chain more robust and fair for its users.
+The Shutterized Gnosis Chain was the first mainnet to run a Shutter encrypted mempool, and it ran in production for over two years until it was decommissioned on 25 November 2026. By incorporating Shutter's threshold encryption into the Gnosis Chain, the integration shielded transactions from malicious actors, making Gnosis Chain more robust and fair for its users.
 
 The Gnosis Chain, as a prominent Ethereum Layer 1 blockchain focused on scalability and affordability, is a natural fit for Shutter's technology. Its user base and applications, which span decentralized finance (DeFi), governance, and beyond, benefit immensely from the enhanced security and fairness provided by Shutter.
 
