@@ -322,8 +322,7 @@ Some governance processes should remain confidential until execution. With event
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - Define an ETD using the DAO contract address and event signature, with the option to filter by `proposalId`.
-  - Set the TTL to match the voting window.
+  - Define an ETD using the DAO contract address and event signature, with the option to filter by `proposalId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the vote or supporting document and submit.
@@ -426,8 +425,7 @@ In an auction contract that utilizes event-based triggers, it is the contract it
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the auction contract address along with the `AuctionClosed` topic.
-  - Optional filters for `auctionId`.
+  - The ETD includes the auction contract address along with the `AuctionClosed` topic. Optional filters for `auctionId` (**register via `/register_event_identity`**).
 
   ###### Commit Bids
   - Participants encrypt their bids and submit them during the designated time window.
@@ -442,10 +440,6 @@ In an auction contract that utilizes event-based triggers, it is the contract it
 - **NFT marketplaces** that integrate a sealed-bid mode.
 - **Treasury sales** that include a verified closing.
 - **On-chain auctions in the style of Christie's** that prevent pre-reveal leaks.
-
-Now as you can see from the page I just provided to you (and of course you should have already spotted this earlier when I was asking you to make your edits similar to the previous entries), all the old, time-based, entries have an "Example" section, but these are missing from the event-based entries that you came up with.
-
-Please now create two options for an example for the "Event-Triggered Auction Settlement Reveal" entry. Here is an example of how to do it from the older content, the example for the "Shielded Voting" entry. I expect the same format, length, details and style for all the examples that I'm asking you to provide to me. Please give your reply completely in rich text format only.
 
 ##### Example
 <Admonition type="note" title={null} icon={null}>
@@ -512,7 +506,7 @@ This structure removes turn-based bias, prevents unfair move selection, and ensu
   - Ensures that combat actions remain hidden until all players have locked in their choices.
   - Prevents last-minute strategic counterpicking of moves.
 - **Hidden Role & Social Deduction Games (Mafia, Werewolf, Daoplomacy)**
-  - Keeps player roles and actions hidden until the correct moment.
+  - Keeps player roles and actions hidden until the reveal phase.
   - Prevents bias or leaks that could ruin the secrecy of the game.
 - **Tournaments & Competitive Matchmaking**
   - Ensures that players submit their game choices (e.g., characters, weapons, skills) without pre-revealing them.
@@ -751,7 +745,7 @@ Utilize an ETD synchronized with `RoundComplete` for reveals to occur precisely 
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the game contract and the `RoundComplete` topic, and it may optionally include `roundId`.
+  - The ETD includes the game contract and the `RoundComplete` topic, and it may optionally include `roundId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Players encrypt their moves for the round and then submit them.
@@ -785,7 +779,7 @@ Keep NFT visuals or traits hidden until a player accomplishes something that the
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to events such as `LevelUp`, `CompletedQuest`, or similar occurrences for the player.
+  - The ETD corresponds to events such as `LevelUp`, `CompletedQuest`, or similar occurrences for the player (**register via `/register_event_identity`**).
 
   ###### Commit
   - The sensitive metadata or artwork associated with the NFT remains encrypted.
@@ -959,8 +953,7 @@ Restrict access to content based on an on-chain payment detected by an ETD, such
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD includes the token contract address and the `Transfer` topic.
-  - Ensure that the match for `to` is equal to `creator` and that the `value` is greater than or equal to `price`.
+  - The ETD includes the token contract address and the `Transfer` topic. Ensure that the match for `to` is equal to `creator` and that the `value` is greater than or equal to `price` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the content key or payload associated with the buyer's identity.
@@ -997,7 +990,7 @@ Decrypt new session keys only after a `SubscriptionPaid` event or staking renewa
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds with the membership contract event and the subscriber's address.
+  - The ETD corresponds with the membership contract event and the subscriber's address (**register via `/register_event_identity`**).
 
   ###### Commit
   - The materials for the next period are still encrypted and cannot be accessed.
@@ -1031,7 +1024,7 @@ Release an activation key when the `LicenseMinted` event or similar events are e
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the minting event and the buyer's address.
+  - The ETD corresponds to the minting event and the buyer's address (**register via `/register_event_identity`**).
 
   ###### Commit
   - The encrypted license or API key has been prepared for the buyer.
@@ -1065,7 +1058,7 @@ Disclose confidential documents when the `PaymentReleased` or `DealCompleted` ev
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD focuses on events related to the settlement of escrow contracts.
+  - ETD focuses on events related to the settlement of escrow contracts (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt deliverables or intellectual property for the buyer's identity.
@@ -1099,7 +1092,7 @@ Require a multisig approval before revealing content, using events like `Executi
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the multisig execution event and the optional calldata hash.
+  - The ETD corresponds to the multisig execution event and the optional calldata hash (**register via `/register_event_identity`**).
 
   ###### Commit
   - Securely encrypt any shared documents or memos related to the action.
@@ -1213,7 +1206,7 @@ Utilize oracle events, like `AnswerUpdated`, to initiate the decryption of forec
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD refers to the oracle contract and event, and it may include optional filters for feed or round.
+  - ETD refers to the oracle contract and event, and it may include optional filters for feed or round (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt forecasts or settlement instructions.
@@ -1247,7 +1240,7 @@ When a claim oracle emits the event `ClaimEvent(policyId, verified=true)`, it in
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD corresponds to the insurance oracle event and the `policyId`.
+  - The ETD corresponds to the insurance oracle event and the `policyId` (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt claim details for the beneficiary identity.
@@ -1433,7 +1426,7 @@ Decrypt the roadmaps or the reward details when the campaign contract emits the 
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD focuses on the campaign contract and the goal event.
+  - ETD focuses on the campaign contract and the goal event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt milestone materials for backers.
@@ -1467,7 +1460,7 @@ Disclose a secret once N participants have either made a deposit or expressed in
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - The ETD matches the pool contract with the threshold event.
+  - The ETD matches the pool contract with the threshold event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt the shared secret or content.
@@ -1501,7 +1494,7 @@ Decrypt the per-user claim proofs whenever the `RewardClaimed` or `StakeComplete
 <Admonition type="note" title={null} icon={null}>
   <p>
   ###### Register Event Trigger
-  - ETD filters by user and action event.
+  - ETD filters by user and action event (**register via `/register_event_identity`**).
 
   ###### Commit
   - Encrypt claim proofs or reward data.
